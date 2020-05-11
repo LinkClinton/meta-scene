@@ -96,6 +96,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -109,6 +110,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,6 +126,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,6 +144,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,6 +154,53 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="cameras\camera.hpp" />
+    <ClInclude Include="cameras\film.hpp" />
+    <ClInclude Include="cameras\perspective_camera.hpp" />
+    <ClInclude Include="emitters\emitter.hpp" />
+    <ClInclude Include="emitters\surface_emitter.hpp" />
+    <ClInclude Include="entity.hpp" />
+    <ClInclude Include="filters\box_filter.hpp" />
+    <ClInclude Include="filters\filter.hpp" />
+    <ClInclude Include="filters\gaussian_filter.hpp" />
+    <ClInclude Include="importers\mitsuba_importer.hpp" />
+    <ClInclude Include="integrators\integrator.hpp" />
+    <ClInclude Include="integrators\path_integrator.hpp" />
+    <ClInclude Include="materials\diffuse_material.hpp" />
+    <ClInclude Include="materials\material.hpp" />
+    <ClInclude Include="math\matrix4x4.hpp" />
+    <ClInclude Include="math\vector3.hpp" />
+    <ClInclude Include="samplers\random_sampler.hpp" />
+    <ClInclude Include="samplers\sampler.hpp" />
+    <ClInclude Include="scene.hpp" />
+    <ClInclude Include="shapes\mesh.hpp" />
+    <ClInclude Include="shapes\shape.hpp" />
+    <ClInclude Include="spectrums\color_spectrum.hpp" />
+    <ClInclude Include="spectrums\sampled_spectrum.hpp" />
+    <ClInclude Include="spectrums\spectrum.hpp" />
+    <ClInclude Include="utilities.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cameras\camera.cpp" />
+    <ClCompile Include="cameras\perspective_camera.cpp" />
+    <ClCompile Include="emitters\emitter.cpp" />
+    <ClCompile Include="emitters\surface_emitter.cpp" />
+    <ClCompile Include="filters\box_filter.cpp" />
+    <ClCompile Include="filters\filter.cpp" />
+    <ClCompile Include="filters\gaussian_filter.cpp" />
+    <ClCompile Include="importers\mitsuba_importer.cpp" />
+    <ClCompile Include="integrators\integrator.cpp" />
+    <ClCompile Include="integrators\path_integrator.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="materials\diffuse_material.cpp" />
+    <ClCompile Include="materials\material.cpp" />
+    <ClCompile Include="samplers\random_sampler.cpp" />
+    <ClCompile Include="samplers\sampler.cpp" />
+    <ClCompile Include="shapes\mesh.cpp" />
+    <ClCompile Include="shapes\shape.cpp" />
+    <ClCompile Include="spectrums\color_spectrum.cpp" />
+    <ClCompile Include="spectrums\sampled_spectrum.cpp" />
+    <ClCompile Include="spectrums\spectrum.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
