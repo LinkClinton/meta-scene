@@ -5,8 +5,10 @@
 #include "../cameras/perspective_camera.hpp"
 #include "../spectrums/sampled_spectrum.hpp"
 #include "../spectrums/color_spectrum.hpp"
+#include "../emitters/surface_emitter.hpp"
 #include "../samplers/random_sampler.hpp"
 #include "../filters/gaussian_filter.hpp"
+#include "../shapes/mesh.hpp"
 
 
 #include <filesystem>
@@ -37,6 +39,16 @@ using namespace metascene::spectrums;
 
 namespace metascene::importers {
 
+	struct scene_cache {
+		std::unordered_map<std::string, std::shared_ptr<material>> materials;
+
+		std::shared_ptr<scene> scene;
+		
+		std::string directory_path;
+		
+		scene_cache() = default;
+	};
+	
 	real read_real(const std::string& value)
 	{
 		if constexpr (sizeof(real) == 4)
@@ -228,7 +240,7 @@ namespace metascene::importers {
 			});
 	}
 
-	void process_sensor(const tinyxml2::XMLNode* node, const std::shared_ptr<scene>& scene, std::shared_ptr<camera>& camera)
+	void process_sensor(const tinyxml2::XMLNode* node, const std::shared_ptr<scene_cache>& cache, std::shared_ptr<camera>& camera)
 	{
 		const auto element = node->ToElement();
 
@@ -246,11 +258,11 @@ namespace metascene::importers {
 					process_transform(current, camera->transform);
 
 				if (current->Value() == MITSUBA_SAMPLER_ELEMENT)
-					process_sampler(current, scene->sampler);
+					process_sampler(current, cache->scene->sampler);
 
 				// process the film element and create a film to info
 				if (current->Value() == MITSUBA_FILM_ELEMENT)
-					process_film(current, scene->film);
+					process_film(current, cache->scene->film);
 
 				// if we find the float element and its name is fov
 				// we will read a float as fov value(angle)
@@ -261,19 +273,119 @@ namespace metascene::importers {
 
 	void process_diffuse_bsdf(const tinyxml2::XMLNode* node, std::shared_ptr<material>& material)
 	{
-		std::shared_ptr<spectrum> diffuse = std::make_shared<color_spectrum>();
+		material = std::make_shared<diffuse_material>();
+		
+		loop_all_children(node, [&](const tinyxml2::XMLNode* current)
+			{
+				if (current->Value() == MITSUBA_SPECTRUM_ELEMENT)
+					process_spectrum(current, std::static_pointer_cast<diffuse_material>(material)->reflectance);
+			});
+	}
+
+	void process_bsdf(const tinyxml2::XMLNode* node, const std::shared_ptr<scene_cache>& cache)
+	{
+		const auto element = node->ToElement();
+		const auto type = std::string(element->Attribute("type"));
+		const auto id = std::string(element->Attribute("id"));
+
+		std::shared_ptr<material> material;
+
+		if (type == "diffuse") process_diffuse_bsdf(node, material);
+
+		cache->materials.insert({ id, material });
+	}
+
+	void process_obj_mesh(const tinyxml2::XMLNode* node, const std::shared_ptr<scene_cache>& cache, std::shared_ptr<shape>& shape)
+	{
+		// load obj mesh from value
+		// <string name = "filename" value = "path"/>
+		const auto path = node->ToElement()->Attribute("value");
+		
+		shape = std::make_shared<mesh>(mesh_type::obj, cache->directory_path + "/" + path);
+	}
+
+	void process_reference_bsdf(const tinyxml2::XMLNode* node, const std::shared_ptr<scene_cache>& cache, std::shared_ptr<material>& material)
+	{
+		material = cache->materials.at(node->ToElement()->Attribute("id"));
+	}
+
+	void process_emitter_area(const tinyxml2::XMLNode* node, std::shared_ptr<emitter>& emitter)
+	{
+		emitter = std::make_shared<surface_emitter>();
 
 		loop_all_children(node, [&](const tinyxml2::XMLNode* current)
 			{
 				if (current->Value() == MITSUBA_SPECTRUM_ELEMENT)
-					process_spectrum(current, diffuse);
+					process_spectrum(current, std::static_pointer_cast<surface_emitter>(emitter)->radiance);
+			});
+	}
+
+	void process_emitter(const tinyxml2::XMLNode* node, std::shared_ptr<emitter>& emitter)
+	{
+		const auto type = std::string(node->ToElement()->Attribute("type"));
+
+		if (type == "area") process_emitter_area(node, emitter);
+	}
+
+	void process_shape(const tinyxml2::XMLNode* node, const std::shared_ptr<scene_cache>& cache)
+	{
+		const auto type = std::string(node->ToElement()->Attribute("type"));
+
+		// we only support obj mode
+		if (type != "obj") return;
+
+		auto entity = std::make_shared<metascene::entity>();
+		
+		loop_all_children(node, [&](const tinyxml2::XMLNode* current)
+			{
+				if (current->Value() == MITSUBA_STRING_ELEMENT)
+					process_obj_mesh(current, cache, entity->shape);
+
+				if (current->Value() == MITSUBA_TRANSFORM_ELEMENT)
+					process_transform(current, entity->transform);
+
+				if (current->Value() == MITSUBA_REFERENCE_ELEMENT)
+					process_reference_bsdf(current, cache, entity->material);
+
+				if (current->Value() == MITSUBA_EMITTER_ELEMENT)
+					process_emitter(current, entity->emitter);
 			});
 
-		material = std::make_shared<diffuse_material>();
+		cache->scene->entities.push_back(entity);
+	}
+
+	void process_scene(const tinyxml2::XMLNode* node, const std::shared_ptr<scene_cache>& cache) {
+		cache->scene = std::make_shared<scene>();
+
+		loop_all_children(node, [&](const tinyxml2::XMLNode* current)
+			{
+				if (current->Value() == MITSUBA_INTEGRATOR_ELEMENT)
+					process_integrator(current, cache->scene->integrator);
+
+				if (current->Value() == MITSUBA_SENSOR_ELEMENT)
+					process_sensor(current, cache, cache->scene->camera);
+
+				if (current->Value() == MITSUBA_BSDF_ELEMENT)
+					process_bsdf(current, cache);
+
+				if (current->Value() == MITSUBA_SHAPE_ELEMENT)
+					process_shape(current, cache);
+			});
 	}
 	
 	std::shared_ptr<scene> load_mitsuba_scene(const std::string& filename)
 	{
+		const auto cache = std::make_shared<scene_cache>();
+
+		cache->directory_path = std::filesystem::path(filename).parent_path().generic_string();
+
+		tinyxml2::XMLDocument doc;
+
+		doc.LoadFile(filename.c_str());
+
+		process_scene(doc.LastChild(), cache);
+
+		return cache->scene;
 	}
 }
 

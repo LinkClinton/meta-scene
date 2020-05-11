@@ -18,6 +18,8 @@ namespace metascene {
 			std::string filename = "unknown";
 			
 			mesh();
+
+			mesh(const shapes::mesh_type& mesh_type, const std::string& filename);
 		};
 		
 	}

@@ -19,7 +19,7 @@ namespace metascene {
 		std::shared_ptr<emitter> emitter;
 		std::shared_ptr<shape> shape;
 
-		matrix4x4 transform;
+		matrix4x4 transform = matrix4x4(1);
 
 		entity() = default;
 	};

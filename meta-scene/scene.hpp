@@ -17,11 +17,10 @@ namespace metascene {
 	using namespace cameras;
 	
 	struct scene final {
-		std::vector<entity> entities;
+		std::vector<std::shared_ptr<entity>> entities;
 
 		std::shared_ptr<integrator> integrator;
 		std::shared_ptr<sampler> sampler;
-		std::shared_ptr<filter> filter;
 		std::shared_ptr<camera> camera;
 		std::shared_ptr<film> film;
 
