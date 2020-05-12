@@ -22,6 +22,8 @@ namespace metascene {
 			real eta = static_cast<real>(1 / 1.5);
 
 			plastic_material();
+
+			std::string to_string() const noexcept override;
 		};
 		
 	}

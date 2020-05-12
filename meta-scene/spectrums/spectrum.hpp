@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../interfaces/string_property.hpp"
 #include "../utilities.hpp"
 
 namespace metascene {
@@ -10,7 +11,7 @@ namespace metascene {
 			unknown = 0, color = 1, sampled = 2
 		};
 		
-		struct spectrum {
+		struct spectrum : interfaces::string_property {
 			type type = type::unknown;
 
 			spectrum() = default;

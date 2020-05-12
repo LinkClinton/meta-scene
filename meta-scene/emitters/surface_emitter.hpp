@@ -16,6 +16,8 @@ namespace metascene {
 			std::shared_ptr<spectrum> radiance = std::make_shared<color_spectrum>();
 
 			surface_emitter();
+
+			std::string to_string() const noexcept override;
 		};
 		
 	}

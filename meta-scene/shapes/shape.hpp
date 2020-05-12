@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../interfaces/string_property.hpp"
 #include "../utilities.hpp"
 
 namespace metascene {
@@ -10,7 +11,7 @@ namespace metascene {
 			unknown = 0, mesh = 1, sphere = 2
 		};
 
-		struct shape {
+		struct shape : interfaces::string_property {
 			bool reverse_orientation = false;
 
 			type type = type::unknown;

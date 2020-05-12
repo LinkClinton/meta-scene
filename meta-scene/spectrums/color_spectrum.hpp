@@ -10,6 +10,8 @@ namespace metascene {
 			real red = 1, green = 1, blue = 1;
 			
 			color_spectrum();
+
+			std::string to_string() const noexcept override;
 		};
 		
 	}

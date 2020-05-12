@@ -13,6 +13,8 @@ namespace metascene {
 			std::vector<real> value;
 
 			sampled_spectrum();
+
+			std::string to_string() const noexcept override;
 		};
 		
 	}

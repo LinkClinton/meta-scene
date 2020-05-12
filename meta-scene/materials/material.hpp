@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../interfaces/string_property.hpp"
 #include "../utilities.hpp"
 
 namespace metascene {
@@ -10,7 +11,7 @@ namespace metascene {
 			unknown = 0, diffuse = 1, plastic = 2
 		};
 		
-		struct material {
+		struct material : interfaces::string_property {
 			type type = type::unknown;
 
 			material() = default;

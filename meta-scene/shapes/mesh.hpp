@@ -20,6 +20,8 @@ namespace metascene {
 			mesh();
 
 			mesh(const shapes::mesh_type& mesh_type, const std::string& filename);
+
+			std::string to_string() const noexcept override;
 		};
 		
 	}

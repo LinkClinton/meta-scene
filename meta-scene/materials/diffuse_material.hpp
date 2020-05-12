@@ -16,6 +16,8 @@ namespace metascene {
 			std::shared_ptr<spectrum> reflectance = std::make_shared<color_spectrum>();
 
 			diffuse_material();
+
+			std::string to_string() const noexcept override;
 		};
 		
 	}

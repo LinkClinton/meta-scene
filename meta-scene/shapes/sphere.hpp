@@ -14,6 +14,8 @@ namespace metascene {
 			real radius = static_cast<real>(1);
 
 			sphere();
+
+			std::string to_string() const noexcept override;
 		};
 		
 	}

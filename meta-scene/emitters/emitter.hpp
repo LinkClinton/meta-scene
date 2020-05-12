@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../interfaces/string_property.hpp"
 #include "../utilities.hpp"
 
 namespace metascene {
@@ -10,7 +11,7 @@ namespace metascene {
 			unknown = 0, surface = 1
 		};
 		
-		struct emitter {
+		struct emitter : interfaces::string_property {
 			type type = type::unknown;
 
 			emitter() = default;
