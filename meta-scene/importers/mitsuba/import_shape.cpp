@@ -44,11 +44,12 @@ namespace metascene::importers::mitsuba {
 	{
 		auto entity = std::make_shared<metascene::entity>();
 		auto sphere = std::make_shared<shapes::sphere>();
+		auto center = vector3(0);
 		
 		loop_all_children(node, [&](const tinyxml2::XMLNode* current)
 			{
 				if (current->Value() == MITSUBA_POINT_ELEMENT)
-					import_sphere_center(current, sphere->center);
+					import_sphere_center(current, center);
 
 				if (current->Value() == MITSUBA_FLOAT_ELEMENT)
 					import_sphere_radius(current, sphere->radius);
@@ -67,6 +68,7 @@ namespace metascene::importers::mitsuba {
 			});
 
 		entity->shape = sphere;
+		entity->transform *= translate<real>(center);
 		
 		cache->scene->entities.push_back(entity);
 	}
@@ -86,6 +88,9 @@ namespace metascene::importers::mitsuba {
 				if (current->Value() == MITSUBA_REFERENCE_ELEMENT)
 					import_reference_in_shape(current, cache, entity);
 
+				if (current->Value() == MITSUBA_BSDF_ELEMENT)
+					import_bsdf(current, cache, entity->material);
+			
 				if (current->Value() == MITSUBA_EMITTER_ELEMENT)
 					import_emitter(current, entity->emitter);
 			});

@@ -27,7 +27,7 @@ namespace metascene::importers::mitsuba {
 	{
 		const auto name = std::string(node->ToElement()->Attribute("name"));
 
-		if (name != "diffuse_reflectance" || name != "diffuseReflectance")
+		if (name != "diffuse_reflectance" && name != "diffuseReflectance")
 			return;
 
 		if (node->Value() == MITSUBA_RGB_ELEMENT)
@@ -41,7 +41,7 @@ namespace metascene::importers::mitsuba {
 	{
 		const auto name = std::string(node->ToElement()->Attribute("name"));
 
-		if (name != "specular_reflectance" || name != "specularReflectance")
+		if (name != "specular_reflectance" && name != "specularReflectance")
 			return;
 
 		if (node->Value() == MITSUBA_RGB_ELEMENT)
@@ -51,15 +51,24 @@ namespace metascene::importers::mitsuba {
 			import_spectrum(node, specular);
 	}
 
-	void import_plastic_ior(const tinyxml2::XMLNode* node, real& ior)
+	void import_plastic_int_ior(const tinyxml2::XMLNode* node, real& ior)
 	{
 		const auto name = std::string(node->ToElement()->Attribute("name"));
 
-		if (name != "intIOR") return;
+		if (name != "intIOR" && name != "int_ior") return;
 
 		import_float(node, ior);
 	}
 
+	void import_plastic_ext_ior(const tinyxml2::XMLNode* node, real& ior)
+	{
+		const auto name = std::string(node->ToElement()->Attribute("name"));
+
+		if (name != "extIOR" && name != "ext_ior") return;
+
+		import_float(node, ior);
+	}
+	
 	void import_plastic_alpha(const tinyxml2::XMLNode* node, real& roughness)
 	{
 		const auto name = std::string(node->ToElement()->Attribute("name"));
@@ -72,14 +81,20 @@ namespace metascene::importers::mitsuba {
 	void import_plastic_bsdf(const tinyxml2::XMLNode* node, std::shared_ptr<material>& material)
 	{
 		material = std::make_shared<plastic_material>();
+
+		auto int_ior = static_cast<real>(1.5);
+		auto ext_ior = static_cast<real>(1);
 		
 		loop_all_children(node, [&](const tinyxml2::XMLNode* current)
 			{
-				import_plastic_specular_reflectance(node, std::static_pointer_cast<plastic_material>(material)->specular);
-				import_plastic_diffuse_reflectance(node, std::static_pointer_cast<plastic_material>(material)->diffuse);
-				import_plastic_alpha(node, std::static_pointer_cast<plastic_material>(material)->roughness);
-				import_plastic_ior(node, std::static_pointer_cast<plastic_material>(material)->ior);
+				import_plastic_specular_reflectance(current, std::static_pointer_cast<plastic_material>(material)->specular);
+				import_plastic_diffuse_reflectance(current, std::static_pointer_cast<plastic_material>(material)->diffuse);
+				import_plastic_alpha(current, std::static_pointer_cast<plastic_material>(material)->roughness);
+				import_plastic_int_ior(current, int_ior);
+				import_plastic_ext_ior(current, ext_ior);
 			});
+
+		std::static_pointer_cast<plastic_material>(material)->eta = ext_ior / int_ior;
 	}
 	
 	void import_bsdf(const tinyxml2::XMLNode* node, const std::shared_ptr<scene_cache>& cache, std::shared_ptr<material>& material)

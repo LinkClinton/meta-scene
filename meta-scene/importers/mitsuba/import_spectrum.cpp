@@ -36,9 +36,7 @@ namespace metascene::importers::mitsuba {
 		std::stringstream stream(value);
 		std::string component[3];
 
-		std::getline(stream, component[0], ' ');
-		std::getline(stream, component[1], ' ');
-		std::getline(stream, component[2], ' ');
+		stream >> component[0] >> component[1] >> component[2];
 		
 		spectrum->red = string_to_real(component[0]);
 		spectrum->green = string_to_real(component[1]);
@@ -55,6 +53,17 @@ namespace metascene::importers::mitsuba {
 		spectrum = string_to_sampled_spectrum(node->ToElement()->Attribute("value"));
 	}
 
+	void import_simple_spectrum(const tinyxml2::XMLNode* node, std::shared_ptr<spectrum>& spectrum)
+	{
+		const auto value = std::string(node->ToElement()->Attribute("value"));
+		
+		spectrum = std::make_shared<color_spectrum>();
+
+		std::static_pointer_cast<color_spectrum>(spectrum)->red = string_to_real(value);
+		std::static_pointer_cast<color_spectrum>(spectrum)->green = string_to_real(value);
+		std::static_pointer_cast<color_spectrum>(spectrum)->blue = string_to_real(value);
+	}
+
 	void import_color_spectrum(const tinyxml2::XMLNode* node, std::shared_ptr<spectrum>& spectrum)
 	{
 		/*
@@ -65,7 +74,12 @@ namespace metascene::importers::mitsuba {
 	
 	void import_spectrum(const tinyxml2::XMLNode* node, std::shared_ptr<spectrum>& spectrum)
 	{
-		import_sampled_spectrum(node, spectrum);
+		const auto value = std::string(node->ToElement()->Attribute("value"));
+
+		if (value.find(':') != std::string::npos)
+			import_sampled_spectrum(node, spectrum);
+		else
+			import_simple_spectrum(node, spectrum);
 	}
 
 	void import_rgb(const tinyxml2::XMLNode* node, std::shared_ptr<spectrum>& spectrum)

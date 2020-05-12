@@ -11,7 +11,6 @@ namespace metascene {
 	namespace shapes {
 
 		struct sphere final : shape {
-			vector3 center = vector3(0);
 			real radius = static_cast<real>(1);
 
 			sphere();

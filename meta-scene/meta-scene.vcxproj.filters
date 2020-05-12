@@ -34,6 +34,9 @@
     <Filter Include="importers\mitsuba">
       <UniqueIdentifier>{2ac1fb7f-d1ca-44e9-a318-b1a1b748e7c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="interfaces">
+      <UniqueIdentifier>{8308a8d1-c826-470b-9ea8-a7c01c876355}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\vector3.hpp">
@@ -134,6 +137,9 @@
     </ClInclude>
     <ClInclude Include="materials\plastic_material.hpp">
       <Filter>materials</Filter>
+    </ClInclude>
+    <ClInclude Include="interfaces\string_property.hpp">
+      <Filter>interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
