@@ -34,4 +34,17 @@ void metascene::importers::mitsuba::import_float(const tinyxml2::XMLNode* node, 
 	value = string_to_real(node->ToElement()->Attribute("value"));
 }
 
+void metascene::importers::mitsuba::import_point(const tinyxml2::XMLNode* node, vector3& point)
+{
+	/*
+	 * <point name="center" x="" y="" z=""/>
+	 */
+	const auto element = node->ToElement();
+
+	point = vector3(
+		string_to_real(element->Attribute("x")),
+		string_to_real(element->Attribute("y")),
+		string_to_real(element->Attribute("z")));
+}
+
 #endif

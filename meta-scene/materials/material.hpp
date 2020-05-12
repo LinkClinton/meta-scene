@@ -7,7 +7,7 @@ namespace metascene {
 	namespace materials {
 
 		enum class type : uint32 {
-			unknown = 0, diffuse = 1
+			unknown = 0, diffuse = 1, plastic = 2
 		};
 		
 		struct material {

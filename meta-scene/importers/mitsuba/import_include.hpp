@@ -23,9 +23,11 @@ namespace metascene::importers::mitsuba {
 	const std::string MITSUBA_SENSOR_ELEMENT = "sensor";
 	const std::string MITSUBA_STRING_ELEMENT = "string";
 	const std::string MITSUBA_SHAPE_ELEMENT = "shape";
+	const std::string MITSUBA_POINT_ELEMENT = "point";
 	const std::string MITSUBA_FLOAT_ELEMENT = "float";
 	const std::string MITSUBA_FILM_ELEMENT = "film";
 	const std::string MITSUBA_BSDF_ELEMENT = "bsdf";
+	const std::string MITSUBA_RGB_ELEMENT = "rgb";
 
 	vector3 string_to_vector3(const std::string& value);
 	
@@ -39,6 +41,8 @@ namespace metascene::importers::mitsuba {
 		// <integer name = "integer_property" value = "1"/>
 		value = string_to_integer<T>(node->ToElement()->Attribute("value"));
 	}
+
+	void import_point(const tinyxml2::XMLNode* node, vector3& point);
 
 	struct scene_cache {
 		std::unordered_map<std::string, std::shared_ptr<material>> materials;

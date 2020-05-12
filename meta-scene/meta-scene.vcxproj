@@ -169,13 +169,14 @@
     <ClInclude Include="importers\mitsuba\import_integrator.hpp" />
     <ClInclude Include="importers\mitsuba\import_sensor.hpp" />
     <ClInclude Include="importers\mitsuba\import_shape.hpp" />
-    <ClInclude Include="importers\mitsuba\import_specturm.hpp" />
+    <ClInclude Include="importers\mitsuba\import_spectrum.hpp" />
     <ClInclude Include="importers\mitsuba\import_transform.hpp" />
     <ClInclude Include="importers\mitsuba\mitsuba_importer.hpp" />
     <ClInclude Include="integrators\integrator.hpp" />
     <ClInclude Include="integrators\path_integrator.hpp" />
     <ClInclude Include="materials\diffuse_material.hpp" />
     <ClInclude Include="materials\material.hpp" />
+    <ClInclude Include="materials\plastic_material.hpp" />
     <ClInclude Include="math\matrix4x4.hpp" />
     <ClInclude Include="math\vector3.hpp" />
     <ClInclude Include="samplers\random_sampler.hpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="scene.hpp" />
     <ClInclude Include="shapes\mesh.hpp" />
     <ClInclude Include="shapes\shape.hpp" />
+    <ClInclude Include="shapes\sphere.hpp" />
     <ClInclude Include="spectrums\color_spectrum.hpp" />
     <ClInclude Include="spectrums\sampled_spectrum.hpp" />
     <ClInclude Include="spectrums\spectrum.hpp" />
@@ -210,10 +212,12 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="materials\diffuse_material.cpp" />
     <ClCompile Include="materials\material.cpp" />
+    <ClCompile Include="materials\plastic_material.cpp" />
     <ClCompile Include="samplers\random_sampler.cpp" />
     <ClCompile Include="samplers\sampler.cpp" />
     <ClCompile Include="shapes\mesh.cpp" />
     <ClCompile Include="shapes\shape.cpp" />
+    <ClCompile Include="shapes\sphere.cpp" />
     <ClCompile Include="spectrums\color_spectrum.cpp" />
     <ClCompile Include="spectrums\sampled_spectrum.cpp" />
     <ClCompile Include="spectrums\spectrum.cpp" />

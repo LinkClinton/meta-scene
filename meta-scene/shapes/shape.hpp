@@ -7,7 +7,7 @@ namespace metascene {
 	namespace shapes {
 
 		enum class type : uint32 {
-			unknown = 0, mesh = 1
+			unknown = 0, mesh = 1, sphere = 2
 		};
 
 		struct shape {

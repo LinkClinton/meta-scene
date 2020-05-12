@@ -1,6 +1,7 @@
-#include "import_specturm.hpp"
+#include "import_spectrum.hpp"
 
 #include "../../spectrums/sampled_spectrum.hpp"
+#include "../../spectrums/color_spectrum.hpp"
 
 #ifdef __MITSUBA_IMPORTER__
 
@@ -27,6 +28,24 @@ namespace metascene::importers::mitsuba {
 
 		return spectrum;
 	}
+
+	std::shared_ptr<spectrum> string_to_color_spectrum(const std::string& value)
+	{
+		auto spectrum = std::make_shared<color_spectrum>();
+		
+		std::stringstream stream(value);
+		std::string component[3];
+
+		std::getline(stream, component[0], ' ');
+		std::getline(stream, component[1], ' ');
+		std::getline(stream, component[2], ' ');
+		
+		spectrum->red = string_to_real(component[0]);
+		spectrum->green = string_to_real(component[1]);
+		spectrum->blue = string_to_real(component[2]);
+
+		return spectrum;
+	}
 	
 	void import_sampled_spectrum(const tinyxml2::XMLNode* node, std::shared_ptr<spectrum>& spectrum)
 	{
@@ -36,9 +55,22 @@ namespace metascene::importers::mitsuba {
 		spectrum = string_to_sampled_spectrum(node->ToElement()->Attribute("value"));
 	}
 
+	void import_color_spectrum(const tinyxml2::XMLNode* node, std::shared_ptr<spectrum>& spectrum)
+	{
+		/*
+		 * 	<rgb name="" value="red, blue, green"/>
+		 */
+		spectrum = string_to_color_spectrum(node->ToElement()->Attribute("value"));
+	}
+	
 	void import_spectrum(const tinyxml2::XMLNode* node, std::shared_ptr<spectrum>& spectrum)
 	{
 		import_sampled_spectrum(node, spectrum);
+	}
+
+	void import_rgb(const tinyxml2::XMLNode* node, std::shared_ptr<spectrum>& spectrum)
+	{
+		import_color_spectrum(node, spectrum);
 	}
 }
 

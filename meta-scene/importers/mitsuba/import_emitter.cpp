@@ -2,7 +2,7 @@
 
 #include "../../emitters/surface_emitter.hpp"
 
-#include "import_specturm.hpp"
+#include "import_spectrum.hpp"
 
 #ifdef __MITSUBA_IMPORTER__
 
@@ -16,6 +16,9 @@ namespace metascene::importers::mitsuba {
 			{
 				if (current->Value() == MITSUBA_SPECTRUM_ELEMENT)
 					import_spectrum(current, std::static_pointer_cast<surface_emitter>(emitter)->radiance);
+
+				if (current->Value() == MITSUBA_RGB_ELEMENT)
+					import_rgb(current, std::static_pointer_cast<surface_emitter>(emitter)->radiance);
 			});
 	}
 
