@@ -94,7 +94,7 @@ namespace metascene::importers::mitsuba {
 				import_plastic_ext_ior(current, ext_ior);
 			});
 
-		std::static_pointer_cast<plastic_material>(material)->eta = ext_ior / int_ior;
+		std::static_pointer_cast<plastic_material>(material)->eta = int_ior / ext_ior;
 	}
 	
 	void import_bsdf(const tinyxml2::XMLNode* node, const std::shared_ptr<scene_cache>& cache, std::shared_ptr<material>& material)
