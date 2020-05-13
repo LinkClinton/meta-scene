@@ -16,4 +16,4 @@ Meta-scene is a library to load different scene format. Using meta-scene load sc
 
 Different importer need different third-parties. You do not need install third-parties other importers used.
 
-- Mitsuba importer : [tingxml2](https://github.com/leethomason/tinyxml2).
+- Mitsuba importer : [tinyxml2](https://github.com/leethomason/tinyxml2).
