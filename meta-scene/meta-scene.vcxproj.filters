@@ -159,6 +159,12 @@
     <ClInclude Include="importers\pbrt\import_pbrt_integrator.hpp">
       <Filter>importers\pbrt</Filter>
     </ClInclude>
+    <ClInclude Include="importers\pbrt\import_pbrt_attribute.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\pbrt\import_pbrt_transform.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">
@@ -262,6 +268,12 @@
       <Filter>importers\pbrt</Filter>
     </ClCompile>
     <ClCompile Include="importers\pbrt\import_pbrt_integrator.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\pbrt\import_pbrt_attribute.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\pbrt\import_pbrt_transform.cpp">
       <Filter>importers\pbrt</Filter>
     </ClCompile>
   </ItemGroup>

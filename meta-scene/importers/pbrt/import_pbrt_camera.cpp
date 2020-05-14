@@ -1,5 +1,6 @@
 #include "import_pbrt_camera.hpp"
 
+#include "../../cameras/perspective_camera.hpp"
 #include "../../samplers/random_sampler.hpp"
 
 #ifdef __PBRT_IMPORTER__
@@ -18,10 +19,10 @@ namespace metascene::importers::pbrt {
 				auto [type, name] = context.peek_type_and_name();
 
 				if (type == PBRT_INTEGER_TOKEN) {
-					const auto value_token = remove_special_character(context.peek_one_token());
+					const auto value = context.peek_integer<size_t>();
 
-					if (name == "xresolution") film->width = string_to_integer<size_t>(value_token);
-					if (name == "yresolution") film->height = string_to_integer<size_t>(value_token);
+					if (name == "xresolution") film->width = value;
+					if (name == "yresolution") film->height = value;
 				}
 
 				// because we do not process the "string filename" so we just remove the value 
@@ -42,16 +43,34 @@ namespace metascene::importers::pbrt {
 				auto [type, name] = context.peek_type_and_name();
 
 				if (type == PBRT_INTEGER_TOKEN) {
-					const auto value_token = remove_special_character(context.peek_one_token());
-
-					if (name == "pixelsamples") sampler->sample_per_pixel = string_to_integer<size_t>(value_token);
+					const auto value = context.peek_integer<size_t>();
+					
+					if (name == "pixelsamples") sampler->sample_per_pixel = value;
 				}
 			});
 	}
 
-	void import_look_at(scene_context& context, matrix4x4& transform)
+	void import_perspective_camera(scene_context& context, std::shared_ptr<camera>& camera)
 	{
-		
+		camera = std::make_shared<perspective_camera>();
+
+		context.loop_important_token([&]()
+			{
+				auto [type, name] = context.peek_type_and_name();
+
+				if (type == PBRT_FLOAT_TOKEN) {
+					const auto value = context.peek_real();
+					
+					if (name == "fov") std::static_pointer_cast<perspective_camera>(camera)->fov = value;
+				}
+			});
+	}
+
+	void import_camera(scene_context& context, std::shared_ptr<camera>& camera)
+	{
+		const auto type = remove_special_character(context.peek_one_token());
+
+		if (type == "perspective") import_perspective_camera(context, camera);
 	}
 }
 

@@ -172,9 +172,11 @@
     <ClInclude Include="importers\mitsuba\import_mitsuba_spectrum.hpp" />
     <ClInclude Include="importers\mitsuba\import_mitsuba_transform.hpp" />
     <ClInclude Include="importers\mitsuba\mitsuba_importer.hpp" />
+    <ClInclude Include="importers\pbrt\import_pbrt_attribute.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_camera.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_include.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_integrator.hpp" />
+    <ClInclude Include="importers\pbrt\import_pbrt_transform.hpp" />
     <ClInclude Include="importers\pbrt\pbrt_importer.hpp" />
     <ClInclude Include="integrators\direct_integrator.hpp" />
     <ClInclude Include="integrators\integrator.hpp" />
@@ -213,9 +215,11 @@
     <ClCompile Include="importers\mitsuba\import_mitsuba_spectrum.cpp" />
     <ClCompile Include="importers\mitsuba\import_mitsuba_transform.cpp" />
     <ClCompile Include="importers\mitsuba\mitsuba_importer.cpp" />
+    <ClCompile Include="importers\pbrt\import_pbrt_attribute.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_camera.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_include.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_integrator.cpp" />
+    <ClCompile Include="importers\pbrt\import_pbrt_transform.cpp" />
     <ClCompile Include="importers\pbrt\pbrt_importer.cpp" />
     <ClCompile Include="integrators\direct_integrator.cpp" />
     <ClCompile Include="integrators\integrator.cpp" />

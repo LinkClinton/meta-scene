@@ -15,9 +15,9 @@ namespace metascene::importers::pbrt {
 				auto [type, name] = context.peek_type_and_name();
 
 				if (type == PBRT_INTEGER_TOKEN) {
-					const auto value_token = remove_special_character(context.peek_one_token());
-
-					if (name == "maxdepth") integrator->depth = string_to_integer<size_t>(value_token);
+					const auto value = context.peek_integer<size_t>();
+					
+					if (name == "maxdepth") integrator->depth = value;
 				}
 			});
 	}

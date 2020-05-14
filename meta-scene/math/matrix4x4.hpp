@@ -30,6 +30,18 @@ namespace metascene {
 		{
 			return glm::translate(matrix4x4_t<T>(1), v);
 		}
+
+		template <typename T>
+		matrix4x4_t<T> rotate(const vector3& axis, real angle)
+		{
+			return glm::rotate(matrix4x4_t<T>(1), angle, axis);
+		}
+
+		template <typename T>
+		T radians(T value)
+		{
+			return glm::radians(value);
+		}
 #endif
 		
 	}

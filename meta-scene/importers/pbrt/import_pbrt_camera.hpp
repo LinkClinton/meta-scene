@@ -10,7 +10,7 @@ namespace metascene::importers::pbrt {
 
 	void import_sampler(scene_context& context, std::shared_ptr<sampler>& sampler);
 
-	void import_look_at(scene_context& context, matrix4x4& transform);
+	void import_camera(scene_context& context, std::shared_ptr<camera>& camera);
 }
 
 #endif
