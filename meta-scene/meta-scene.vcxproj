@@ -172,6 +172,7 @@
     <ClInclude Include="importers\mitsuba\import_spectrum.hpp" />
     <ClInclude Include="importers\mitsuba\import_transform.hpp" />
     <ClInclude Include="importers\mitsuba\mitsuba_importer.hpp" />
+    <ClInclude Include="integrators\direct_integrator.hpp" />
     <ClInclude Include="integrators\integrator.hpp" />
     <ClInclude Include="integrators\path_integrator.hpp" />
     <ClInclude Include="interfaces\string_property.hpp" />
@@ -208,6 +209,7 @@
     <ClCompile Include="importers\mitsuba\import_spectrum.cpp" />
     <ClCompile Include="importers\mitsuba\import_transform.cpp" />
     <ClCompile Include="importers\mitsuba\mitsuba_importer.cpp" />
+    <ClCompile Include="integrators\direct_integrator.cpp" />
     <ClCompile Include="integrators\integrator.cpp" />
     <ClCompile Include="integrators\path_integrator.cpp" />
     <ClCompile Include="main.cpp" />

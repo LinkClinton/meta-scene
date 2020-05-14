@@ -141,6 +141,9 @@
     <ClInclude Include="interfaces\string_property.hpp">
       <Filter>interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="integrators\direct_integrator.hpp">
+      <Filter>integrators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">
@@ -230,6 +233,9 @@
     </ClCompile>
     <ClCompile Include="materials\plastic_material.cpp">
       <Filter>materials</Filter>
+    </ClCompile>
+    <ClCompile Include="integrators\direct_integrator.cpp">
+      <Filter>integrators</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
