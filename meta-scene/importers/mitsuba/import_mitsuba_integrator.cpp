@@ -1,4 +1,4 @@
-#include "import_integrator.hpp"
+#include "import_mitsuba_integrator.hpp"
 
 #include "../../integrators/direct_integrator.hpp"
 #include "../../integrators/path_integrator.hpp"

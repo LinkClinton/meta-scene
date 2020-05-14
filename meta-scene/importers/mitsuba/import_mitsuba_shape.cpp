@@ -1,11 +1,11 @@
-#include "import_shape.hpp"
+#include "import_mitsuba_shape.hpp"
 
 #include "../../shapes/sphere.hpp"
 #include "../../shapes/mesh.hpp"
 
-#include "import_transform.hpp"
-#include "import_emitter.hpp"
-#include "import_bsdf.hpp"
+#include "import_mitsuba_transform.hpp"
+#include "import_mitsuba_emitter.hpp"
+#include "import_mitsuba_bsdf.hpp"
 
 #ifdef __MITSUBA_IMPORTER__
 

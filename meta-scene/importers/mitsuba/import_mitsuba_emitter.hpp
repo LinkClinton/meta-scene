@@ -1,6 +1,6 @@
 #pragma once
 
-#include "import_include.hpp"
+#include "import_mitsuba_include.hpp"
 
 #ifdef __MITSUBA_IMPORTER__
 

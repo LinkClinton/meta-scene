@@ -1,10 +1,10 @@
-#include "import_sensor.hpp"
+#include "import_mitsuba_sensor.hpp"
 
 #include "../../cameras/perspective_camera.hpp"
 #include "../../samplers/random_sampler.hpp"
 #include "../../filters/gaussian_filter.hpp"
 
-#include "import_transform.hpp"
+#include "import_mitsuba_transform.hpp"
 
 #ifdef __MITSUBA_IMPORTER__
 

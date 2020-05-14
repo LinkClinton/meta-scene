@@ -1,9 +1,9 @@
-#include "import_bsdf.hpp"
+#include "import_mitsuba_bsdf.hpp"
 
 #include "../../materials/diffuse_material.hpp"
 #include "../../materials/plastic_material.hpp"
 
-#include "import_spectrum.hpp"
+#include "import_mitsuba_spectrum.hpp"
 
 #ifdef __MITSUBA_IMPORTER__
 

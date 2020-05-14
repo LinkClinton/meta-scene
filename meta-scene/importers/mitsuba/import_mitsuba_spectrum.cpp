@@ -1,4 +1,4 @@
-#include "import_spectrum.hpp"
+#include "import_mitsuba_spectrum.hpp"
 
 #include "../../spectrums/sampled_spectrum.hpp"
 #include "../../spectrums/color_spectrum.hpp"

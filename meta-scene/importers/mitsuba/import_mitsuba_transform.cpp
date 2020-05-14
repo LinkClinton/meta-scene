@@ -1,4 +1,4 @@
-#include "import_transform.hpp"
+#include "import_mitsuba_transform.hpp"
 
 #ifdef __MITSUBA_IMPORTER__
 

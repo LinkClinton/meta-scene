@@ -1,9 +1,9 @@
 #include "mitsuba_importer.hpp"
 
-#include "import_integrator.hpp"
-#include "import_sensor.hpp"
-#include "import_shape.hpp"
-#include "import_bsdf.hpp"
+#include "import_mitsuba_integrator.hpp"
+#include "import_mitsuba_sensor.hpp"
+#include "import_mitsuba_shape.hpp"
+#include "import_mitsuba_bsdf.hpp"
 
 #include <filesystem>
 

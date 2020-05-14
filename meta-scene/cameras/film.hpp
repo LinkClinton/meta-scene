@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../filters/box_filter.hpp"
 #include "../filters/filter.hpp"
 
 #include <memory>
@@ -11,7 +12,7 @@ namespace metascene {
 	namespace cameras {
 
 		struct film {
-			std::shared_ptr<filter> filter;
+			std::shared_ptr<filter> filter = std::make_shared<box_filter>();
 			
 			size_t height = 720;
 			size_t width = 1280;
