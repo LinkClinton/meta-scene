@@ -19,7 +19,7 @@ namespace metascene {
 			bool remapped_roughness_to_alpha = false;
 			
 			real roughness = static_cast<real>(0.5);
-			real eta = static_cast<real>(1 / 1.5);
+			real eta = static_cast<real>(1.5);
 
 			plastic_material();
 

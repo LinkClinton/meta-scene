@@ -35,6 +35,9 @@ namespace metascene {
 		if constexpr (is_integral<T>() && sizeof(T) == 4)
 			return std::stoi(value);
 
+		if constexpr (is_unsigned_integral<T>() && sizeof(T) == 4)
+			return std::stoul(value);
+		
 		if constexpr (is_unsigned_integral<T>() && sizeof(T) == 8)
 			return std::stoull(value);
 

@@ -1,12 +1,14 @@
 #include "pbrt_importer.hpp"
 
 #include "import_pbrt_integrator.hpp"
+#include "import_pbrt_attribute.hpp"
 #include "import_pbrt_transform.hpp"
 #include "import_pbrt_include.hpp"
 #include "import_pbrt_camera.hpp"
 
 #ifdef __PBRT_IMPORTER__
 
+#include <filesystem>
 #include <fstream>
 
 namespace metascene::importers::pbrt {
@@ -50,7 +52,21 @@ namespace metascene::importers::pbrt {
 		std::stack<std::string> stack;
 		std::string token;
 
-		while (stream >> token) tokens.push_back(token);
+		while (stream >> token) {
+			if (has_one_special_character(token)) {
+				char token_part = stream.get();
+				
+				while (!is_special_character(token_part)) {
+					token.push_back(token_part);
+
+					token_part = stream.get();
+				}
+
+				token.push_back(token_part);
+			}
+
+			tokens.push_back(token);
+		}
 
 		for (auto index = static_cast<int>(tokens.size() - 1); index >= 0; index--) 
 			stack.push(tokens[index]);
@@ -62,7 +78,11 @@ namespace metascene::importers::pbrt {
 	{
 		context.loop_world_token([&]()
 			{
+				std::shared_ptr<entity> entity;
+			
+				import_attribute(context, entity);
 
+				context.scene->entities.push_back(entity);
 			});
 	}
 
@@ -96,6 +116,7 @@ namespace metascene::importers::pbrt {
 		scene_context context;
 
 		context.token_stack = convert_scene_file_to_stack(preprocess_scene_file(filename));
+		context.directory_path = std::filesystem::path(filename).parent_path().generic_string() + "/";
 		
 		import_scene(context);
 

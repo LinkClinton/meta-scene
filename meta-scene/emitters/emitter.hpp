@@ -8,7 +8,7 @@ namespace metascene {
 	namespace emitters {
 
 		enum class type : uint32 {
-			unknown = 0, surface = 1
+			unknown = 0, surface = 1, environment = 2
 		};
 		
 		struct emitter : interfaces::string_property {

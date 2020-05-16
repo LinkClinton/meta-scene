@@ -158,6 +158,7 @@
     <ClInclude Include="cameras\film.hpp" />
     <ClInclude Include="cameras\perspective_camera.hpp" />
     <ClInclude Include="emitters\emitter.hpp" />
+    <ClInclude Include="emitters\environment_emitter.hpp" />
     <ClInclude Include="emitters\surface_emitter.hpp" />
     <ClInclude Include="entity.hpp" />
     <ClInclude Include="filters\box_filter.hpp" />
@@ -176,6 +177,10 @@
     <ClInclude Include="importers\pbrt\import_pbrt_camera.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_include.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_integrator.hpp" />
+    <ClInclude Include="importers\pbrt\import_pbrt_light_source.hpp" />
+    <ClInclude Include="importers\pbrt\import_pbrt_material.hpp" />
+    <ClInclude Include="importers\pbrt\import_pbrt_shape.hpp" />
+    <ClInclude Include="importers\pbrt\import_pbrt_spectrum.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_transform.hpp" />
     <ClInclude Include="importers\pbrt\pbrt_importer.hpp" />
     <ClInclude Include="integrators\direct_integrator.hpp" />
@@ -193,6 +198,7 @@
     <ClInclude Include="shapes\mesh.hpp" />
     <ClInclude Include="shapes\shape.hpp" />
     <ClInclude Include="shapes\sphere.hpp" />
+    <ClInclude Include="shapes\triangles.hpp" />
     <ClInclude Include="spectrums\color_spectrum.hpp" />
     <ClInclude Include="spectrums\sampled_spectrum.hpp" />
     <ClInclude Include="spectrums\spectrum.hpp" />
@@ -202,7 +208,9 @@
     <ClCompile Include="cameras\camera.cpp" />
     <ClCompile Include="cameras\perspective_camera.cpp" />
     <ClCompile Include="emitters\emitter.cpp" />
+    <ClCompile Include="emitters\environment_emitter.cpp" />
     <ClCompile Include="emitters\surface_emitter.cpp" />
+    <ClCompile Include="entity.cpp" />
     <ClCompile Include="filters\box_filter.cpp" />
     <ClCompile Include="filters\filter.cpp" />
     <ClCompile Include="filters\gaussian_filter.cpp" />
@@ -219,6 +227,10 @@
     <ClCompile Include="importers\pbrt\import_pbrt_camera.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_include.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_integrator.cpp" />
+    <ClCompile Include="importers\pbrt\import_pbrt_light_source.cpp" />
+    <ClCompile Include="importers\pbrt\import_pbrt_material.cpp" />
+    <ClCompile Include="importers\pbrt\import_pbrt_shape.cpp" />
+    <ClCompile Include="importers\pbrt\import_pbrt_spectrum.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_transform.cpp" />
     <ClCompile Include="importers\pbrt\pbrt_importer.cpp" />
     <ClCompile Include="integrators\direct_integrator.cpp" />
@@ -233,6 +245,7 @@
     <ClCompile Include="shapes\mesh.cpp" />
     <ClCompile Include="shapes\shape.cpp" />
     <ClCompile Include="shapes\sphere.cpp" />
+    <ClCompile Include="shapes\triangles.cpp" />
     <ClCompile Include="spectrums\color_spectrum.cpp" />
     <ClCompile Include="spectrums\sampled_spectrum.cpp" />
     <ClCompile Include="spectrums\spectrum.cpp" />

@@ -165,6 +165,24 @@
     <ClInclude Include="importers\pbrt\import_pbrt_transform.hpp">
       <Filter>importers\pbrt</Filter>
     </ClInclude>
+    <ClInclude Include="importers\pbrt\import_pbrt_light_source.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
+    <ClInclude Include="emitters\environment_emitter.hpp">
+      <Filter>emitters</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\pbrt\import_pbrt_spectrum.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\pbrt\import_pbrt_material.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\pbrt\import_pbrt_shape.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
+    <ClInclude Include="shapes\triangles.hpp">
+      <Filter>shapes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">
@@ -276,5 +294,24 @@
     <ClCompile Include="importers\pbrt\import_pbrt_transform.cpp">
       <Filter>importers\pbrt</Filter>
     </ClCompile>
+    <ClCompile Include="importers\pbrt\import_pbrt_light_source.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="emitters\environment_emitter.cpp">
+      <Filter>emitters</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\pbrt\import_pbrt_spectrum.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\pbrt\import_pbrt_material.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\pbrt\import_pbrt_shape.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="shapes\triangles.cpp">
+      <Filter>shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="entity.cpp" />
   </ItemGroup>
 </Project>

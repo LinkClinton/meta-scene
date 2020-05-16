@@ -1,5 +1,7 @@
 #pragma once
 
+#include "interfaces/string_property.hpp"
+
 #include "materials/material.hpp"
 #include "emitters/emitter.hpp"
 #include "math/matrix4x4.hpp"
@@ -14,7 +16,7 @@ namespace metascene {
 	using namespace shapes;
 	using namespace math;
 	
-	struct entity final {
+	struct entity final : interfaces::string_property {
 		std::shared_ptr<material> material;
 		std::shared_ptr<emitter> emitter;
 		std::shared_ptr<shape> shape;
@@ -22,6 +24,8 @@ namespace metascene {
 		matrix4x4 transform = matrix4x4(1);
 
 		entity() = default;
+
+		std::string to_string() const noexcept override;
 	};
 	
 }
