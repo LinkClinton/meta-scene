@@ -11,9 +11,12 @@ Meta-scene is a library to load different scene format. Using meta-scene load sc
 ## Support Format
 
 - Part of mitsuba scene format. 
+- Part of PBRT scene format.
 
 ## ThirdParties
 
 Different importer need different third-parties. You do not need install third-parties other importers used.
 
 - Mitsuba importer : [tinyxml2](https://github.com/leethomason/tinyxml2).
+- PBRT importer : null.
+- [glm](https://github.com/g-truc/glm): OpenGL Mathematics (GLM) 
