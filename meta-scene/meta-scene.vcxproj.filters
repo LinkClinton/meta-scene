@@ -183,6 +183,9 @@
     <ClInclude Include="shapes\triangles.hpp">
       <Filter>shapes</Filter>
     </ClInclude>
+    <ClInclude Include="materials\glass_material.hpp">
+      <Filter>materials</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">
@@ -313,5 +316,8 @@
       <Filter>shapes</Filter>
     </ClCompile>
     <ClCompile Include="entity.cpp" />
+    <ClCompile Include="materials\glass_material.cpp">
+      <Filter>materials</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
