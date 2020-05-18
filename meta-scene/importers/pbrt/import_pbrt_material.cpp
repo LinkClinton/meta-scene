@@ -90,14 +90,39 @@ namespace metascene::importers::pbrt {
 
 		material = instance;
 	}
-	
-	void import_pbrt_material(scene_context& context, std::shared_ptr<material>& material)
+
+	void import_material_from_property_group(const property_group& properties, std::shared_ptr<material>& material)
+	{
+		const auto type = remove_special_character(properties.find(type_and_name("string", "type"))->second);
+
+		
+	}
+
+	void import_material(scene_context& context, std::shared_ptr<material>& material)
 	{
 		const auto type = remove_special_character(context.peek_one_token());
 
 		if (type == "plastic") import_plastic_material(context, material);
 		if (type == "glass") import_glass_material(context, material);
 		if (type == "metal") import_metal_material(context, material);
+	}
+
+	void import_named_material(scene_context& context)
+	{
+		// the first token should be the name of material
+		const auto name = remove_special_character(context.peek_one_token());
+
+		property_group properties;
+		
+		context.loop_important_token([&]()
+			{
+				const auto type_and_name = context.peek_type_and_name();
+				const auto value = context.peek_one_token();
+
+				properties.insert({ type_and_name, value });
+			});
+
+		import_material_from_property_group(properties, context.materials[name]);
 	}
 }
 

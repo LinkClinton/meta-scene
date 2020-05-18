@@ -6,7 +6,7 @@
 
 namespace metascene::importers::pbrt {
 
-	void import_attribute(scene_context& context, std::shared_ptr<entity>& entity);
+	void import_attribute(scene_context& context);
 	
 }
 

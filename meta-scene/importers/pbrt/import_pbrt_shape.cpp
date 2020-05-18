@@ -39,16 +39,22 @@ namespace metascene::importers::pbrt {
 
 	void import_ply_mesh(scene_context& context, std::shared_ptr<shape>& shape)
 	{
+		auto instance = std::make_shared<mesh>();
+
+		instance->mesh_type = mesh_type::ply;
+		
 		context.loop_important_token([&]()
 			{
 				auto [type, name] = context.peek_type_and_name();
 
 				if (type == PBRT_STRING_TOKEN) {
-					const auto value = remove_special_character(context.peek_one_token());
+					const auto value = read_string_from_token(context.peek_one_token());
 
-					if (name == "filename") shape = std::make_shared<mesh>(mesh_type::ply, context.directory_path + value);
+					if (name == "filename") instance->filename = context.directory_path + value;
 				}
 			});
+
+		shape = instance;
 	}
 	
 	void import_shape(scene_context& context, std::shared_ptr<shape>& shape)

@@ -38,6 +38,12 @@ namespace metascene {
 		}
 
 		template <typename T>
+		matrix4x4_t<T> scale(const vector3& v)
+		{
+			return glm::scale(matrix4x4_t<T>(1), v);
+		}
+
+		template <typename T>
 		T radians(T value)
 		{
 			return glm::radians(value);

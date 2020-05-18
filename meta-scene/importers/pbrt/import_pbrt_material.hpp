@@ -6,8 +6,11 @@
 
 namespace metascene::importers::pbrt {
 
-	void import_pbrt_material(scene_context& context, std::shared_ptr<material>& material);
+	void import_material_from_property_group(const property_group& properties, std::shared_ptr<material>& material);
 	
+	void import_material(scene_context& context, std::shared_ptr<material>& material);
+
+	void import_named_material(scene_context& context);
 }
 
 #endif

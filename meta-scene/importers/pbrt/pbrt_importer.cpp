@@ -3,6 +3,7 @@
 #include "import_pbrt_integrator.hpp"
 #include "import_pbrt_attribute.hpp"
 #include "import_pbrt_transform.hpp"
+#include "import_pbrt_material.hpp"
 #include "import_pbrt_include.hpp"
 #include "import_pbrt_camera.hpp"
 
@@ -53,18 +54,25 @@ namespace metascene::importers::pbrt {
 		std::string token;
 
 		while (stream >> token) {
-			if (has_one_special_character(token)) {
-				char token_part = stream.get();
-				
-				while (!is_special_character(token_part)) {
-					token.push_back(token_part);
+			size_t brackets_count = 0;
+			size_t marks_count = 0;
 
-					token_part = stream.get();
-				}
+			for (const auto& character : token) {
+				if (character == '"') marks_count++;
+				if (character == '[') brackets_count++;
+				if (character == ']') brackets_count--;
+			}
+
+			while (brackets_count != 0 || marks_count % 2 == 1) {
+				const char token_part = stream.get();
+
+				if (token_part == '"') marks_count++;
+				if (token_part == '[') brackets_count++;
+				if (token_part == ']') brackets_count--;
 
 				token.push_back(token_part);
 			}
-
+		
 			tokens.push_back(token);
 		}
 
@@ -78,11 +86,18 @@ namespace metascene::importers::pbrt {
 	{
 		context.loop_world_token([&]()
 			{
-				std::shared_ptr<entity> entity;
-			
-				import_attribute(context, entity);
+				const auto token = context.peek_one_token();
 
-				context.scene->entities.push_back(entity);
+				if (token == PBRT_ATTRIBUTE_BEGIN_TOKEN) 
+					import_attribute(context);
+
+				// when we read a reverse orientation token in world begin
+				// not in attribution, it change the global state
+				if (token == PBRT_REVERSE_ORIENTATION_TOKEN) 
+					context.reverse_orientation ^= true;
+
+				if (token == PBRT_MAKE_NAMED_MATERIAL_TOKEN)
+					import_named_material(context);
 			});
 	}
 
@@ -103,6 +118,8 @@ namespace metascene::importers::pbrt {
 
 			if (token == PBRT_LOOK_AT_TOKEN) import_look_at(context, camera_transform);
 
+			if (token == PBRT_SCALE_TOKEN) import_scale(context, camera_transform);
+			
 			if (token == PBRT_CAMERA_TOKEN) import_camera(context, context.scene->camera);
 
 			if (token == PBRT_WORLD_BEGIN_TOKEN) import_world(context);

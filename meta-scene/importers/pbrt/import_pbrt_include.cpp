@@ -92,6 +92,9 @@ namespace metascene::importers::pbrt {
 	bool is_important_token(const std::string& token)
 	{
 		return
+			token == PBRT_REVERSE_ORIENTATION_TOKEN ||
+			token == PBRT_MAKE_NAMED_MATERIAL_TOKEN ||
+			token == PBRT_AREA_LIGHT_SOURCE_TOKEN ||
 			token == PBRT_ATTRIBUTE_BEGIN_TOKEN || 
 			token == PBRT_ATTRIBUTE_END_TOKEN ||
 			token == PBRT_LIGHT_SOURCE_TOKEN ||
@@ -104,6 +107,7 @@ namespace metascene::importers::pbrt {
 			token == PBRT_SAMPLER_TOKEN ||
 			token == PBRT_ROTATE_TOKEN ||
 			token == PBRT_CAMERA_TOKEN ||
+			token == PBRT_SCALE_TOKEN ||
 			token == PBRT_SHAPE_TOKEN ||
 			token == PBRT_FILM_TOKEN;
 	}
@@ -119,6 +123,21 @@ namespace metascene::importers::pbrt {
 		return ret;
 	}
 
+	std::string read_string_from_token(const std::string& token)
+	{
+		auto in_mark = false;
+
+		std::string ret = "";
+
+		for (const auto& character : token) {
+			if (character == '"') { in_mark ^= true; continue; }
+
+			if (in_mark) ret.push_back(character);
+		}
+
+		return ret;
+	}
+	
 	void import_token_vector3(const std::string& token, std::vector<vector3>& data)
 	{
 		auto stream = std::stringstream(remove_special_character(token));

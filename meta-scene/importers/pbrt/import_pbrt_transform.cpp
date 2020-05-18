@@ -28,6 +28,13 @@ namespace metascene::importers::pbrt {
 		transform *= rotate<real>(axis, angle);
 	}
 
+	void import_scale(scene_context& context, matrix4x4& transform)
+	{
+		const auto vector3 = context.peek_vector3();
+
+		transform *= scale<real>(vector3);
+	}
+
 }
 
 #endif

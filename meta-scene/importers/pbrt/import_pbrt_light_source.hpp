@@ -7,7 +7,8 @@
 namespace metascene::importers::pbrt {
 
 	void import_light_source(scene_context& context, std::shared_ptr<emitter>& emitter);
-	
+
+	void import_area_light_source(scene_context& context, std::shared_ptr<emitter>& emitter);
 }
 
 #endif

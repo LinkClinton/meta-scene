@@ -11,6 +11,8 @@ namespace metascene::importers::pbrt {
 	void import_translate(scene_context& context, matrix4x4& transform);
 	
 	void import_rotate(scene_context& context, matrix4x4& transform);
+
+	void import_scale(scene_context& context, matrix4x4& transform);
 }
 
 #endif
