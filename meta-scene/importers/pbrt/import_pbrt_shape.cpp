@@ -25,6 +25,7 @@ namespace metascene::importers::pbrt {
 					const auto token = context.peek_one_token();
 
 					if (name == "uv") import_token_vector2(token, instance->uvs);
+					if (name == "st") import_token_vector2(token, instance->uvs);
 				}
 
 				if (type == PBRT_INTEGER_TOKEN) {
@@ -61,6 +62,7 @@ namespace metascene::importers::pbrt {
 	{
 		const auto type = remove_special_character(context.peek_one_token());
 
+		if (type == "loopsubdiv") import_triangle_mesh(context, shape);
 		if (type == "trianglemesh") import_triangle_mesh(context, shape);
 		if (type == "plymesh") import_ply_mesh(context, shape);
 	}

@@ -11,10 +11,12 @@
 
 #define META_SCENE_PBRT_NOT_SUPPORT throw "meta-scene pbrt not support."
 #define META_SCENE_PBRT_ERROR_TOKEN throw "meta-scene pbrt error token."
+#define META_SCENE_PBRT_SCALE_TEXTURE_SHOULD_CONSTANT throw "meta-scene pbrt error scale texture should be constant."
 
 namespace metascene::importers::pbrt {
 
 	const std::string PBRT_SPECTRUM_TOKEN = "spectrum";
+	const std::string PBRT_TEXTURE_TOKEN = "texture";
 	const std::string PBRT_INTEGER_TOKEN = "integer";
 	const std::string PBRT_STRING_TOKEN = "string";
 	const std::string PBRT_FLOAT_TOKEN = "float";
@@ -26,8 +28,10 @@ namespace metascene::importers::pbrt {
 	const std::string PBRT_MAKE_NAMED_MATERIAL_TOKEN = "MakeNamedMaterial";
 	const std::string PBRT_AREA_LIGHT_SOURCE_TOKEN = "AreaLightSource";
 	const std::string PBRT_ATTRIBUTE_BEGIN_TOKEN = "AttributeBegin";
+	const std::string PBRT_NAMED_MATERIAL_TOKEN = "NamedMaterial";
 	const std::string PBRT_ATTRIBUTE_END_TOKEN = "AttributeEnd";
 	const std::string PBRT_LIGHT_SOURCE_TOKEN = "LightSource";
+	const std::string PBRT_MAKE_TEXTURE_TOKEN = "Texture";
 	const std::string PBRT_WORLD_BEGIN_TOKEN = "WorldBegin";
 	const std::string PBRT_INTEGRATOR_TOKEN = "Integrator";
 	const std::string PBRT_TRANSLATE_TOKEN = "Translate";
@@ -52,6 +56,7 @@ namespace metascene::importers::pbrt {
 		// begin global state of scene
 
 		std::unordered_map<std::string, std::shared_ptr<material>> materials;
+		std::unordered_map<std::string, std::shared_ptr<texture>> textures;
 		
 		bool reverse_orientation = false;
 

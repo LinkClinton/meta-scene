@@ -11,7 +11,7 @@ namespace metascene::importers::mitsuba {
 
 	void import_spectrum_texture(const tinyxml2::XMLNode* node, std::shared_ptr<texture>& texture)
 	{
-		auto instance = std::make_shared<constant_texture>();
+		auto instance = std::make_shared<constant_texture>(value_type::spectrum);
 
 		import_spectrum(node, instance->spectrum);
 
@@ -20,7 +20,7 @@ namespace metascene::importers::mitsuba {
 
 	void import_float_texture(const tinyxml2::XMLNode* node, std::shared_ptr<texture>& texture)
 	{
-		auto instance = std::make_shared<constant_texture>();
+		auto instance = std::make_shared<constant_texture>(value_type::real);
 
 		import_float(node, instance->real);
 
@@ -29,7 +29,7 @@ namespace metascene::importers::mitsuba {
 
 	void import_rgb_texture(const tinyxml2::XMLNode* node, std::shared_ptr<texture>& texture)
 	{
-		auto instance = std::make_shared<constant_texture>();
+		auto instance = std::make_shared<constant_texture>(value_type::spectrum);
 
 		import_rgb(node, instance->spectrum);
 

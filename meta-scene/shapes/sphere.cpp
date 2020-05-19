@@ -10,6 +10,7 @@ std::string metascene::shapes::sphere::to_string() const noexcept
 
 	stream << "sphere : " << std::endl;
 	stream << "radius = " << radius << std::endl;
-
+	stream << "reverse_orientation = " << reverse_orientation << std::endl;
+	
 	return stream.str();
 }

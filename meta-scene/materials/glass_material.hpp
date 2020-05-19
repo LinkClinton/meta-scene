@@ -10,12 +10,12 @@ namespace metascene {
 	namespace materials {
 
 		struct glass_material final : material {
-			std::shared_ptr<texture> transmission = std::make_shared<constant_texture>();
-			std::shared_ptr<texture> reflectance = std::make_shared<constant_texture>();
+			std::shared_ptr<texture> transmission = std::make_shared<constant_texture>(value_type::spectrum);
+			std::shared_ptr<texture> reflectance = std::make_shared<constant_texture>(value_type::spectrum);
 
-			std::shared_ptr<texture> roughness_u = std::make_shared<constant_texture>(static_cast<real>(0));
-			std::shared_ptr<texture> roughness_v = std::make_shared<constant_texture>(static_cast<real>(0));
-			std::shared_ptr<texture> eta = std::make_shared<constant_texture>(static_cast<real>(1.5));
+			std::shared_ptr<texture> roughness_u = std::make_shared<constant_texture>(value_type::real);
+			std::shared_ptr<texture> roughness_v = std::make_shared<constant_texture>(value_type::real);
+			std::shared_ptr<texture> eta = std::make_shared<constant_texture>(value_type::real);
 			
 			bool remapped_roughness_to_alpha = true;
 

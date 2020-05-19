@@ -1,6 +1,7 @@
 #pragma once
 
 #include "integrators/integrator.hpp"
+#include "textures/texture.hpp"
 #include "samplers/sampler.hpp"
 #include "filters/filter.hpp"
 #include "cameras/camera.hpp"
@@ -12,6 +13,7 @@
 namespace metascene {
 
 	using namespace integrators;
+	using namespace textures;
 	using namespace samplers;
 	using namespace filters;
 	using namespace cameras;

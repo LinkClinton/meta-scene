@@ -10,9 +10,6 @@
     <Filter Include="cameras">
       <UniqueIdentifier>{6258f8b0-d5d1-42d0-bc10-89e1027cd8a6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="filters">
-      <UniqueIdentifier>{58774d09-6db7-403e-9382-e2df18fbdfb5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="samplers">
       <UniqueIdentifier>{7a637d28-3f47-4582-9311-593b0e9937ba}</UniqueIdentifier>
     </Filter>
@@ -42,6 +39,9 @@
     </Filter>
     <Filter Include="textures">
       <UniqueIdentifier>{908e3601-ed43-4936-9f90-8bd30f957a5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="filters">
+      <UniqueIdentifier>{58774d09-6db7-403e-9382-e2df18fbdfb5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +210,9 @@
     <ClInclude Include="importers\mitsuba\import_mitsuba_spectrum.hpp">
       <Filter>importers\mitsuba</Filter>
     </ClInclude>
+    <ClInclude Include="materials\uber_material.hpp">
+      <Filter>materials</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">
@@ -363,6 +366,9 @@
     </ClCompile>
     <ClCompile Include="textures\constant_texture.cpp">
       <Filter>textures</Filter>
+    </ClCompile>
+    <ClCompile Include="materials\uber_material.cpp">
+      <Filter>materials</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

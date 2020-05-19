@@ -15,5 +15,6 @@ namespace metascene {
 
 			std::string to_string() const noexcept override;
 		};
+		
 	}
 }

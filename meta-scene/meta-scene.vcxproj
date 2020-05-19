@@ -194,6 +194,7 @@
     <ClInclude Include="materials\material.hpp" />
     <ClInclude Include="materials\metal_material.hpp" />
     <ClInclude Include="materials\plastic_material.hpp" />
+    <ClInclude Include="materials\uber_material.hpp" />
     <ClInclude Include="math\matrix4x4.hpp" />
     <ClInclude Include="math\vector3.hpp" />
     <ClInclude Include="samplers\random_sampler.hpp" />
@@ -252,6 +253,7 @@
     <ClCompile Include="materials\material.cpp" />
     <ClCompile Include="materials\metal_material.cpp" />
     <ClCompile Include="materials\plastic_material.cpp" />
+    <ClCompile Include="materials\uber_material.cpp" />
     <ClCompile Include="samplers\random_sampler.cpp" />
     <ClCompile Include="samplers\sampler.cpp" />
     <ClCompile Include="shapes\mesh.cpp" />

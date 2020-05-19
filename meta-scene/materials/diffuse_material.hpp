@@ -12,8 +12,8 @@ namespace metascene {
 	namespace materials {
 
 		struct diffuse_material final : material {
-			std::shared_ptr<texture> reflectance = std::make_shared<constant_texture>();
-			std::shared_ptr<texture> sigma = std::make_shared<constant_texture>(static_cast<real>(0));
+			std::shared_ptr<texture> reflectance;
+			std::shared_ptr<texture> sigma;
 			
 			diffuse_material();
 

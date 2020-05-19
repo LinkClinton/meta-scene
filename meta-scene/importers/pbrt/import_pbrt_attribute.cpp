@@ -36,6 +36,8 @@ namespace metascene::importers::pbrt {
 				if (important_token == PBRT_MATERIAL_TOKEN) import_material(context, entity->material);
 
 				if (important_token == PBRT_SHAPE_TOKEN) import_shape(context, entity->shape);
+
+				if (important_token == PBRT_NAMED_MATERIAL_TOKEN) import_named_material(context, entity->material);
 			});
 
 		if (entity->shape != nullptr) entity->shape->reverse_orientation = reverse_orientation;

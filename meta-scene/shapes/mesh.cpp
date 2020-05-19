@@ -15,6 +15,7 @@ std::string metascene::shapes::mesh::to_string() const noexcept
 
 	stream << "triangle_mesh : " << std::endl;
 	stream << "filename = " << filename << std::endl;
-
+	stream << "reverse_orientation = " << reverse_orientation << std::endl;
+	
 	return stream.str();
 }

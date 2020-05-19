@@ -95,9 +95,11 @@ namespace metascene::importers::pbrt {
 			token == PBRT_REVERSE_ORIENTATION_TOKEN ||
 			token == PBRT_MAKE_NAMED_MATERIAL_TOKEN ||
 			token == PBRT_AREA_LIGHT_SOURCE_TOKEN ||
-			token == PBRT_ATTRIBUTE_BEGIN_TOKEN || 
+			token == PBRT_ATTRIBUTE_BEGIN_TOKEN ||
+			token == PBRT_NAMED_MATERIAL_TOKEN ||
 			token == PBRT_ATTRIBUTE_END_TOKEN ||
 			token == PBRT_LIGHT_SOURCE_TOKEN ||
+			token == PBRT_MAKE_TEXTURE_TOKEN ||
 			token == PBRT_WORLD_BEGIN_TOKEN ||
 			token == PBRT_INTEGRATOR_TOKEN ||
 			token == PBRT_TRANSLATE_TOKEN ||

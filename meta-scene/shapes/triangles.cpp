@@ -12,6 +12,7 @@ std::string metascene::shapes::triangles::to_string() const noexcept
 	stream << "positions = " << positions.size() << std::endl;
 	stream << "normals = " << normals.size() << std::endl;
 	stream << "uvs = " << uvs.size() << std::endl;
-
+	stream << "reverse_orientation = " << reverse_orientation << std::endl;
+	
 	return stream.str();
 }
