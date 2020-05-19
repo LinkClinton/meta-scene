@@ -13,7 +13,8 @@
 #define META_SCENE_PBRT_ERROR_TOKEN throw "meta-scene pbrt error token."
 
 namespace metascene::importers::pbrt {
-	
+
+	const std::string PBRT_SPECTRUM_TOKEN = "spectrum";
 	const std::string PBRT_INTEGER_TOKEN = "integer";
 	const std::string PBRT_STRING_TOKEN = "string";
 	const std::string PBRT_FLOAT_TOKEN = "float";
@@ -32,6 +33,7 @@ namespace metascene::importers::pbrt {
 	const std::string PBRT_TRANSLATE_TOKEN = "Translate";
 	const std::string PBRT_WORLD_END_TOKEN = "WorldEnd";
 	const std::string PBRT_MATERIAL_TOKEN = "Material";
+	const std::string PBRT_INCLUDE_TOKEN = "Include";
 	const std::string PBRT_SAMPLER_TOKEN = "Sampler";
 	const std::string PBRT_ROTATE_TOKEN = "Rotate";
 	const std::string PBRT_CAMERA_TOKEN = "Camera";

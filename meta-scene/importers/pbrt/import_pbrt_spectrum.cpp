@@ -1,8 +1,11 @@
 #include "import_pbrt_spectrum.hpp"
 
+#include "../../spectrums/sampled_spectrum.hpp"
 #include "../../spectrums/color_spectrum.hpp"
 
 #ifdef __PBRT_IMPORTER__
+
+using namespace metascene::spectrums;
 
 namespace metascene::importers::pbrt {
 
@@ -17,9 +20,9 @@ namespace metascene::importers::pbrt {
 		spectrum = instance;
 	}
 
-	void import_color_spectrum(scene_context& context, std::shared_ptr<spectrum>& spectrum)
+	void import_sampled_spectrum(const std::string& filename, std::shared_ptr<spectrum>& spectrum)
 	{
-		import_color_spectrum(context.peek_one_token(), spectrum);
+		spectrum = read_sampled_spectrum_from_spd(filename);
 	}
 }
 

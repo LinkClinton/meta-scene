@@ -3,7 +3,7 @@
 #include "../../materials/diffuse_material.hpp"
 #include "../../materials/plastic_material.hpp"
 
-#include "import_mitsuba_spectrum.hpp"
+#include "import_mitsuba_texture.hpp"
 
 #ifdef __MITSUBA_IMPORTER__
 
@@ -16,14 +16,14 @@ namespace metascene::importers::mitsuba {
 		loop_all_children(node, [&](const tinyxml2::XMLNode* current)
 			{
 				if (current->Value() == MITSUBA_SPECTRUM_ELEMENT)
-					import_spectrum(current, std::static_pointer_cast<diffuse_material>(material)->reflectance);
+					import_spectrum_texture(current, std::static_pointer_cast<diffuse_material>(material)->reflectance);
 
 				if (current->Value() == MITSUBA_RGB_ELEMENT)
-					import_rgb(current, std::static_pointer_cast<diffuse_material>(material)->reflectance);
+					import_rgb_texture(current, std::static_pointer_cast<diffuse_material>(material)->reflectance);
 			});
 	}
 
-	void import_plastic_diffuse_reflectance(const tinyxml2::XMLNode* node, std::shared_ptr<spectrum>& diffuse)
+	void import_plastic_diffuse_reflectance(const tinyxml2::XMLNode* node, std::shared_ptr<texture>& diffuse)
 	{
 		const auto name = std::string(node->ToElement()->Attribute("name"));
 
@@ -31,13 +31,13 @@ namespace metascene::importers::mitsuba {
 			return;
 
 		if (node->Value() == MITSUBA_RGB_ELEMENT)
-			import_rgb(node, diffuse);
+			import_rgb_texture(node, diffuse);
 
 		if (node->Value() == MITSUBA_SPECTRUM_ELEMENT)
-			import_spectrum(node, diffuse);
+			import_spectrum_texture(node, diffuse);
 	}
 
-	void import_plastic_specular_reflectance(const tinyxml2::XMLNode* node, std::shared_ptr<spectrum>& specular)
+	void import_plastic_specular_reflectance(const tinyxml2::XMLNode* node, std::shared_ptr<texture>& specular)
 	{
 		const auto name = std::string(node->ToElement()->Attribute("name"));
 
@@ -45,10 +45,10 @@ namespace metascene::importers::mitsuba {
 			return;
 
 		if (node->Value() == MITSUBA_RGB_ELEMENT)
-			import_rgb(node, specular);
+			import_rgb_texture(node, specular);
 
 		if (node->Value() == MITSUBA_SPECTRUM_ELEMENT)
-			import_spectrum(node, specular);
+			import_spectrum_texture(node, specular);
 	}
 
 	void import_plastic_int_ior(const tinyxml2::XMLNode* node, real& ior)
@@ -69,13 +69,13 @@ namespace metascene::importers::mitsuba {
 		import_float(node, ior);
 	}
 	
-	void import_plastic_alpha(const tinyxml2::XMLNode* node, real& roughness)
+	void import_plastic_alpha(const tinyxml2::XMLNode* node, std::shared_ptr<texture>& roughness)
 	{
 		const auto name = std::string(node->ToElement()->Attribute("name"));
 
 		if (name != "alpha") return;
 
-		import_float(node, roughness);
+		import_float_texture(node, roughness);
 	}
 	
 	void import_plastic_bsdf(const tinyxml2::XMLNode* node, std::shared_ptr<material>& material)
@@ -93,8 +93,8 @@ namespace metascene::importers::mitsuba {
 				import_plastic_int_ior(current, int_ior);
 				import_plastic_ext_ior(current, ext_ior);
 			});
-
-		std::static_pointer_cast<plastic_material>(material)->eta = int_ior / ext_ior;
+		
+		std::static_pointer_cast<plastic_material>(material)->eta = std::make_shared<constant_texture>(int_ior / ext_ior);
 	}
 	
 	void import_bsdf(const tinyxml2::XMLNode* node, const std::shared_ptr<scene_cache>& cache, std::shared_ptr<material>& material)

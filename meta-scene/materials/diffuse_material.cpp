@@ -10,6 +10,7 @@ std::string metascene::materials::diffuse_material::to_string() const noexcept
 
 	stream << "diffuse_material : " << std::endl;
 	stream << "reflectance = " << reflectance->to_string() << std::endl;
+	stream << "sigma = " << sigma->to_string() << std::endl;
 
 	return stream.str();
 }

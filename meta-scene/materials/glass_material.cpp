@@ -11,9 +11,10 @@ std::string metascene::materials::glass_material::to_string() const noexcept
 	stream << "glass material : " << std::endl;
 	stream << "transmission = " << transmission->to_string() << std::endl;
 	stream << "reflectance = " << reflectance->to_string() << std::endl;
-	stream << "roughness uv = [" << roughness_u << ", " << roughness_v << "]" << std::endl;
+	stream << "roughness u = " << roughness_u->to_string() << std::endl;
+	stream << "roughness v = " << roughness_v->to_string() << std::endl;
+	stream << "eta = " << eta->to_string() << std::endl;
 	stream << "remapped  = " << remapped_roughness_to_alpha << std::endl;
-	stream << "eta = " << eta << std::endl;
 
 	return stream.str();
 }

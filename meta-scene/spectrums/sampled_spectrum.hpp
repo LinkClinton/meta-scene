@@ -16,6 +16,7 @@ namespace metascene {
 
 			std::string to_string() const noexcept override;
 		};
-		
+
+		std::shared_ptr<sampled_spectrum> read_sampled_spectrum_from_spd(const std::string& filename);
 	}
 }

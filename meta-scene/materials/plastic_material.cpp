@@ -11,9 +11,9 @@ std::string metascene::materials::plastic_material::to_string() const noexcept
 	stream << "plastic_material : " << std::endl;
 	stream << "specular  = " << specular->to_string() << std::endl;
 	stream << "diffuse   = " << diffuse->to_string() << std::endl;
+	stream << "roughness = " << roughness->to_string() << std::endl;
+	stream << "eta       = " << eta->to_string() << std::endl;
 	stream << "remapped  = " << remapped_roughness_to_alpha << std::endl;
-	stream << "roughness = " << roughness << std::endl;
-	stream << "eta       = " << eta << std::endl;
 
 	return stream.str();
 }

@@ -28,7 +28,7 @@ namespace metascene::importers::pbrt {
 
 		return ret;
 	}
-	
+
 	std::string preprocess_scene_file(const std::string& filename)
 	{
 		auto stream = std::ifstream(filename);
@@ -38,20 +38,21 @@ namespace metascene::importers::pbrt {
 
 		// read all lines to skip the '#' line
 		while (std::getline(stream, line)) 
-			scene = scene + read_line_without_comment(line) + " ";
+			scene += read_line_without_comment(line) + " ";
 
 		stream.close();
 		
 		return scene;
 	}
 
-	std::stack<std::string> convert_scene_file_to_stack(const std::string& scene)
+	std::vector<std::string> convert_scene_file_to_vector(const std::string& directory_path, const std::string& scene)
 	{
 		auto stream = std::stringstream(scene);
 
 		std::vector<std::string> tokens;
-		std::stack<std::string> stack;
 		std::string token;
+
+		auto is_include_token = false;
 
 		while (stream >> token) {
 			size_t brackets_count = 0;
@@ -72,10 +73,38 @@ namespace metascene::importers::pbrt {
 
 				token.push_back(token_part);
 			}
-		
+
+			// if we find a PBRT_INCLUDE_TOKEN, next should be the file name
+			// we will read all data from the file and push them to tokens
+			if (token == PBRT_INCLUDE_TOKEN) {
+				is_include_token = true;
+
+				continue;
+			}
+
+			if (is_include_token) {
+				is_include_token = false;
+
+				const auto filename = directory_path + read_string_from_token(token);
+				const auto include_tokens = 
+					convert_scene_file_to_vector(directory_path, preprocess_scene_file(filename));
+
+				tokens.insert(tokens.end(), include_tokens.begin(), include_tokens.end());
+				
+				continue;
+			}
+
 			tokens.push_back(token);
 		}
 
+		return tokens;
+	}
+
+	std::stack<std::string> convert_scene_file_to_stack(const std::string& directory_path, const std::string& scene)
+	{
+		std::vector<std::string> tokens = convert_scene_file_to_vector(directory_path, scene);
+		std::stack<std::string> stack;
+		
 		for (auto index = static_cast<int>(tokens.size() - 1); index >= 0; index--) 
 			stack.push(tokens[index]);
 
@@ -132,8 +161,8 @@ namespace metascene::importers::pbrt {
 	{
 		scene_context context;
 
-		context.token_stack = convert_scene_file_to_stack(preprocess_scene_file(filename));
 		context.directory_path = std::filesystem::path(filename).parent_path().generic_string() + "/";
+		context.token_stack = convert_scene_file_to_stack(context.directory_path, preprocess_scene_file(filename));
 		
 		import_scene(context);
 

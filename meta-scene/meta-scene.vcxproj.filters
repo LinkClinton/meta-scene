@@ -40,6 +40,9 @@
     <Filter Include="importers\pbrt">
       <UniqueIdentifier>{fa9dd048-b2a5-4620-8fa9-35a6d363bd20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="textures">
+      <UniqueIdentifier>{908e3601-ed43-4936-9f90-8bd30f957a5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\vector3.hpp">
@@ -147,9 +150,6 @@
     <ClInclude Include="importers\mitsuba\import_mitsuba_shape.hpp">
       <Filter>importers\mitsuba</Filter>
     </ClInclude>
-    <ClInclude Include="importers\mitsuba\import_mitsuba_spectrum.hpp">
-      <Filter>importers\mitsuba</Filter>
-    </ClInclude>
     <ClInclude Include="importers\mitsuba\import_mitsuba_transform.hpp">
       <Filter>importers\mitsuba</Filter>
     </ClInclude>
@@ -188,6 +188,27 @@
     </ClInclude>
     <ClInclude Include="materials\metal_material.hpp">
       <Filter>materials</Filter>
+    </ClInclude>
+    <ClInclude Include="textures\texture.hpp">
+      <Filter>textures</Filter>
+    </ClInclude>
+    <ClInclude Include="textures\image_texture.hpp">
+      <Filter>textures</Filter>
+    </ClInclude>
+    <ClInclude Include="textures\scale_texture.hpp">
+      <Filter>textures</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\pbrt\import_pbrt_texture.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\mitsuba\import_mitsuba_texture.hpp">
+      <Filter>importers\mitsuba</Filter>
+    </ClInclude>
+    <ClInclude Include="textures\constant_texture.hpp">
+      <Filter>textures</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\mitsuba\import_mitsuba_spectrum.hpp">
+      <Filter>importers\mitsuba</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -324,6 +345,24 @@
     </ClCompile>
     <ClCompile Include="materials\metal_material.cpp">
       <Filter>materials</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\pbrt\import_pbrt_texture.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\mitsuba\import_mitsuba_texture.cpp">
+      <Filter>importers\mitsuba</Filter>
+    </ClCompile>
+    <ClCompile Include="textures\texture.cpp">
+      <Filter>textures</Filter>
+    </ClCompile>
+    <ClCompile Include="textures\scale_texture.cpp">
+      <Filter>textures</Filter>
+    </ClCompile>
+    <ClCompile Include="textures\image_texture.cpp">
+      <Filter>textures</Filter>
+    </ClCompile>
+    <ClCompile Include="textures\constant_texture.cpp">
+      <Filter>textures</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

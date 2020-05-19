@@ -171,6 +171,7 @@
     <ClInclude Include="importers\mitsuba\import_mitsuba_sensor.hpp" />
     <ClInclude Include="importers\mitsuba\import_mitsuba_shape.hpp" />
     <ClInclude Include="importers\mitsuba\import_mitsuba_spectrum.hpp" />
+    <ClInclude Include="importers\mitsuba\import_mitsuba_texture.hpp" />
     <ClInclude Include="importers\mitsuba\import_mitsuba_transform.hpp" />
     <ClInclude Include="importers\mitsuba\mitsuba_importer.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_attribute.hpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="importers\pbrt\import_pbrt_material.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_shape.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_spectrum.hpp" />
+    <ClInclude Include="importers\pbrt\import_pbrt_texture.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_transform.hpp" />
     <ClInclude Include="importers\pbrt\pbrt_importer.hpp" />
     <ClInclude Include="integrators\direct_integrator.hpp" />
@@ -204,6 +206,10 @@
     <ClInclude Include="spectrums\color_spectrum.hpp" />
     <ClInclude Include="spectrums\sampled_spectrum.hpp" />
     <ClInclude Include="spectrums\spectrum.hpp" />
+    <ClInclude Include="textures\constant_texture.hpp" />
+    <ClInclude Include="textures\image_texture.hpp" />
+    <ClInclude Include="textures\scale_texture.hpp" />
+    <ClInclude Include="textures\texture.hpp" />
     <ClInclude Include="utilities.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +229,7 @@
     <ClCompile Include="importers\mitsuba\import_mitsuba_sensor.cpp" />
     <ClCompile Include="importers\mitsuba\import_mitsuba_shape.cpp" />
     <ClCompile Include="importers\mitsuba\import_mitsuba_spectrum.cpp" />
+    <ClCompile Include="importers\mitsuba\import_mitsuba_texture.cpp" />
     <ClCompile Include="importers\mitsuba\import_mitsuba_transform.cpp" />
     <ClCompile Include="importers\mitsuba\mitsuba_importer.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_attribute.cpp" />
@@ -233,6 +240,7 @@
     <ClCompile Include="importers\pbrt\import_pbrt_material.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_shape.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_spectrum.cpp" />
+    <ClCompile Include="importers\pbrt\import_pbrt_texture.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_transform.cpp" />
     <ClCompile Include="importers\pbrt\pbrt_importer.cpp" />
     <ClCompile Include="integrators\direct_integrator.cpp" />
@@ -253,6 +261,10 @@
     <ClCompile Include="spectrums\color_spectrum.cpp" />
     <ClCompile Include="spectrums\sampled_spectrum.cpp" />
     <ClCompile Include="spectrums\spectrum.cpp" />
+    <ClCompile Include="textures\constant_texture.cpp" />
+    <ClCompile Include="textures\image_texture.cpp" />
+    <ClCompile Include="textures\scale_texture.cpp" />
+    <ClCompile Include="textures\texture.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

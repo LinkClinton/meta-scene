@@ -104,6 +104,7 @@ namespace metascene::importers::pbrt {
 			token == PBRT_WORLD_END_TOKEN ||
 			token == PBRT_MATERIAL_TOKEN ||
 			token == PBRT_LOOK_AT_TOKEN ||
+			token == PBRT_INCLUDE_TOKEN ||
 			token == PBRT_SAMPLER_TOKEN ||
 			token == PBRT_ROTATE_TOKEN ||
 			token == PBRT_CAMERA_TOKEN ||

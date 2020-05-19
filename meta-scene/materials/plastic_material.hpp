@@ -1,26 +1,25 @@
 #pragma once
 
-#include "../spectrums/color_spectrum.hpp"
-#include "../spectrums/spectrum.hpp"
+#include "../textures/constant_texture.hpp"
 #include "material.hpp"
 
 #include <memory>
 
 namespace metascene {
 
-	using namespace spectrums;
+	using namespace textures;
 	
 	namespace materials {
 
 		struct plastic_material final : material {
-			std::shared_ptr<spectrum> specular = std::make_shared<color_spectrum>();
-			std::shared_ptr<spectrum> diffuse = std::make_shared<color_spectrum>();
+			std::shared_ptr<texture> specular = std::make_shared<constant_texture>();
+			std::shared_ptr<texture> diffuse = std::make_shared<constant_texture>();
 
-			bool remapped_roughness_to_alpha = false;
+			std::shared_ptr<texture> roughness = std::make_shared<constant_texture>(static_cast<real>(0.5));
+			std::shared_ptr<texture> eta = std::make_shared<constant_texture>(static_cast<real>(1.5));
 			
-			real roughness = static_cast<real>(0.5);
-			real eta = static_cast<real>(1.5);
-
+			bool remapped_roughness_to_alpha = true;
+			
 			plastic_material();
 
 			std::string to_string() const noexcept override;
