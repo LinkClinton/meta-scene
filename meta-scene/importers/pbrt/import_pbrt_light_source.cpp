@@ -50,12 +50,18 @@ namespace metascene::importers::pbrt {
 		emitter = instance;
 	}
 
-	void import_light_source(scene_context& context, std::shared_ptr<emitter>& emitter)
+	void import_light_source(scene_context& context)
 	{
 		// the first token should be the type of light source
 		const auto type = remove_special_character(context.peek_one_token());
 
-		if (type == "infinite") import_infinite_light(context, emitter);
+		const auto entity = std::make_shared<metascene::entity>();
+		
+		if (type == "infinite") import_infinite_light(context, entity->emitter);
+
+		entity->transform = context.current().transform;
+
+		context.scene->entities.push_back(entity);
 	}
 
 	void import_area_light_source(scene_context& context, std::shared_ptr<emitter>& emitter)

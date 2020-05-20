@@ -114,6 +114,9 @@ namespace metascene::importers::pbrt {
 
 	void import_world(scene_context& context)
 	{
+		// push the world state
+		context.push_config();
+		
 		context.loop_world_token([&]()
 			{
 				const auto token = context.peek_one_token();
@@ -124,7 +127,7 @@ namespace metascene::importers::pbrt {
 				// when we read a reverse orientation token in world begin
 				// not in attribution, it change the global state
 				if (token == PBRT_REVERSE_ORIENTATION_TOKEN) 
-					context.reverse_orientation ^= true;
+					context.state.reverse_orientation ^= true;
 
 				if (token == PBRT_MAKE_NAMED_MATERIAL_TOKEN)
 					import_named_material(context);
@@ -132,6 +135,8 @@ namespace metascene::importers::pbrt {
 				if (token == PBRT_MAKE_TEXTURE_TOKEN)
 					import_texture(context);
 			});
+
+		context.pop_config();
 	}
 
 	void import_scene(scene_context& context)

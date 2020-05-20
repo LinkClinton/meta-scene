@@ -6,7 +6,7 @@
 
 namespace metascene::importers::pbrt {
 
-	void import_shape(scene_context& context, std::shared_ptr<shape>& shape);
+	void import_shape(scene_context& context);
 	
 }
 

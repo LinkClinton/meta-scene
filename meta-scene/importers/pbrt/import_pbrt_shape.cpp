@@ -79,14 +79,24 @@ namespace metascene::importers::pbrt {
 		shape = instance;
 	}
 	
-	void import_shape(scene_context& context, std::shared_ptr<shape>& shape)
+	void import_shape(scene_context& context)
 	{
 		const auto type = remove_special_character(context.peek_one_token());
 
-		if (type == "loopsubdiv") import_triangle_mesh(context, shape);
-		if (type == "trianglemesh") import_triangle_mesh(context, shape);
-		if (type == "plymesh") import_ply_mesh(context, shape);
-		if (type == "sphere") import_sphere(context, shape);
+		const auto entity = std::make_shared<metascene::entity>();
+		
+		if (type == "loopsubdiv") import_triangle_mesh(context, entity->shape);
+		if (type == "trianglemesh") import_triangle_mesh(context, entity->shape);
+		if (type == "plymesh") import_ply_mesh(context, entity->shape);
+		if (type == "sphere") import_sphere(context, entity->shape);
+
+		// build the shape we current state of context
+		entity->shape->reverse_orientation = context.state.reverse_orientation;
+		entity->transform = context.current().transform;
+		entity->material = context.current().material;
+		entity->emitter = context.current().emitter;
+
+		context.scene->entities.push_back(entity);
 	}
 }
 

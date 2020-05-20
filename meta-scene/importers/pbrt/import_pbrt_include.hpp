@@ -46,6 +46,26 @@ namespace metascene::importers::pbrt {
 	const std::string PBRT_SHAPE_TOKEN = "Shape";
 	const std::string PBRT_FILM_TOKEN = "Film";
 
+	struct render_config {
+		std::shared_ptr<material> material;
+		std::shared_ptr<emitter> emitter;
+		
+		matrix4x4 transform = matrix4x4(1);
+		
+		render_config() = default;
+	};
+	
+	struct scene_state {
+		std::unordered_map<std::string, std::shared_ptr<material>> materials;
+		std::unordered_map<std::string, std::shared_ptr<texture>> textures;
+
+		std::stack<render_config> render_config_stack;
+
+		bool reverse_orientation = false;
+		
+		scene_state() = default;
+	};
+	
 	struct scene_context {
 		std::shared_ptr<scene> scene;
 		
@@ -53,16 +73,21 @@ namespace metascene::importers::pbrt {
 
 		std::string directory_path;
 
-		// begin global state of scene
-
-		std::unordered_map<std::string, std::shared_ptr<material>> materials;
-		std::unordered_map<std::string, std::shared_ptr<texture>> textures;
-		
-		bool reverse_orientation = false;
-
-		// end global state of scene
+		scene_state state;
 		
 		scene_context() = default;
+
+		// begin scene state method
+
+		void push_config();
+
+		render_config& current();
+
+		void pop_config();
+		
+		// end scene state method
+
+		// begin token read method
 		
 		std::string peek_one_token();
 
@@ -77,6 +102,8 @@ namespace metascene::importers::pbrt {
 		
 		real peek_real();
 
+		// end token read method
+		
 		void loop_important_token(const std::function<void()>& function) const;
 
 		void loop_attribute_token(const std::function<void()>& function) const;

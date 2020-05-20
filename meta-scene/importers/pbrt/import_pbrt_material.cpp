@@ -173,13 +173,13 @@ namespace metascene::importers::pbrt {
 			if (type == PBRT_TEXTURE_TOKEN) {
 				const auto value = read_string_from_token(property.second);
 
-				if (name == "Ks") instance->specular = context.textures[value];
-				if (name == "Kd") instance->diffuse = context.textures[value];
+				if (name == "Ks") instance->specular = context.state.textures[value];
+				if (name == "Kd") instance->diffuse = context.state.textures[value];
 
-				if (name == "Kt") instance->transmission = context.textures[value];
-				if (name == "Kr") instance->reflectance = context.textures[value];
+				if (name == "Kt") instance->transmission = context.state.textures[value];
+				if (name == "Kr") instance->reflectance = context.state.textures[value];
 
-				if (name == "opacity") instance->opacity = context.textures[value];
+				if (name == "opacity") instance->opacity = context.state.textures[value];
 			}
 
 			if (type == PBRT_RGB_TOKEN) {
@@ -246,14 +246,14 @@ namespace metascene::importers::pbrt {
 		properties[type_and_name(PBRT_STRING_TOKEN, "type")] =
 			read_string_from_token(properties[type_and_name(PBRT_STRING_TOKEN, "type")]);
 		
-		import_material_from_property_group(context, properties, context.materials[name]);
+		import_material_from_property_group(context, properties, context.state.materials[name]);
 	}
 
 	void import_named_material(scene_context& context, std::shared_ptr<material>& material)
 	{
 		const auto name = read_string_from_token(context.peek_one_token());
 
-		material = context.materials[name];
+		material = context.state.materials[name];
 	}
 }
 

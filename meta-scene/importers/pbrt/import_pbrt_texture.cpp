@@ -73,7 +73,7 @@ namespace metascene::importers::pbrt {
 				if (type == PBRT_TEXTURE_TOKEN) {
 					const auto value = read_string_from_token(context.peek_one_token());
 
-					if (name == "tex1") instance->base = context.textures[value];
+					if (name == "tex1") instance->base = context.state.textures[value];
 				}
 
 				if (type == PBRT_RGB_TOKEN) {
@@ -96,8 +96,8 @@ namespace metascene::importers::pbrt {
 		const auto color = remove_special_character(context.peek_one_token());
 		const auto type = remove_special_character(context.peek_one_token());
 
-		if (type == "imagemap") import_image_map_texture(context, context.textures[name]);
-		if (type == "scale") import_scale_texture(context, context.textures[name]);
+		if (type == "imagemap") import_image_map_texture(context, context.state.textures[name]);
+		if (type == "scale") import_scale_texture(context, context.state.textures[name]);
 	}
 
 }

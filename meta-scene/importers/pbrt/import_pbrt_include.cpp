@@ -30,6 +30,22 @@ namespace metascene::importers::pbrt {
 		META_SCENE_PBRT_ERROR_TOKEN;
 	}
 
+	void scene_context::push_config()
+	{
+		if (state.render_config_stack.empty()) state.render_config_stack.push(render_config());
+		else state.render_config_stack.push(state.render_config_stack.top());
+	}
+
+	render_config& scene_context::current()
+	{
+		return state.render_config_stack.top();
+	}
+
+	void scene_context::pop_config()
+	{
+		state.render_config_stack.pop();
+	}
+
 	std::string scene_context::peek_one_token()
 	{
 		const auto token = token_stack.top(); token_stack.pop();
