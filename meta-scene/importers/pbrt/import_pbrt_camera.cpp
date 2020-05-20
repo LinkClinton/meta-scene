@@ -54,6 +54,8 @@ namespace metascene::importers::pbrt {
 	{
 		camera = std::make_shared<perspective_camera>();
 
+		std::static_pointer_cast<perspective_camera>(camera)->system = coordinate_system::left_hand;
+		
 		context.loop_important_token([&]()
 			{
 				auto [type, name] = context.peek_type_and_name();

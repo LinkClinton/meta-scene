@@ -1,6 +1,7 @@
 #include "import_pbrt_shape.hpp"
 
 #include "../../shapes/triangles.hpp"
+#include "../../shapes/sphere.hpp"
 #include "../../shapes/mesh.hpp"
 
 #ifdef __PBRT_IMPORTER__
@@ -57,6 +58,26 @@ namespace metascene::importers::pbrt {
 
 		shape = instance;
 	}
+
+	void import_sphere(scene_context& context, std::shared_ptr<shape>& shape)
+	{
+		auto instance = std::make_shared<sphere>();
+
+		instance->radius = static_cast<real>(1);
+
+		context.loop_important_token([&]()
+			{
+				auto [type, name] = context.peek_type_and_name();
+
+				if (type == PBRT_FLOAT_TOKEN) {
+					const auto value = string_to_real(remove_special_character(context.peek_one_token()));
+
+					if (name == "radius") instance->radius = value;
+				}
+			});
+
+		shape = instance;
+	}
 	
 	void import_shape(scene_context& context, std::shared_ptr<shape>& shape)
 	{
@@ -65,6 +86,7 @@ namespace metascene::importers::pbrt {
 		if (type == "loopsubdiv") import_triangle_mesh(context, shape);
 		if (type == "trianglemesh") import_triangle_mesh(context, shape);
 		if (type == "plymesh") import_ply_mesh(context, shape);
+		if (type == "sphere") import_sphere(context, shape);
 	}
 }
 

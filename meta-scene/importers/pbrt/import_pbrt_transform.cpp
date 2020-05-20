@@ -10,7 +10,7 @@ namespace metascene::importers::pbrt {
 		const auto target = context.peek_vector3();
 		const auto up = context.peek_vector3();
 
-		transform *= inverse(look_at<real>(origin, target, up));
+		transform *= look_at_left_hand<real>(origin, target, up);
 	}
 
 	void import_translate(scene_context& context, matrix4x4& transform)

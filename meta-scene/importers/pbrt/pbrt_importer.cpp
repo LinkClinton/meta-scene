@@ -138,7 +138,7 @@ namespace metascene::importers::pbrt {
 	{
 		context.scene = std::make_shared<scene>();
 
-		matrix4x4 camera_transform = matrix4x4(1);
+		auto invert_transform = matrix4x4(1);
 		
 		while (!context.token_stack.empty()) {
 			const auto token = context.peek_one_token();
@@ -149,16 +149,16 @@ namespace metascene::importers::pbrt {
 
 			if (token == PBRT_INTEGRATOR_TOKEN) import_integrator(context, context.scene->integrator);
 
-			if (token == PBRT_LOOK_AT_TOKEN) import_look_at(context, camera_transform);
+			if (token == PBRT_LOOK_AT_TOKEN) import_look_at(context, invert_transform);
 
-			if (token == PBRT_SCALE_TOKEN) import_scale(context, camera_transform);
+			if (token == PBRT_SCALE_TOKEN) import_scale(context, invert_transform);
 			
 			if (token == PBRT_CAMERA_TOKEN) import_camera(context, context.scene->camera);
 
 			if (token == PBRT_WORLD_BEGIN_TOKEN) import_world(context);
 		}
 
-		context.scene->camera->transform = camera_transform;
+		context.scene->camera->transform = inverse(invert_transform);
 	}
 	
 	std::shared_ptr<scene> import_pbrt_scene(const std::string& filename)

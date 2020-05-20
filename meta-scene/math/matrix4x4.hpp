@@ -14,9 +14,15 @@ namespace metascene {
 		using matrix4x4 = matrix4x4_t<real>;
 
 		template <typename T>
-		matrix4x4_t<T> look_at(const vector3& origin, const vector3& target, const vector3& up)
+		matrix4x4_t<T> look_at_right_hand(const vector3& origin, const vector3& target, const vector3& up)
 		{
 			return glm::lookAtRH(origin, target, up);
+		}
+
+		template <typename T>
+		matrix4x4_t<T> look_at_left_hand(const vector3& origin, const vector3& target, const vector3& up)
+		{
+			return glm::lookAtLH(origin, target, up);
 		}
 
 		template <typename T>

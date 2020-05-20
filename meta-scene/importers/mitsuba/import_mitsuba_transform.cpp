@@ -15,7 +15,7 @@ namespace metascene::importers::mitsuba {
 		const auto target = string_to_vector3(element->Attribute("target"));
 		const auto up = string_to_vector3(element->Attribute("up"));
 
-		transform *= inverse(look_at<real>(origin, target, up));
+		transform *= inverse(look_at_right_hand<real>(origin, target, up));
 	}
 
 	void import_translate(const tinyxml2::XMLNode* node, matrix4x4& transform)

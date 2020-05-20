@@ -65,6 +65,8 @@ namespace metascene::importers::mitsuba {
 		if (element->Attribute("type") != std::string("perspective")) return;
 
 		auto camera = cache->scene->camera = std::make_shared<perspective_camera>();
+
+		std::static_pointer_cast<perspective_camera>(camera)->system = coordinate_system::right_hand;
 		
 		loop_all_children(node, [&](const tinyxml2::XMLNode* current)
 			{
