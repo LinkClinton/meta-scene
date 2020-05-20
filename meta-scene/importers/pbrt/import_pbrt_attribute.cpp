@@ -32,7 +32,7 @@ namespace metascene::importers::pbrt {
 
 				if (important_token == PBRT_MATERIAL_TOKEN) import_material(context, context.current().material);
 
-				if (important_token == PBRT_SHAPE_TOKEN) import_shape(context);
+				if (important_token == PBRT_SHAPE_TOKEN) import_shape_to_scene(context);
 
 				if (important_token == PBRT_NAMED_MATERIAL_TOKEN) import_named_material(context, context.current().material);
 			});

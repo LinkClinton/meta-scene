@@ -78,13 +78,13 @@ namespace metascene::importers::pbrt {
 
 		shape = instance;
 	}
-	
-	void import_shape(scene_context& context)
+
+	void import_shape(scene_context& context, std::shared_ptr<entity>& entity)
 	{
 		const auto type = remove_special_character(context.peek_one_token());
 
-		const auto entity = std::make_shared<metascene::entity>();
-		
+		entity = std::make_shared<metascene::entity>();
+
 		if (type == "loopsubdiv") import_triangle_mesh(context, entity->shape);
 		if (type == "trianglemesh") import_triangle_mesh(context, entity->shape);
 		if (type == "plymesh") import_ply_mesh(context, entity->shape);
@@ -95,8 +95,60 @@ namespace metascene::importers::pbrt {
 		entity->transform = context.current().transform;
 		entity->material = context.current().material;
 		entity->emitter = context.current().emitter;
+	}
+
+	void import_objects_to_scene(scene_context& context)
+	{
+		const auto name = read_string_from_token(context.peek_one_token());
+
+		const auto objects = context.state.objects[name];
+
+		for (const auto& object : objects->entities) {
+			auto entity = std::make_shared<metascene::entity>();
+
+			entity->material = object->material;
+			entity->emitter = object->emitter;
+			entity->shape = object->shape;
+
+			entity->transform = context.current().transform * object->transform;
+
+			context.scene->entities.push_back(entity);
+		}
+	}
+
+	void import_shape_to_scene(scene_context& context)
+	{
+		std::shared_ptr<entity> entity;
+
+		import_shape(context, entity);
 
 		context.scene->entities.push_back(entity);
+	}
+
+	void import_objects(scene_context& context)
+	{
+		context.push_config();
+		
+		const auto name = remove_special_character(context.peek_one_token());
+		const auto objects = std::make_shared<pbrt::objects>();
+		
+		context.loop_objects_token([&]()
+			{
+				const auto important_token = context.peek_one_token();
+
+				if (important_token == PBRT_SHAPE_TOKEN) {
+					std::shared_ptr<entity> entity;
+
+					import_shape(context, entity);
+
+					objects->entities.push_back(entity);
+				}
+			});
+
+		context.state.objects.insert({ name, objects });
+		
+		context.peek_one_token();
+		context.pop_config();
 	}
 }
 

@@ -1,5 +1,7 @@
 #include "import_pbrt_include.hpp"
 
+#include "../../materials/diffuse_material.hpp"
+
 #ifdef __PBRT_IMPORTER__
 
 namespace metascene::importers::pbrt {
@@ -28,6 +30,16 @@ namespace metascene::importers::pbrt {
 		if (count == 2 || count == 0) return false;
 
 		META_SCENE_PBRT_ERROR_TOKEN;
+	}
+
+	render_config::render_config() 
+	{
+		auto instance = std::make_shared<diffuse_material>();
+
+		instance->reflectance = std::make_shared<constant_texture>(std::make_shared<color_spectrum>(static_cast<real>(0.5)));
+		instance->sigma = std::make_shared<constant_texture>(static_cast<real>(0));
+
+		material = instance;
 	}
 
 	void scene_context::push_config()
@@ -99,6 +111,18 @@ namespace metascene::importers::pbrt {
 			function();
 	}
 
+	void scene_context::loop_transform_token(const std::function<void()>& function) const
+	{
+		while (token_stack.top() != PBRT_TRANSFORM_END_TOKEN)
+			function();
+	}
+
+	void scene_context::loop_objects_token(const std::function<void()>& function) const
+	{
+		while (token_stack.top() != PBRT_OBJECT_END_TOKEN)
+			function();
+	}
+
 	void scene_context::loop_world_token(const std::function<void()>& function) const
 	{
 		while (token_stack.top() != PBRT_WORLD_END_TOKEN) 
@@ -111,13 +135,19 @@ namespace metascene::importers::pbrt {
 			token == PBRT_REVERSE_ORIENTATION_TOKEN ||
 			token == PBRT_MAKE_NAMED_MATERIAL_TOKEN ||
 			token == PBRT_AREA_LIGHT_SOURCE_TOKEN ||
+			token == PBRT_OBJECT_INSTANCE_TOKEN ||
 			token == PBRT_ATTRIBUTE_BEGIN_TOKEN ||
+			token == PBRT_TRANSFORM_BEGIN_TOKEN ||
 			token == PBRT_NAMED_MATERIAL_TOKEN ||
 			token == PBRT_ATTRIBUTE_END_TOKEN ||
+			token == PBRT_TRANSFORM_END_TOKEN ||
 			token == PBRT_LIGHT_SOURCE_TOKEN ||
+			token == PBRT_OBJECT_BEGIN_TOKEN ||
 			token == PBRT_MAKE_TEXTURE_TOKEN ||
 			token == PBRT_WORLD_BEGIN_TOKEN ||
 			token == PBRT_INTEGRATOR_TOKEN ||
+			token == PBRT_OBJECT_END_TOKEN ||
+			token == PBRT_TRANSFORM_TOKEN ||
 			token == PBRT_TRANSLATE_TOKEN ||
 			token == PBRT_WORLD_END_TOKEN ||
 			token == PBRT_MATERIAL_TOKEN ||

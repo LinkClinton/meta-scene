@@ -4,6 +4,7 @@
 
 #include "../../materials/diffuse_material.hpp"
 #include "../../materials/plastic_material.hpp"
+#include "../../materials/mirror_material.hpp"
 #include "../../materials/glass_material.hpp"
 #include "../../materials/metal_material.hpp"
 #include "../../materials/uber_material.hpp"
@@ -32,6 +33,13 @@ namespace metascene::importers::pbrt {
 				if (name == "Ks") import_color_spectrum_texture(value, instance->specular);
 			}
 
+			if (type == PBRT_RGB_TOKEN) {
+				const auto value = property.second;
+
+				if (name == "Kd") import_color_spectrum_texture(value, instance->diffuse);
+				if (name == "Ks") import_color_spectrum_texture(value, instance->specular);
+			}
+			
 			if (type == PBRT_FLOAT_TOKEN) {
 				const auto value = remove_special_character(property.second);
 
@@ -52,6 +60,7 @@ namespace metascene::importers::pbrt {
 		instance->roughness_u = std::make_shared<constant_texture>(static_cast<real>(0));
 		instance->roughness_v = std::make_shared<constant_texture>(static_cast<real>(0));
 		instance->eta = std::make_shared<constant_texture>(static_cast<real>(1.5));
+		instance->remapped_roughness_to_alpha = true;
 		
 		for (const auto& property : properties)
 		{
@@ -84,6 +93,7 @@ namespace metascene::importers::pbrt {
 		instance->k = std::make_shared<constant_texture>(std::make_shared<color_spectrum>(static_cast<real>(0)));
 		instance->roughness_u = std::make_shared<constant_texture>(static_cast<real>(0.01));
 		instance->roughness_v = std::make_shared<constant_texture>(static_cast<real>(0.01));
+		instance->remapped_roughness_to_alpha = true;
 		
 		for (const auto& property : properties)
 		{
@@ -158,6 +168,8 @@ namespace metascene::importers::pbrt {
 		instance->roughness_v = std::make_shared<constant_texture>(static_cast<real>(0.1));
 		instance->eta = std::make_shared<constant_texture>(static_cast<real>(1.5));
 
+		instance->remapped_roughness_to_alpha = true;
+		
 		for (const auto& property : properties) {
 			auto [type, name] = property.first;
 
@@ -197,12 +209,32 @@ namespace metascene::importers::pbrt {
 		
 		material = instance;
 	}
+
+	void import_mirror_material(scene_context& context, const property_group& properties, std::shared_ptr<material>& material)
+	{
+		auto instance = std::make_shared<mirror_material>();
+
+		instance->reflectance = std::make_shared<constant_texture>(static_cast<real>(0.9));
+		
+		for (const auto& property : properties) {
+			auto [type, name] = property.first;
+
+			if (type == PBRT_RGB_TOKEN) {
+				const auto value = property.second;
+
+				if (name == "Kr") import_color_spectrum_texture(value, instance->reflectance);
+			}
+		}
+
+		material = instance;
+	}
 	
 	void import_material_from_property_group(scene_context& context, const property_group& properties, std::shared_ptr<material>& material)
 	{
 		const auto type = properties.find(type_and_name(PBRT_STRING_TOKEN, "type"))->second;
 
 		if (type == "plastic") import_plastic_material(context, properties, material);
+		if (type == "mirror") import_mirror_material(context, properties, material);
 		if (type == "glass") import_glass_material(context, properties, material);
 		if (type == "metal") import_metal_material(context, properties, material);
 		if (type == "matte") import_matte_material(context, properties, material);

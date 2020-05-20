@@ -1,5 +1,6 @@
 #include "pbrt_importer.hpp"
 
+#include "import_pbrt_light_source.hpp"
 #include "import_pbrt_integrator.hpp"
 #include "import_pbrt_attribute.hpp"
 #include "import_pbrt_transform.hpp"
@@ -7,6 +8,7 @@
 #include "import_pbrt_texture.hpp"
 #include "import_pbrt_include.hpp"
 #include "import_pbrt_camera.hpp"
+#include "import_pbrt_shape.hpp"
 
 #ifdef __PBRT_IMPORTER__
 
@@ -134,6 +136,18 @@ namespace metascene::importers::pbrt {
 
 				if (token == PBRT_MAKE_TEXTURE_TOKEN)
 					import_texture(context);
+
+				if (token == PBRT_OBJECT_BEGIN_TOKEN)
+					import_objects(context);
+
+				if (token == PBRT_TRANSFORM_BEGIN_TOKEN)
+					import_transform(context);
+
+				if (token == PBRT_LIGHT_SOURCE_TOKEN) import_light_source(context);
+			
+				if (token == PBRT_AREA_LIGHT_SOURCE_TOKEN) import_area_light_source(context, context.current().emitter);
+
+				if (token == PBRT_MATERIAL_TOKEN) import_material(context, context.current().material);
 			});
 
 		context.pop_config();

@@ -193,6 +193,7 @@
     <ClInclude Include="materials\glass_material.hpp" />
     <ClInclude Include="materials\material.hpp" />
     <ClInclude Include="materials\metal_material.hpp" />
+    <ClInclude Include="materials\mirror_material.hpp" />
     <ClInclude Include="materials\plastic_material.hpp" />
     <ClInclude Include="materials\uber_material.hpp" />
     <ClInclude Include="math\matrix4x4.hpp" />
@@ -252,6 +253,7 @@
     <ClCompile Include="materials\glass_material.cpp" />
     <ClCompile Include="materials\material.cpp" />
     <ClCompile Include="materials\metal_material.cpp" />
+    <ClCompile Include="materials\mirror_material.cpp" />
     <ClCompile Include="materials\plastic_material.cpp" />
     <ClCompile Include="materials\uber_material.cpp" />
     <ClCompile Include="samplers\random_sampler.cpp" />

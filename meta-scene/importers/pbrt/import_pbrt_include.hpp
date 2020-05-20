@@ -27,13 +27,19 @@ namespace metascene::importers::pbrt {
 	const std::string PBRT_REVERSE_ORIENTATION_TOKEN = "ReverseOrientation";
 	const std::string PBRT_MAKE_NAMED_MATERIAL_TOKEN = "MakeNamedMaterial";
 	const std::string PBRT_AREA_LIGHT_SOURCE_TOKEN = "AreaLightSource";
+	const std::string PBRT_OBJECT_INSTANCE_TOKEN = "ObjectInstance";
 	const std::string PBRT_ATTRIBUTE_BEGIN_TOKEN = "AttributeBegin";
+	const std::string PBRT_TRANSFORM_BEGIN_TOKEN = "TransformBegin";
 	const std::string PBRT_NAMED_MATERIAL_TOKEN = "NamedMaterial";
 	const std::string PBRT_ATTRIBUTE_END_TOKEN = "AttributeEnd";
+	const std::string PBRT_TRANSFORM_END_TOKEN = "TransformEnd";
 	const std::string PBRT_LIGHT_SOURCE_TOKEN = "LightSource";
+	const std::string PBRT_OBJECT_BEGIN_TOKEN = "ObjectBegin";
 	const std::string PBRT_MAKE_TEXTURE_TOKEN = "Texture";
 	const std::string PBRT_WORLD_BEGIN_TOKEN = "WorldBegin";
 	const std::string PBRT_INTEGRATOR_TOKEN = "Integrator";
+	const std::string PBRT_OBJECT_END_TOKEN = "ObjectEnd";
+	const std::string PBRT_TRANSFORM_TOKEN = "Transform";
 	const std::string PBRT_TRANSLATE_TOKEN = "Translate";
 	const std::string PBRT_WORLD_END_TOKEN = "WorldEnd";
 	const std::string PBRT_MATERIAL_TOKEN = "Material";
@@ -47,17 +53,24 @@ namespace metascene::importers::pbrt {
 	const std::string PBRT_FILM_TOKEN = "Film";
 
 	struct render_config {
-		std::shared_ptr<material> material;
-		std::shared_ptr<emitter> emitter;
+		std::shared_ptr<material> material = nullptr;
+		std::shared_ptr<emitter> emitter = nullptr;
 		
 		matrix4x4 transform = matrix4x4(1);
 		
-		render_config() = default;
+		render_config();
+	};
+
+	struct objects {
+		std::vector<std::shared_ptr<entity>> entities;
+
+		objects() = default;
 	};
 	
 	struct scene_state {
 		std::unordered_map<std::string, std::shared_ptr<material>> materials;
 		std::unordered_map<std::string, std::shared_ptr<texture>> textures;
+		std::unordered_map<std::string, std::shared_ptr<objects>> objects;
 
 		std::stack<render_config> render_config_stack;
 
@@ -107,6 +120,10 @@ namespace metascene::importers::pbrt {
 		void loop_important_token(const std::function<void()>& function) const;
 
 		void loop_attribute_token(const std::function<void()>& function) const;
+
+		void loop_transform_token(const std::function<void()>& function) const;
+		
+		void loop_objects_token(const std::function<void()>& function) const;
 		
 		void loop_world_token(const std::function<void()>& function) const;
 	};

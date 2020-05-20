@@ -1,5 +1,7 @@
 #include "import_pbrt_transform.hpp"
 
+#include "import_pbrt_shape.hpp"
+
 #ifdef __PBRT_IMPORTER__
 
 namespace metascene::importers::pbrt {
@@ -33,6 +35,38 @@ namespace metascene::importers::pbrt {
 		const auto vector3 = context.peek_vector3();
 
 		transform *= scale<real>(vector3);
+	}
+
+	void import_matrix(scene_context& context, matrix4x4& transform)
+	{
+		const auto data = remove_special_character(context.peek_one_token());
+
+		std::stringstream stream(data);
+
+		for (int x = 0; x < 4; x++) {
+			for (int y = 0; y < 4; y++) {
+				stream >> transform[x][y];
+			}
+		}
+	}
+
+	void import_transform(scene_context& context)
+	{
+		context.push_config();
+
+		context.loop_transform_token([&]()
+			{
+				const auto important_token = context.peek_one_token();
+
+				if (important_token == PBRT_SHAPE_TOKEN) import_shape_to_scene(context);
+
+				if (important_token == PBRT_TRANSFORM_TOKEN) import_matrix(context, context.current().transform);
+
+				if (important_token == PBRT_OBJECT_INSTANCE_TOKEN) import_objects_to_scene(context);
+			});
+		
+		context.peek_one_token();
+		context.pop_config();
 	}
 
 }

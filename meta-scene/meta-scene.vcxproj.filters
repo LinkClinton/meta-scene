@@ -213,6 +213,9 @@
     <ClInclude Include="materials\uber_material.hpp">
       <Filter>materials</Filter>
     </ClInclude>
+    <ClInclude Include="materials\mirror_material.hpp">
+      <Filter>materials</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">
@@ -368,6 +371,9 @@
       <Filter>textures</Filter>
     </ClCompile>
     <ClCompile Include="materials\uber_material.cpp">
+      <Filter>materials</Filter>
+    </ClCompile>
+    <ClCompile Include="materials\mirror_material.cpp">
       <Filter>materials</Filter>
     </ClCompile>
   </ItemGroup>
