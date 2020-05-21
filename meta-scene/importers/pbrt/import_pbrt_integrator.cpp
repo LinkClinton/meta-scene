@@ -8,7 +8,10 @@ namespace metascene::importers::pbrt {
 
 	void import_path_integrator(scene_context& context, std::shared_ptr<integrator>& integrator)
 	{
-		integrator = std::make_shared<path_integrator>();
+		auto instance = std::make_shared<path_integrator>();
+
+		instance->threshold = static_cast<real>(1);
+		instance->depth = 5;
 		
 		context.loop_important_token([&]()
 			{
@@ -17,13 +20,19 @@ namespace metascene::importers::pbrt {
 				if (type == PBRT_INTEGER_TOKEN) {
 					const auto value = context.peek_integer<size_t>();
 					
-					if (name == "maxdepth") integrator->depth = value;
+					if (name == "maxdepth") META_SCENE_FINISHED_AND_RETURN(instance->depth = value);
 				}
 
 				if (type == PBRT_FLOAT_TOKEN) {
 					const auto value = context.peek_real();
+
+					if (name == "rrthreshold") META_SCENE_FINISHED_AND_RETURN(instance->threshold = value);
 				}
+
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
+
+		integrator = instance;
 	}
 	
 	void import_integrator(scene_context& context, std::shared_ptr<integrator>& integrator)
@@ -31,6 +40,8 @@ namespace metascene::importers::pbrt {
 		const auto integrator_type = remove_special_character(context.peek_one_token());
 
 		if (integrator_type == "path") import_path_integrator(context, integrator);
+
+		META_SCENE_IMPORT_SUCCESS_CHECK(integrator);
 	}
 	
 }

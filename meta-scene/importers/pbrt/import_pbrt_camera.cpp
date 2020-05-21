@@ -21,14 +21,17 @@ namespace metascene::importers::pbrt {
 				if (type == PBRT_INTEGER_TOKEN) {
 					const auto value = context.peek_integer<size_t>();
 
-					if (name == "xresolution") film->width = value;
-					if (name == "yresolution") film->height = value;
+					if (name == "xresolution") META_SCENE_FINISHED_AND_RETURN(film->width = value);
+					if (name == "yresolution") META_SCENE_FINISHED_AND_RETURN(film->height = value);
 				}
 
 				// because we do not process the "string filename" so we just remove the value 
-				if (type == PBRT_STRING_TOKEN) context.peek_one_token();
+				if (type == PBRT_STRING_TOKEN) META_SCENE_FINISHED_AND_RETURN(context.peek_one_token());
 
-				if (type == PBRT_FLOAT_TOKEN) context.peek_real();
+				// scale property 
+				if (type == PBRT_FLOAT_TOKEN) META_SCENE_FINISHED_AND_RETURN(context.peek_real());
+
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 	}
 
@@ -47,14 +50,16 @@ namespace metascene::importers::pbrt {
 				if (type == PBRT_INTEGER_TOKEN) {
 					const auto value = context.peek_integer<size_t>();
 					
-					if (name == "pixelsamples") sampler->sample_per_pixel = value;
+					if (name == "pixelsamples") META_SCENE_FINISHED_AND_RETURN(sampler->sample_per_pixel = value);
 				}
+
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 	}
 
 	void import_perspective_camera(scene_context& context, std::shared_ptr<camera>& camera)
 	{
-		camera = std::make_shared<perspective_camera>();
+		auto instance = std::make_shared<perspective_camera>();
 
 		context.loop_important_token([&]()
 			{
@@ -63,9 +68,15 @@ namespace metascene::importers::pbrt {
 				if (type == PBRT_FLOAT_TOKEN) {
 					const auto value = context.peek_real();
 					
-					if (name == "fov") std::static_pointer_cast<perspective_camera>(camera)->fov = value;
+					if (name == "fov") META_SCENE_FINISHED_AND_RETURN(instance->fov = value);
+					if (name == "focaldistance") return;
+					if (name == "lensradius") return;
 				}
+
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
+		
+		camera = instance;
 	}
 
 	void import_camera(scene_context& context, std::shared_ptr<camera>& camera)
@@ -73,6 +84,8 @@ namespace metascene::importers::pbrt {
 		const auto type = remove_special_character(context.peek_one_token());
 
 		if (type == "perspective") import_perspective_camera(context, camera);
+
+		META_SCENE_IMPORT_SUCCESS_CHECK(camera);
 	}
 }
 

@@ -12,12 +12,19 @@
 #define META_SCENE_PBRT_NOT_SUPPORT throw "meta-scene pbrt not support."
 #define META_SCENE_PBRT_ERROR_TOKEN throw "meta-scene pbrt error token."
 #define META_SCENE_PBRT_SCALE_TEXTURE_SHOULD_CONSTANT throw "meta-scene pbrt error scale texture should be constant."
+#define META_SCENE_PBRT_UN_RESOLVE_TOKEN throw "meta-scene pbrt error un-resolve token."
+
+#define META_SCENE_FINISHED_AND_CONTINUE(task) { task; continue; }
+#define META_SCENE_FINISHED_AND_RETURN(task) { task; return; }
+
+#define META_SCENE_IMPORT_SUCCESS_CHECK(value) assert(value != nullptr)
 
 namespace metascene::importers::pbrt {
 
 	const std::string PBRT_SPECTRUM_TOKEN = "spectrum";
 	const std::string PBRT_TEXTURE_TOKEN = "texture";
 	const std::string PBRT_INTEGER_TOKEN = "integer";
+	const std::string PBRT_NORMAL_TOKEN = "normal";
 	const std::string PBRT_STRING_TOKEN = "string";
 	const std::string PBRT_FLOAT_TOKEN = "float";
 	const std::string PBRT_COLOR_TOKEN = "color";
@@ -151,6 +158,8 @@ namespace metascene::importers::pbrt {
 
 	void import_token_unsigned(const std::string& token, std::vector<unsigned>& data);
 
+	void import_reverse_orientation(scene_context& context);
+	
 	template <typename T>
 	T scene_context::peek_integer()
 	{

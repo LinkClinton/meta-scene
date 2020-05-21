@@ -19,22 +19,17 @@ namespace metascene::importers::pbrt {
 				if (type == PBRT_STRING_TOKEN) {
 					const auto value = read_string_from_token(context.peek_one_token());
 
-					if (name == "mapname") instance->environment_map = context.directory_path + value;
+					if (name == "mapname") META_SCENE_FINISHED_AND_RETURN(instance->environment_map = context.directory_path + value);
 				}
 
-				if (type == PBRT_COLOR_TOKEN) {
+				if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
 					const auto value = context.peek_one_token();
 					
-					if (name == "scale") import_color_spectrum(value, instance->intensity);
-					if (name == "L") import_color_spectrum(value, instance->intensity);
+					if (name == "scale") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum(value, instance->intensity));
+					if (name == "L") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum(value, instance->intensity));
 				}
 
-				if (type == PBRT_RGB_TOKEN) {
-					const auto value = context.peek_one_token();
-
-					if (name == "scale") import_color_spectrum(value, instance->intensity);
-					if (name == "L") import_color_spectrum(value, instance->intensity);
-				}
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 
 		emitter = instance;
@@ -51,8 +46,11 @@ namespace metascene::importers::pbrt {
 				if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
 					const auto value = context.peek_one_token();
 
-					if (name == "L") import_color_spectrum(value, instance->radiance);
+					if (name == "scale") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum(value, instance->radiance));
+					if (name == "L") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum(value, instance->radiance));
 				}
+
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 
 		emitter = instance;
@@ -70,6 +68,8 @@ namespace metascene::importers::pbrt {
 		entity->transform = context.current().transform;
 
 		context.scene->entities.push_back(entity);
+
+		META_SCENE_IMPORT_SUCCESS_CHECK(entity->emitter);
 	}
 
 	void import_area_light_source(scene_context& context, std::shared_ptr<emitter>& emitter)
@@ -77,6 +77,8 @@ namespace metascene::importers::pbrt {
 		const auto type = remove_special_character(context.peek_one_token());
 
 		if (type == "diffuse") import_area_light(context, emitter);
+
+		META_SCENE_IMPORT_SUCCESS_CHECK(emitter);
 	}
 }
 

@@ -4,6 +4,8 @@
 #include "../../shapes/sphere.hpp"
 #include "../../shapes/mesh.hpp"
 
+#include "import_pbrt_attribute.hpp"
+
 #ifdef __PBRT_IMPORTER__
 
 namespace metascene::importers::pbrt {
@@ -19,21 +21,30 @@ namespace metascene::importers::pbrt {
 				if (type == PBRT_POINT_TOKEN) {
 					const auto token = context.peek_one_token();
 
-					if (name == "P") import_token_vector3(token, instance->positions);
+					if (name == "P") META_SCENE_FINISHED_AND_RETURN(import_token_vector3(token, instance->positions));
 				}
 
 				if (type == PBRT_FLOAT_TOKEN) {
 					const auto token = context.peek_one_token();
 
-					if (name == "uv") import_token_vector2(token, instance->uvs);
-					if (name == "st") import_token_vector2(token, instance->uvs);
+					if (name == "uv") META_SCENE_FINISHED_AND_RETURN(import_token_vector2(token, instance->uvs));
+					if (name == "st") META_SCENE_FINISHED_AND_RETURN(import_token_vector2(token, instance->uvs));
 				}
 
 				if (type == PBRT_INTEGER_TOKEN) {
 					const auto token = context.peek_one_token();
 
-					if (name == "indices") import_token_unsigned(token, instance->indices);
+					if (name == "indices") META_SCENE_FINISHED_AND_RETURN(import_token_unsigned(token, instance->indices));
+					if (name == "nlevels") return;
 				}
+
+				if (type == PBRT_NORMAL_TOKEN) {
+					const auto token = context.peek_one_token();
+
+					if (name == "N") META_SCENE_FINISHED_AND_RETURN(import_token_vector3(token, instance->normals));
+				}
+			
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 
 		shape = instance;
@@ -52,8 +63,10 @@ namespace metascene::importers::pbrt {
 				if (type == PBRT_STRING_TOKEN) {
 					const auto value = read_string_from_token(context.peek_one_token());
 
-					if (name == "filename") instance->filename = context.directory_path + value;
+					if (name == "filename") META_SCENE_FINISHED_AND_RETURN(instance->filename = context.directory_path + value);
 				}
+
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 
 		shape = instance;
@@ -72,8 +85,10 @@ namespace metascene::importers::pbrt {
 				if (type == PBRT_FLOAT_TOKEN) {
 					const auto value = string_to_real(remove_special_character(context.peek_one_token()));
 
-					if (name == "radius") instance->radius = value;
+					if (name == "radius") META_SCENE_FINISHED_AND_RETURN(instance->radius = value);
 				}
+
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 
 		shape = instance;
@@ -95,6 +110,8 @@ namespace metascene::importers::pbrt {
 		entity->transform = context.current().transform;
 		entity->material = context.current().material;
 		entity->emitter = context.current().emitter;
+
+		META_SCENE_IMPORT_SUCCESS_CHECK(entity->shape);
 	}
 
 	void import_objects_to_scene(scene_context& context)
@@ -123,6 +140,17 @@ namespace metascene::importers::pbrt {
 		import_shape(context, entity);
 
 		context.scene->entities.push_back(entity);
+
+		META_SCENE_IMPORT_SUCCESS_CHECK(entity->shape);
+	}
+
+	void import_object(scene_context& context, const std::shared_ptr<objects>& objects)
+	{
+		std::shared_ptr<entity> entity;
+
+		import_shape(context, entity);
+
+		objects->entities.push_back(entity);
 	}
 
 	void import_objects(scene_context& context)
@@ -136,13 +164,11 @@ namespace metascene::importers::pbrt {
 			{
 				const auto important_token = context.peek_one_token();
 
-				if (important_token == PBRT_SHAPE_TOKEN) {
-					std::shared_ptr<entity> entity;
+				if (important_token == PBRT_SHAPE_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_object(context, objects));
 
-					import_shape(context, entity);
-
-					objects->entities.push_back(entity);
-				}
+				//if (important_token == PBRT_ATTRIBUTE_BEGIN_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_attribute(context));
+			
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 
 		context.state.objects.insert({ name, objects });

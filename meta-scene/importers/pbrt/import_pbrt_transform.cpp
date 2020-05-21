@@ -67,11 +67,13 @@ namespace metascene::importers::pbrt {
 			{
 				const auto important_token = context.peek_one_token();
 
-				if (important_token == PBRT_SHAPE_TOKEN) import_shape_to_scene(context);
+				if (important_token == PBRT_SHAPE_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_shape_to_scene(context));
 
-				if (important_token == PBRT_TRANSFORM_TOKEN) import_matrix(context, context.current().transform);
+				if (important_token == PBRT_TRANSFORM_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_matrix(context, context.current().transform));
 
-				if (important_token == PBRT_OBJECT_INSTANCE_TOKEN) import_objects_to_scene(context);
+				if (important_token == PBRT_OBJECT_INSTANCE_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_objects_to_scene(context));
+
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 		
 		context.peek_one_token();

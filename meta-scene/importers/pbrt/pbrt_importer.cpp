@@ -126,32 +126,38 @@ namespace metascene::importers::pbrt {
 				const auto token = context.peek_one_token();
 
 				if (token == PBRT_ATTRIBUTE_BEGIN_TOKEN) 
-					import_attribute(context);
+					META_SCENE_FINISHED_AND_RETURN(import_attribute(context));
 
 				// when we read a reverse orientation token in world begin
 				// not in attribution, it change the global state
-				if (token == PBRT_REVERSE_ORIENTATION_TOKEN) 
-					context.state.reverse_orientation ^= true;
+				if (token == PBRT_REVERSE_ORIENTATION_TOKEN)
+					META_SCENE_FINISHED_AND_RETURN(import_reverse_orientation(context));
 
 				if (token == PBRT_MAKE_NAMED_MATERIAL_TOKEN)
-					import_named_material(context);
+					META_SCENE_FINISHED_AND_RETURN(import_named_material(context));
 
 				if (token == PBRT_MAKE_TEXTURE_TOKEN)
-					import_texture(context);
+					META_SCENE_FINISHED_AND_RETURN(import_texture(context));
 
 				if (token == PBRT_OBJECT_BEGIN_TOKEN)
-					import_objects(context);
+					META_SCENE_FINISHED_AND_RETURN(import_objects(context));
 
 				if (token == PBRT_TRANSFORM_BEGIN_TOKEN)
-					import_transform(context);
+					META_SCENE_FINISHED_AND_RETURN(import_transform(context));
 
-				if (token == PBRT_LIGHT_SOURCE_TOKEN) import_light_source(context);
+				if (token == PBRT_LIGHT_SOURCE_TOKEN) 
+					META_SCENE_FINISHED_AND_RETURN(import_light_source(context));
 			
-				if (token == PBRT_AREA_LIGHT_SOURCE_TOKEN) import_area_light_source(context, context.current().emitter);
+				if (token == PBRT_AREA_LIGHT_SOURCE_TOKEN) 
+					META_SCENE_FINISHED_AND_RETURN(import_area_light_source(context, context.current().emitter));
 
-				if (token == PBRT_MATERIAL_TOKEN) import_material(context, context.current().material);
+				if (token == PBRT_MATERIAL_TOKEN) 
+					META_SCENE_FINISHED_AND_RETURN(import_material(context, context.current().material));
+
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 
+		context.peek_one_token();
 		context.pop_config();
 	}
 
@@ -168,23 +174,34 @@ namespace metascene::importers::pbrt {
 		while (!context.token_stack.empty()) {
 			const auto token = context.peek_one_token();
 
-			if (token == PBRT_FILM_TOKEN) import_film(context, context.scene->film);
+			if (token == PBRT_FILM_TOKEN) 
+				META_SCENE_FINISHED_AND_CONTINUE(import_film(context, context.scene->film));
 
-			if (token == PBRT_SAMPLER_TOKEN) import_sampler(context, context.scene->sampler);
+			if (token == PBRT_SAMPLER_TOKEN) 
+				META_SCENE_FINISHED_AND_CONTINUE(import_sampler(context, context.scene->sampler));
 
-			if (token == PBRT_INTEGRATOR_TOKEN) import_integrator(context, context.scene->integrator);
+			if (token == PBRT_INTEGRATOR_TOKEN) 
+				META_SCENE_FINISHED_AND_CONTINUE(import_integrator(context, context.scene->integrator));
 
-			if (token == PBRT_LOOK_AT_TOKEN) import_look_at(context, invert_transform);
+			if (token == PBRT_LOOK_AT_TOKEN) 
+				META_SCENE_FINISHED_AND_CONTINUE(import_look_at(context, invert_transform));
 
-			if (token == PBRT_SCALE_TOKEN) import_scale(context, invert_transform);
+			if (token == PBRT_SCALE_TOKEN) 
+				META_SCENE_FINISHED_AND_CONTINUE(import_scale(context, invert_transform));
 
-			if (token == PBRT_TRANSLATE_TOKEN) import_translate(context, invert_transform);
+			if (token == PBRT_TRANSLATE_TOKEN) 
+				META_SCENE_FINISHED_AND_CONTINUE(import_translate(context, invert_transform));
 			
-			if (token == PBRT_CONCAT_TRANSFORM_TOKEN) import_concat_matrix(context, invert_transform);
+			if (token == PBRT_CONCAT_TRANSFORM_TOKEN) 
+				META_SCENE_FINISHED_AND_CONTINUE(import_concat_matrix(context, invert_transform));
 			
-			if (token == PBRT_CAMERA_TOKEN) import_camera(context, context.scene->camera);
+			if (token == PBRT_CAMERA_TOKEN) 
+				META_SCENE_FINISHED_AND_CONTINUE(import_camera(context, context.scene->camera));
 
-			if (token == PBRT_WORLD_BEGIN_TOKEN) import_world(context);
+			if (token == PBRT_WORLD_BEGIN_TOKEN) 
+				META_SCENE_FINISHED_AND_CONTINUE(import_world(context));
+
+			META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 		}
 
 		context.scene->camera->transform = inverse(invert_transform);

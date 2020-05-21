@@ -9,7 +9,6 @@
 
 namespace metascene::importers::pbrt {
 
-
 	void import_attribute(scene_context& context)
 	{
 		context.push_config();
@@ -18,29 +17,46 @@ namespace metascene::importers::pbrt {
 			{
 				const auto important_token = context.peek_one_token();
 
-				if (important_token == PBRT_REVERSE_ORIENTATION_TOKEN) context.state.reverse_orientation ^= true;
+				if (important_token == PBRT_REVERSE_ORIENTATION_TOKEN) 
+					META_SCENE_FINISHED_AND_RETURN(import_reverse_orientation(context));
 			
-				if (important_token == PBRT_TRANSLATE_TOKEN) import_translate(context, context.current().transform);
+				if (important_token == PBRT_TRANSLATE_TOKEN) 
+					META_SCENE_FINISHED_AND_RETURN(import_translate(context, context.current().transform));
 			
-				if (important_token == PBRT_ROTATE_TOKEN) import_rotate(context, context.current().transform);
+				if (important_token == PBRT_ROTATE_TOKEN) 
+					META_SCENE_FINISHED_AND_RETURN(import_rotate(context, context.current().transform));
 
-				if (important_token == PBRT_SCALE_TOKEN) import_scale(context, context.current().transform);
+				if (important_token == PBRT_SCALE_TOKEN) 
+					META_SCENE_FINISHED_AND_RETURN(import_scale(context, context.current().transform));
 
-				if (important_token == PBRT_CONCAT_TRANSFORM_TOKEN) import_concat_matrix(context, context.current().transform);
+				if (important_token == PBRT_CONCAT_TRANSFORM_TOKEN) 
+					META_SCENE_FINISHED_AND_RETURN(import_concat_matrix(context, context.current().transform));
 			
-				if (important_token == PBRT_AREA_LIGHT_SOURCE_TOKEN) import_area_light_source(context, context.current().emitter);
+				if (important_token == PBRT_AREA_LIGHT_SOURCE_TOKEN) 
+					META_SCENE_FINISHED_AND_RETURN(import_area_light_source(context, context.current().emitter));
 
-				if (important_token == PBRT_LIGHT_SOURCE_TOKEN) import_light_source(context);
+				if (important_token == PBRT_LIGHT_SOURCE_TOKEN) 
+					META_SCENE_FINISHED_AND_RETURN(import_light_source(context));
 
-				if (important_token == PBRT_MATERIAL_TOKEN) import_material(context, context.current().material);
+				if (important_token == PBRT_MATERIAL_TOKEN) 
+					META_SCENE_FINISHED_AND_RETURN(import_material(context, context.current().material));
 
-				if (important_token == PBRT_SHAPE_TOKEN) import_shape_to_scene(context);
+				if (important_token == PBRT_SHAPE_TOKEN) 
+					META_SCENE_FINISHED_AND_RETURN(import_shape_to_scene(context));
 
-				if (important_token == PBRT_NAMED_MATERIAL_TOKEN) import_named_material(context, context.current().material);
+				if (important_token == PBRT_NAMED_MATERIAL_TOKEN) 
+					META_SCENE_FINISHED_AND_RETURN(import_named_material(context, context.current().material));
 
-				if (important_token == PBRT_ATTRIBUTE_BEGIN_TOKEN) import_attribute(context);
+				if (important_token == PBRT_ATTRIBUTE_BEGIN_TOKEN) 
+					META_SCENE_FINISHED_AND_RETURN(import_attribute(context));
 			
-				if (important_token == PBRT_OBJECT_BEGIN_TOKEN) import_objects(context);
+				if (important_token == PBRT_OBJECT_BEGIN_TOKEN) 
+					META_SCENE_FINISHED_AND_RETURN(import_objects(context));
+
+				if (important_token == PBRT_OBJECT_INSTANCE_TOKEN)
+					META_SCENE_FINISHED_AND_RETURN(import_objects_to_scene(context));
+			
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 
 		// the last token should be PBRT_ATTRIBUTE_END_TOKEN

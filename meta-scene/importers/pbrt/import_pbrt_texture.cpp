@@ -51,8 +51,17 @@ namespace metascene::importers::pbrt {
 				if (type == PBRT_STRING_TOKEN) {
 					const auto value = read_string_from_token(context.peek_one_token());
 
-					if (name == "filename") instance->filename = context.directory_path + value;
+					if (name == "filename") META_SCENE_FINISHED_AND_RETURN(instance->filename = context.directory_path + value);
 				}
+
+				if (type == PBRT_FLOAT_TOKEN) {
+					const auto value = context.peek_real();
+
+					if (name == "uscale") return;
+					if (name == "vscale") return;
+				}
+
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 
 		const auto extension = std::filesystem::path(instance->filename).extension().string();
@@ -73,18 +82,20 @@ namespace metascene::importers::pbrt {
 				if (type == PBRT_TEXTURE_TOKEN) {
 					const auto value = read_string_from_token(context.peek_one_token());
 
-					if (name == "tex1") instance->base = context.state.textures[value];
-					if (name == "tex2") instance->scale = context.state.textures[value];
+					if (name == "tex1") META_SCENE_FINISHED_AND_RETURN(instance->base = context.state.textures[value]);
+					if (name == "tex2") META_SCENE_FINISHED_AND_RETURN(instance->scale = context.state.textures[value]);
 				}
 
 				if (type == PBRT_RGB_TOKEN) {
 					const auto value = context.peek_one_token();
 
-					if (name == "tex1") import_color_spectrum_texture(value, instance->base);
-					if (name == "tex2") import_color_spectrum_texture(value, instance->scale);
+					if (name == "tex1") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum_texture(value, instance->base));
+					if (name == "tex2") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum_texture(value, instance->scale));
 				}
 
-				if (type == PBRT_FLOAT_TOKEN) context.peek_one_token();
+				if (type == PBRT_FLOAT_TOKEN) META_SCENE_FINISHED_AND_RETURN(context.peek_one_token());
+
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 
 		if (instance->scale->type != textures::type::constant)
@@ -104,11 +115,10 @@ namespace metascene::importers::pbrt {
 				if (type == PBRT_FLOAT_TOKEN) {
 					const auto value = context.peek_real();
 
-					if (name == "value") {
-						instance->value_type = value_type::real;
-						instance->real = value;
-					}
+					if (name == "value") META_SCENE_FINISHED_AND_RETURN({ instance->value_type = value_type::real; instance->real = value; });
 				}
+
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 
 		texture = instance;
@@ -123,6 +133,8 @@ namespace metascene::importers::pbrt {
 		if (type == "constant") import_constant_texture(context, context.state.textures[name]);
 		if (type == "imagemap") import_image_map_texture(context, context.state.textures[name]);
 		if (type == "scale") import_scale_texture(context, context.state.textures[name]);
+
+		META_SCENE_IMPORT_SUCCESS_CHECK(context.state.textures[name]);
 	}
 
 }
