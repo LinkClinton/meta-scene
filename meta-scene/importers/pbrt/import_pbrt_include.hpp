@@ -27,6 +27,7 @@ namespace metascene::importers::pbrt {
 	const std::string PBRT_REVERSE_ORIENTATION_TOKEN = "ReverseOrientation";
 	const std::string PBRT_MAKE_NAMED_MATERIAL_TOKEN = "MakeNamedMaterial";
 	const std::string PBRT_AREA_LIGHT_SOURCE_TOKEN = "AreaLightSource";
+	const std::string PBRT_CONCAT_TRANSFORM_TOKEN = "ConcatTransform";
 	const std::string PBRT_OBJECT_INSTANCE_TOKEN = "ObjectInstance";
 	const std::string PBRT_ATTRIBUTE_BEGIN_TOKEN = "AttributeBegin";
 	const std::string PBRT_TRANSFORM_BEGIN_TOKEN = "TransformBegin";

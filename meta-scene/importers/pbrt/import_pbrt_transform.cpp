@@ -50,6 +50,15 @@ namespace metascene::importers::pbrt {
 		}
 	}
 
+	void import_concat_matrix(scene_context& context, matrix4x4& transform)
+	{
+		auto matrix = matrix4x4(1);
+
+		import_matrix(context, matrix);
+		
+		transform *= matrix;
+	}
+
 	void import_transform(scene_context& context)
 	{
 		context.push_config();

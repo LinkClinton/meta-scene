@@ -25,6 +25,8 @@ namespace metascene::importers::pbrt {
 				if (important_token == PBRT_ROTATE_TOKEN) import_rotate(context, context.current().transform);
 
 				if (important_token == PBRT_SCALE_TOKEN) import_scale(context, context.current().transform);
+
+				if (important_token == PBRT_CONCAT_TRANSFORM_TOKEN) import_concat_matrix(context, context.current().transform);
 			
 				if (important_token == PBRT_AREA_LIGHT_SOURCE_TOKEN) import_area_light_source(context, context.current().emitter);
 
@@ -35,6 +37,10 @@ namespace metascene::importers::pbrt {
 				if (important_token == PBRT_SHAPE_TOKEN) import_shape_to_scene(context);
 
 				if (important_token == PBRT_NAMED_MATERIAL_TOKEN) import_named_material(context, context.current().material);
+
+				if (important_token == PBRT_ATTRIBUTE_BEGIN_TOKEN) import_attribute(context);
+			
+				if (important_token == PBRT_OBJECT_BEGIN_TOKEN) import_objects(context);
 			});
 
 		// the last token should be PBRT_ATTRIBUTE_END_TOKEN

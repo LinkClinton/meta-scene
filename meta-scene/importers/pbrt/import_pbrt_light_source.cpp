@@ -26,6 +26,14 @@ namespace metascene::importers::pbrt {
 					const auto value = context.peek_one_token();
 					
 					if (name == "scale") import_color_spectrum(value, instance->intensity);
+					if (name == "L") import_color_spectrum(value, instance->intensity);
+				}
+
+				if (type == PBRT_RGB_TOKEN) {
+					const auto value = context.peek_one_token();
+
+					if (name == "scale") import_color_spectrum(value, instance->intensity);
+					if (name == "L") import_color_spectrum(value, instance->intensity);
 				}
 			});
 

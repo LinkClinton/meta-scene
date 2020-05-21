@@ -135,6 +135,7 @@ namespace metascene::importers::pbrt {
 			token == PBRT_REVERSE_ORIENTATION_TOKEN ||
 			token == PBRT_MAKE_NAMED_MATERIAL_TOKEN ||
 			token == PBRT_AREA_LIGHT_SOURCE_TOKEN ||
+			token == PBRT_CONCAT_TRANSFORM_TOKEN ||
 			token == PBRT_OBJECT_INSTANCE_TOKEN ||
 			token == PBRT_ATTRIBUTE_BEGIN_TOKEN ||
 			token == PBRT_TRANSFORM_BEGIN_TOKEN ||

@@ -171,6 +171,10 @@ namespace metascene::importers::pbrt {
 			if (token == PBRT_LOOK_AT_TOKEN) import_look_at(context, invert_transform);
 
 			if (token == PBRT_SCALE_TOKEN) import_scale(context, invert_transform);
+
+			if (token == PBRT_TRANSLATE_TOKEN) import_translate(context, invert_transform);
+			
+			if (token == PBRT_CONCAT_TRANSFORM_TOKEN) import_concat_matrix(context, invert_transform);
 			
 			if (token == PBRT_CAMERA_TOKEN) import_camera(context, context.scene->camera);
 

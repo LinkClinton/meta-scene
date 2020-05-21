@@ -19,6 +19,10 @@ namespace metascene::importers::pbrt {
 					
 					if (name == "maxdepth") integrator->depth = value;
 				}
+
+				if (type == PBRT_FLOAT_TOKEN) {
+					const auto value = context.peek_real();
+				}
 			});
 	}
 	

@@ -15,6 +15,8 @@ namespace metascene::importers::pbrt {
 	void import_scale(scene_context& context, matrix4x4& transform);
 
 	void import_matrix(scene_context& context, matrix4x4& transform);
+
+	void import_concat_matrix(scene_context& context, matrix4x4& transform);
 	
 	void import_transform(scene_context& context);
 }

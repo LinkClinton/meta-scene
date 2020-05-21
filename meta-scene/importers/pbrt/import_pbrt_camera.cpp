@@ -27,6 +27,8 @@ namespace metascene::importers::pbrt {
 
 				// because we do not process the "string filename" so we just remove the value 
 				if (type == PBRT_STRING_TOKEN) context.peek_one_token();
+
+				if (type == PBRT_FLOAT_TOKEN) context.peek_real();
 			});
 	}
 
