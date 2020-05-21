@@ -39,6 +39,13 @@ namespace metascene::importers::pbrt {
 				if (name == "Kd") import_color_spectrum_texture(value, instance->diffuse);
 				if (name == "Ks") import_color_spectrum_texture(value, instance->specular);
 			}
+
+			if (type == PBRT_TEXTURE_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+
+				if (name == "Ks") instance->specular = context.state.textures[value];
+				if (name == "Kd") instance->diffuse = context.state.textures[value];
+			}
 			
 			if (type == PBRT_FLOAT_TOKEN) {
 				const auto value = remove_special_character(property.second);

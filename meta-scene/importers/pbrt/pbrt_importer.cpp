@@ -10,6 +10,8 @@
 #include "import_pbrt_camera.hpp"
 #include "import_pbrt_shape.hpp"
 
+#include "../../integrators/path_integrator.hpp"
+
 #ifdef __PBRT_IMPORTER__
 
 #include <filesystem>
@@ -157,6 +159,10 @@ namespace metascene::importers::pbrt {
 	{
 		context.scene = std::make_shared<scene>();
 
+		// initialize pbrt default value
+		context.scene->integrator = std::make_shared<path_integrator>();
+		context.scene->integrator->depth = 5;
+		
 		auto invert_transform = matrix4x4(1);
 		
 		while (!context.token_stack.empty()) {

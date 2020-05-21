@@ -74,6 +74,7 @@ namespace metascene::importers::pbrt {
 					const auto value = read_string_from_token(context.peek_one_token());
 
 					if (name == "tex1") instance->base = context.state.textures[value];
+					if (name == "tex2") instance->scale = context.state.textures[value];
 				}
 
 				if (type == PBRT_RGB_TOKEN) {
@@ -82,11 +83,34 @@ namespace metascene::importers::pbrt {
 					if (name == "tex1") import_color_spectrum_texture(value, instance->base);
 					if (name == "tex2") import_color_spectrum_texture(value, instance->scale);
 				}
+
+				if (type == PBRT_FLOAT_TOKEN) context.peek_one_token();
 			});
 
 		if (instance->scale->type != textures::type::constant)
 			META_SCENE_PBRT_SCALE_TEXTURE_SHOULD_CONSTANT;
 		
+		texture = instance;
+	}
+
+	void import_constant_texture(scene_context& context, std::shared_ptr<texture>& texture)
+	{
+		auto instance = std::make_shared<constant_texture>();
+
+		context.loop_important_token([&]()
+			{
+				auto [type, name] = context.peek_type_and_name();
+
+				if (type == PBRT_FLOAT_TOKEN) {
+					const auto value = context.peek_real();
+
+					if (name == "value") {
+						instance->value_type = value_type::real;
+						instance->real = value;
+					}
+				}
+			});
+
 		texture = instance;
 	}
 	
@@ -96,6 +120,7 @@ namespace metascene::importers::pbrt {
 		const auto color = remove_special_character(context.peek_one_token());
 		const auto type = remove_special_character(context.peek_one_token());
 
+		if (type == "constant") import_constant_texture(context, context.state.textures[name]);
 		if (type == "imagemap") import_image_map_texture(context, context.state.textures[name]);
 		if (type == "scale") import_scale_texture(context, context.state.textures[name]);
 	}

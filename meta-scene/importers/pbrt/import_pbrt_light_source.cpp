@@ -48,7 +48,7 @@ namespace metascene::importers::pbrt {
 			{
 				auto [type, name] = context.peek_type_and_name();
 
-				if (type == PBRT_COLOR_TOKEN) {
+				if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
 					const auto value = context.peek_one_token();
 
 					if (name == "L") import_color_spectrum(value, instance->radiance);
