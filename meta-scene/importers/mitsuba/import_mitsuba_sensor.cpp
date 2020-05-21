@@ -66,8 +66,6 @@ namespace metascene::importers::mitsuba {
 
 		auto camera = cache->scene->camera = std::make_shared<perspective_camera>();
 
-		std::static_pointer_cast<perspective_camera>(camera)->system = coordinate_system::right_hand;
-		
 		loop_all_children(node, [&](const tinyxml2::XMLNode* current)
 			{
 				// if we find the transform element, it should be the transform from camera to world

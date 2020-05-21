@@ -146,6 +146,13 @@ namespace metascene::importers::pbrt {
 
 				if (name == "sigma") import_real_texture(value, instance->sigma);
 			}
+
+			if (type == PBRT_TEXTURE_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+
+				if (name == "Kd") instance->reflectance = context.state.textures[value];
+				if (name == "sigma") instance->sigma = context.state.textures[value];
+			}
 		}
 
 		material = instance;
