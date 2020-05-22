@@ -2,6 +2,7 @@
 
 #include "../../cameras/perspective_camera.hpp"
 #include "../../samplers/random_sampler.hpp"
+#include "../../filters/gaussian_filter.hpp"
 
 #ifdef __PBRT_IMPORTER__
 
@@ -57,6 +58,30 @@ namespace metascene::importers::pbrt {
 			});
 	}
 
+	void import_gaussian_filter(scene_context& context, std::shared_ptr<filter>& filter)
+	{
+		const auto instance = std::make_shared<gaussian_filter>();
+
+		instance->radius_x = 2;
+		instance->radius_y = 2;
+		instance->alpha = 2;
+
+		context.loop_important_token([&]()
+			{
+			});
+		
+		filter = instance;
+	}
+	
+	void import_filter(scene_context& context, std::shared_ptr<filter>& filter)
+	{
+		const auto name = remove_special_character(context.peek_one_token());
+
+		if (name == "gaussian") import_gaussian_filter(context, filter);
+
+		META_SCENE_IMPORT_SUCCESS_CHECK(filter);
+	}
+
 	void import_perspective_camera(scene_context& context, std::shared_ptr<camera>& camera)
 	{
 		auto instance = std::make_shared<perspective_camera>();
@@ -83,9 +108,13 @@ namespace metascene::importers::pbrt {
 	{
 		const auto type = remove_special_character(context.peek_one_token());
 
-		if (type == "perspective") import_perspective_camera(context, camera);
+		std::shared_ptr<cameras::camera> instance;
+		
+		if (type == "perspective") import_perspective_camera(context, instance);
 
-		META_SCENE_IMPORT_SUCCESS_CHECK(camera);
+		META_SCENE_IMPORT_SUCCESS_CHECK(instance);
+
+		camera = instance;
 	}
 }
 

@@ -128,6 +128,9 @@ namespace metascene::importers::pbrt {
 				if (token == PBRT_ATTRIBUTE_BEGIN_TOKEN) 
 					META_SCENE_FINISHED_AND_RETURN(import_attribute(context));
 
+				if (token == PBRT_SHAPE_TOKEN)
+					META_SCENE_FINISHED_AND_RETURN(import_shape_to(context));
+			
 				// when we read a reverse orientation token in world begin
 				// not in attribution, it change the global state
 				if (token == PBRT_REVERSE_ORIENTATION_TOKEN)
@@ -168,6 +171,8 @@ namespace metascene::importers::pbrt {
 		// initialize pbrt default value
 		context.scene->integrator = std::make_shared<path_integrator>();
 		context.scene->integrator->depth = 5;
+
+		std::shared_ptr<filter> filter;
 		
 		auto invert_transform = matrix4x4(1);
 		
@@ -194,6 +199,9 @@ namespace metascene::importers::pbrt {
 			
 			if (token == PBRT_CONCAT_TRANSFORM_TOKEN) 
 				META_SCENE_FINISHED_AND_CONTINUE(import_concat_matrix(context, invert_transform));
+
+			if (token == PBRT_PIXEL_FILTER_TOKEN)
+				META_SCENE_FINISHED_AND_CONTINUE(import_filter(context, filter));
 			
 			if (token == PBRT_CAMERA_TOKEN) 
 				META_SCENE_FINISHED_AND_CONTINUE(import_camera(context, context.scene->camera));
@@ -205,6 +213,7 @@ namespace metascene::importers::pbrt {
 		}
 
 		context.scene->camera->transform = inverse(invert_transform);
+		context.scene->film->filter = filter;
 	}
 	
 	std::shared_ptr<scene> import_pbrt_scene(const std::string& filename)

@@ -41,6 +41,7 @@ namespace metascene::importers::pbrt {
 	const std::string PBRT_NAMED_MATERIAL_TOKEN = "NamedMaterial";
 	const std::string PBRT_ATTRIBUTE_END_TOKEN = "AttributeEnd";
 	const std::string PBRT_TRANSFORM_END_TOKEN = "TransformEnd";
+	const std::string PBRT_PIXEL_FILTER_TOKEN = "PixelFilter";
 	const std::string PBRT_LIGHT_SOURCE_TOKEN = "LightSource";
 	const std::string PBRT_OBJECT_BEGIN_TOKEN = "ObjectBegin";
 	const std::string PBRT_MAKE_TEXTURE_TOKEN = "Texture";

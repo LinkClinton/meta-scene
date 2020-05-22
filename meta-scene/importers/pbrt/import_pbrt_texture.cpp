@@ -130,11 +130,15 @@ namespace metascene::importers::pbrt {
 		const auto color = remove_special_character(context.peek_one_token());
 		const auto type = remove_special_character(context.peek_one_token());
 
-		if (type == "constant") import_constant_texture(context, context.state.textures[name]);
-		if (type == "imagemap") import_image_map_texture(context, context.state.textures[name]);
-		if (type == "scale") import_scale_texture(context, context.state.textures[name]);
+		std::shared_ptr<texture> instance = nullptr;
+		
+		if (type == "constant") import_constant_texture(context, instance);
+		if (type == "imagemap") import_image_map_texture(context, instance);
+		if (type == "scale") import_scale_texture(context, instance);
 
-		META_SCENE_IMPORT_SUCCESS_CHECK(context.state.textures[name]);
+		META_SCENE_IMPORT_SUCCESS_CHECK(instance);
+
+		context.state.textures[name] = instance;
 	}
 
 }

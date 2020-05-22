@@ -142,6 +142,7 @@ namespace metascene::importers::pbrt {
 			token == PBRT_NAMED_MATERIAL_TOKEN ||
 			token == PBRT_ATTRIBUTE_END_TOKEN ||
 			token == PBRT_TRANSFORM_END_TOKEN ||
+			token == PBRT_PIXEL_FILTER_TOKEN ||
 			token == PBRT_LIGHT_SOURCE_TOKEN ||
 			token == PBRT_OBJECT_BEGIN_TOKEN ||
 			token == PBRT_MAKE_TEXTURE_TOKEN ||

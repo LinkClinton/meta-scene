@@ -39,9 +39,13 @@ namespace metascene::importers::pbrt {
 	{
 		const auto integrator_type = remove_special_character(context.peek_one_token());
 
-		if (integrator_type == "path") import_path_integrator(context, integrator);
+		std::shared_ptr<integrators::integrator> instance = nullptr;
+		
+		if (integrator_type == "path") import_path_integrator(context, instance);
 
-		META_SCENE_IMPORT_SUCCESS_CHECK(integrator);
+		META_SCENE_IMPORT_SUCCESS_CHECK(instance);
+
+		integrator = instance;
 	}
 	
 }

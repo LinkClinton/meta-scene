@@ -76,9 +76,13 @@ namespace metascene::importers::pbrt {
 	{
 		const auto type = remove_special_character(context.peek_one_token());
 
-		if (type == "diffuse") import_area_light(context, emitter);
+		std::shared_ptr<emitters::emitter> instance = nullptr;
+		
+		if (type == "diffuse") import_area_light(context, instance);
 
-		META_SCENE_IMPORT_SUCCESS_CHECK(emitter);
+		META_SCENE_IMPORT_SUCCESS_CHECK(instance);
+
+		emitter = instance;
 	}
 }
 
