@@ -115,8 +115,15 @@ namespace metascene::importers::pbrt {
 			if (type == PBRT_FLOAT_TOKEN) {
 				const auto value = remove_special_character(property.second);
 
-				if (name == "uroughness" || name == "roughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->roughness_u));
-				if (name == "vroughness" || name == "roughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->roughness_v));
+				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->roughness_u));
+				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->roughness_v));
+
+				if (name == "roughness") {
+					import_real_texture(value, instance->roughness_u);
+					import_real_texture(value, instance->roughness_v);
+
+					continue;
+				}
 			}
 
 			if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
@@ -206,10 +213,17 @@ namespace metascene::importers::pbrt {
 			if (type == PBRT_FLOAT_TOKEN) {
 				const auto value = remove_special_character(property.second);
 
-				if (name == "uroughness" || name == "roughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->roughness_u));
-				if (name == "vroughness" || name == "roughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->roughness_v));
-
+				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->roughness_u));
+				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->roughness_v));
+				
 				if (name == "index") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->eta));
+
+				if (name == "roughness") {
+					import_real_texture(value, instance->roughness_u);
+					import_real_texture(value, instance->roughness_v);
+
+					continue;
+				}
 			}
 
 			if (type == PBRT_TEXTURE_TOKEN) {
