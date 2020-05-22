@@ -42,7 +42,7 @@ namespace metascene::importers::pbrt {
 					META_SCENE_FINISHED_AND_RETURN(import_material(context, context.current().material));
 
 				if (important_token == PBRT_SHAPE_TOKEN) 
-					META_SCENE_FINISHED_AND_RETURN(import_shape_to_scene(context));
+					META_SCENE_FINISHED_AND_RETURN(import_shape_to(context));
 
 				if (important_token == PBRT_NAMED_MATERIAL_TOKEN) 
 					META_SCENE_FINISHED_AND_RETURN(import_named_material(context, context.current().material));
@@ -54,7 +54,7 @@ namespace metascene::importers::pbrt {
 					META_SCENE_FINISHED_AND_RETURN(import_objects(context));
 
 				if (important_token == PBRT_OBJECT_INSTANCE_TOKEN)
-					META_SCENE_FINISHED_AND_RETURN(import_objects_to_scene(context));
+					META_SCENE_FINISHED_AND_RETURN(import_objects_to(context));
 			
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});

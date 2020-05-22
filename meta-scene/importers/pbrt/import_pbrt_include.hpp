@@ -60,21 +60,23 @@ namespace metascene::importers::pbrt {
 	const std::string PBRT_SHAPE_TOKEN = "Shape";
 	const std::string PBRT_FILM_TOKEN = "Film";
 
-	struct render_config {
-		std::shared_ptr<material> material = nullptr;
-		std::shared_ptr<emitter> emitter = nullptr;
-		
-		matrix4x4 transform = matrix4x4(1);
-		
-		render_config();
-	};
-
 	struct objects {
 		std::vector<std::shared_ptr<entity>> entities;
 
 		objects() = default;
 	};
 	
+	struct render_config {
+		std::shared_ptr<material> material = nullptr;
+		std::shared_ptr<emitter> emitter = nullptr;
+
+		std::shared_ptr<objects> objects = nullptr;
+		
+		matrix4x4 transform = matrix4x4(1);
+		
+		render_config();
+	};
+
 	struct scene_state {
 		std::unordered_map<std::string, std::shared_ptr<material>> materials;
 		std::unordered_map<std::string, std::shared_ptr<texture>> textures;

@@ -114,7 +114,21 @@ namespace metascene::importers::pbrt {
 		META_SCENE_IMPORT_SUCCESS_CHECK(entity->shape);
 	}
 
-	void import_objects_to_scene(scene_context& context)
+	void import_shape_to(scene_context& context)
+	{
+		std::shared_ptr<entity> entity;
+
+		import_shape(context, entity);
+
+		if (context.current().objects != nullptr)
+			context.current().objects->entities.push_back(entity);
+		else
+			context.scene->entities.push_back(entity);
+		
+		META_SCENE_IMPORT_SUCCESS_CHECK(entity->shape);
+	}
+
+	void import_objects_to(scene_context& context)
 	{
 		const auto name = read_string_from_token(context.peek_one_token());
 
@@ -129,44 +143,28 @@ namespace metascene::importers::pbrt {
 
 			entity->transform = context.current().transform * object->transform;
 
-			context.scene->entities.push_back(entity);
+			if (context.current().objects != nullptr)
+				context.current().objects->entities.push_back(entity);
+			else
+				context.scene->entities.push_back(entity);
 		}
-	}
-
-	void import_shape_to_scene(scene_context& context)
-	{
-		std::shared_ptr<entity> entity;
-
-		import_shape(context, entity);
-
-		context.scene->entities.push_back(entity);
-
-		META_SCENE_IMPORT_SUCCESS_CHECK(entity->shape);
-	}
-
-	void import_object(scene_context& context, const std::shared_ptr<objects>& objects)
-	{
-		std::shared_ptr<entity> entity;
-
-		import_shape(context, entity);
-
-		objects->entities.push_back(entity);
 	}
 
 	void import_objects(scene_context& context)
 	{
-		context.push_config();
-		
 		const auto name = remove_special_character(context.peek_one_token());
 		const auto objects = std::make_shared<pbrt::objects>();
+		
+		context.push_config();		
+		context.current().objects = objects;
 		
 		context.loop_objects_token([&]()
 			{
 				const auto important_token = context.peek_one_token();
 
-				if (important_token == PBRT_SHAPE_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_object(context, objects));
+				if (important_token == PBRT_SHAPE_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_shape_to(context));
 
-				//if (important_token == PBRT_ATTRIBUTE_BEGIN_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_attribute(context));
+				if (important_token == PBRT_ATTRIBUTE_BEGIN_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_attribute(context));
 			
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
