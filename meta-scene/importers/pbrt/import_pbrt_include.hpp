@@ -13,6 +13,7 @@
 #define META_SCENE_PBRT_ERROR_TOKEN throw "meta-scene pbrt error token."
 #define META_SCENE_PBRT_SCALE_TEXTURE_SHOULD_CONSTANT throw "meta-scene pbrt error scale texture should be constant."
 #define META_SCENE_PBRT_UN_RESOLVE_TOKEN throw "meta-scene pbrt error un-resolve token."
+#define META_SCENE_PBRT_NO_ELEMENT throw "meta-scene pbrt error no-element."
 
 #define META_SCENE_FINISHED_AND_CONTINUE(task) { task; continue; }
 #define META_SCENE_FINISHED_AND_RETURN(task) { task; return; }
@@ -87,6 +88,12 @@ namespace metascene::importers::pbrt {
 		std::stack<render_config> render_config_stack;
 
 		bool reverse_orientation = false;
+
+		std::shared_ptr<material> find_material(const std::string& name);
+
+		std::shared_ptr<texture> find_texture(const std::string& name);
+
+		std::shared_ptr<pbrt::objects> find_object(const std::string& name);
 		
 		scene_state() = default;
 	};

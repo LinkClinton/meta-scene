@@ -93,7 +93,11 @@ namespace metascene::importers::pbrt {
 					if (name == "tex2") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum_texture(value, instance->scale));
 				}
 
-				if (type == PBRT_FLOAT_TOKEN) META_SCENE_FINISHED_AND_RETURN(context.peek_one_token());
+				if (type == PBRT_FLOAT_TOKEN) {
+					const auto value = context.peek_real();
+
+					if (name == "tex2") META_SCENE_FINISHED_AND_RETURN(instance->scale = std::make_shared<constant_texture>(value));
+				}
 
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});

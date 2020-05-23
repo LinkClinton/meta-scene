@@ -132,7 +132,7 @@ namespace metascene::importers::pbrt {
 	{
 		const auto name = read_string_from_token(context.peek_one_token());
 
-		const auto objects = context.state.objects[name];
+		const auto objects = context.state.find_object(name);
 
 		for (const auto& object : objects->entities) {
 			auto entity = std::make_shared<metascene::entity>();

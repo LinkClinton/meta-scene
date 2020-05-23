@@ -42,6 +42,27 @@ namespace metascene::importers::pbrt {
 		material = instance;
 	}
 
+	std::shared_ptr<material> scene_state::find_material(const std::string& name)
+	{	
+		if (materials.find(name) != materials.end()) return materials.at(name);
+
+		META_SCENE_PBRT_NO_ELEMENT;
+	}
+
+	std::shared_ptr<texture> scene_state::find_texture(const std::string& name)
+	{
+		if (textures.find(name) != textures.end()) return textures.at(name);
+
+		META_SCENE_PBRT_NO_ELEMENT;
+	}
+
+	std::shared_ptr<objects> scene_state::find_object(const std::string& name)
+	{
+		if (objects.find(name) != objects.end()) return objects.at(name);
+
+		META_SCENE_PBRT_NO_ELEMENT;
+	}
+
 	void scene_context::push_config()
 	{
 		if (state.render_config_stack.empty()) state.render_config_stack.push(render_config());

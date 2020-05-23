@@ -37,8 +37,8 @@ namespace metascene::importers::pbrt {
 			if (type == PBRT_TEXTURE_TOKEN) {
 				const auto value = read_string_from_token(property.second);
 
-				if (name == "Ks") META_SCENE_FINISHED_AND_CONTINUE(instance->specular = context.state.textures[value]);
-				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(instance->diffuse = context.state.textures[value]);
+				if (name == "Ks") META_SCENE_FINISHED_AND_CONTINUE(instance->specular = context.state.find_texture(value));
+				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(instance->diffuse = context.state.find_texture(value));
 
 				// now we do not support it.
 				if (name == "bumpmap") continue;;
@@ -176,8 +176,8 @@ namespace metascene::importers::pbrt {
 			if (type == PBRT_TEXTURE_TOKEN) {
 				const auto value = read_string_from_token(property.second);
 
-				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(instance->reflectance = context.state.textures[value]);
-				if (name == "sigma") META_SCENE_FINISHED_AND_CONTINUE(instance->sigma = context.state.textures[value]);
+				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(instance->reflectance = context.state.find_texture(value));
+				if (name == "sigma") META_SCENE_FINISHED_AND_CONTINUE(instance->sigma = context.state.find_texture(value));
 			}
 
 			// material name
@@ -230,13 +230,24 @@ namespace metascene::importers::pbrt {
 			if (type == PBRT_TEXTURE_TOKEN) {
 				const auto value = read_string_from_token(property.second);
 
-				if (name == "Ks") META_SCENE_FINISHED_AND_CONTINUE(instance->specular = context.state.textures[value]);
-				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(instance->diffuse = context.state.textures[value]);
+				if (name == "Ks") META_SCENE_FINISHED_AND_CONTINUE(instance->specular = context.state.find_texture(value));
+				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(instance->diffuse = context.state.find_texture(value));
 
-				if (name == "Kt") META_SCENE_FINISHED_AND_CONTINUE(instance->transmission = context.state.textures[value]);
-				if (name == "Kr") META_SCENE_FINISHED_AND_CONTINUE(instance->reflectance = context.state.textures[value]);
+				if (name == "Kt") META_SCENE_FINISHED_AND_CONTINUE(instance->transmission = context.state.find_texture(value));
+				if (name == "Kr") META_SCENE_FINISHED_AND_CONTINUE(instance->reflectance = context.state.find_texture(value));
 
-				if (name == "opacity") META_SCENE_FINISHED_AND_CONTINUE(instance->opacity = context.state.textures[value]);
+				if (name == "opacity") META_SCENE_FINISHED_AND_CONTINUE(instance->opacity = context.state.find_texture(value));
+
+				if (name == "roughness") {
+
+					instance->roughness_u = context.state.find_texture(value);
+					instance->roughness_v = context.state.find_texture(value);
+					
+					continue;
+				}
+
+				// now we do not support bump map
+				if (name == "bumpmap") continue;
 			}
 
 			if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
@@ -302,8 +313,11 @@ namespace metascene::importers::pbrt {
 			if (type == PBRT_TEXTURE_TOKEN) {
 				const auto value = read_string_from_token(property.second);
 
-				if (name == "Ks") META_SCENE_FINISHED_AND_CONTINUE(instance->specular = context.state.textures[value]);
-				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(instance->diffuse = context.state.textures[value]);
+				if (name == "Ks") META_SCENE_FINISHED_AND_CONTINUE(instance->specular = context.state.find_texture(value));
+				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(instance->diffuse = context.state.find_texture(value));
+
+				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(instance->roughness_u = context.state.find_texture(value));
+				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(instance->roughness_v = context.state.find_texture(value));
 			}
 
 			if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
@@ -405,7 +419,7 @@ namespace metascene::importers::pbrt {
 	{
 		const auto name = read_string_from_token(context.peek_one_token());
 
-		material = context.state.materials[name];
+		material = context.state.find_material(name);
 	}
 }
 

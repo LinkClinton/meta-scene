@@ -172,7 +172,7 @@ namespace metascene::importers::pbrt {
 		context.scene->integrator = std::make_shared<path_integrator>();
 		context.scene->integrator->depth = 5;
 
-		std::shared_ptr<filter> filter;
+		std::shared_ptr<filter> filter = std::make_shared<box_filter>();
 		
 		auto invert_transform = matrix4x4(1);
 		
@@ -202,6 +202,9 @@ namespace metascene::importers::pbrt {
 
 			if (token == PBRT_PIXEL_FILTER_TOKEN)
 				META_SCENE_FINISHED_AND_CONTINUE(import_filter(context, filter));
+
+			if (token == PBRT_TRANSFORM_TOKEN)
+				META_SCENE_FINISHED_AND_CONTINUE(import_matrix(context, invert_transform));
 			
 			if (token == PBRT_CAMERA_TOKEN) 
 				META_SCENE_FINISHED_AND_CONTINUE(import_camera(context, context.scene->camera));
