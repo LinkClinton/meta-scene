@@ -29,6 +29,7 @@ namespace metascene::importers::pbrt {
 	const std::string PBRT_FLOAT_TOKEN = "float";
 	const std::string PBRT_COLOR_TOKEN = "color";
 	const std::string PBRT_POINT_TOKEN = "point";
+	const std::string PBRT_BOOL_TOKEN = "bool";
 	const std::string PBRT_RGB_TOKEN = "rgb";
 
 	const std::string PBRT_REVERSE_ORIENTATION_TOKEN = "ReverseOrientation";

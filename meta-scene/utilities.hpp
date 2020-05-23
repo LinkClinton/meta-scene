@@ -8,7 +8,7 @@ namespace metascene {
 
 	using uint32 = unsigned;
 
-	inline real string_to_real(const std::string value)
+	inline real string_to_real(const std::string& value)
 	{
 		if constexpr (sizeof(real) == 4)
 			return static_cast<real>(std::stof(value));
@@ -17,6 +17,12 @@ namespace metascene {
 			return static_cast<real>(std::stod(value));
 
 		return 0;
+	}
+
+	inline bool string_to_bool(const std::string& value)
+	{
+		if (value == "true" || value == "True") return true;
+		return false;
 	}
 
 	template <typename T>

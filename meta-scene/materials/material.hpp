@@ -8,7 +8,7 @@ namespace metascene {
 	namespace materials {
 
 		enum class type : uint32 {
-			unknown = 0, diffuse = 1, plastic = 2, glass = 3, metal = 4, uber = 5, mirror = 6
+			unknown = 0, diffuse = 1, plastic = 2, glass = 3, metal = 4, uber = 5, mirror = 6, substrate = 7
 		};
 		
 		struct material : interfaces::string_property {

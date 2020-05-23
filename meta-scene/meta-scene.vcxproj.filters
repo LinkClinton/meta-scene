@@ -216,6 +216,9 @@
     <ClInclude Include="materials\mirror_material.hpp">
       <Filter>materials</Filter>
     </ClInclude>
+    <ClInclude Include="materials\substrate_material.hpp">
+      <Filter>materials</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">
@@ -374,6 +377,9 @@
       <Filter>materials</Filter>
     </ClCompile>
     <ClCompile Include="materials\mirror_material.cpp">
+      <Filter>materials</Filter>
+    </ClCompile>
+    <ClCompile Include="materials\substrate_material.cpp">
       <Filter>materials</Filter>
     </ClCompile>
   </ItemGroup>

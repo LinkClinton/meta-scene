@@ -2,6 +2,7 @@
 
 #include "import_pbrt_texture.hpp"
 
+#include "../../materials/substrate_material.hpp"
 #include "../../materials/diffuse_material.hpp"
 #include "../../materials/plastic_material.hpp"
 #include "../../materials/mirror_material.hpp"
@@ -282,13 +283,72 @@ namespace metascene::importers::pbrt {
 
 		material = instance;
 	}
+
+	void import_substrate_material(scene_context& context, const property_group& properties, std::shared_ptr<material>& material)
+	{
+		auto instance = std::make_shared<substrate_material>();
+
+		instance->specular = std::make_shared<constant_texture>(static_cast<real>(0.5));
+		instance->diffuse = std::make_shared<constant_texture>(static_cast<real>(0.5));
+
+		instance->roughness_u = std::make_shared<constant_texture>(static_cast<real>(0.1));
+		instance->roughness_v = std::make_shared<constant_texture>(static_cast<real>(0.1));
+
+		instance->remapped_roughness_to_alpha = true;
+
+		for (const auto& property : properties) {
+			auto [type, name] = property.first;
+
+			if (type == PBRT_TEXTURE_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+
+				if (name == "Ks") META_SCENE_FINISHED_AND_CONTINUE(instance->specular = context.state.textures[value]);
+				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(instance->diffuse = context.state.textures[value]);
+			}
+
+			if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
+				const auto value = property.second;
+
+				if (name == "Ks") META_SCENE_FINISHED_AND_CONTINUE(import_color_spectrum_texture(value, instance->specular));
+				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(import_color_spectrum_texture(value, instance->diffuse));
+			}
+
+			if (type == PBRT_FLOAT_TOKEN) {
+				const auto value = remove_special_character(property.second);
+
+				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->roughness_u));
+				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->roughness_v));
+
+				if (name == "roughness") {
+					import_real_texture(value, instance->roughness_u);
+					import_real_texture(value, instance->roughness_v);
+
+					continue;
+				}
+			}
+
+			if (type == PBRT_BOOL_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+
+				if (name == "remaproughness") META_SCENE_FINISHED_AND_CONTINUE(instance->remapped_roughness_to_alpha = string_to_bool(value));
+			}
+			
+			// material name
+			if (type == PBRT_STRING_TOKEN) continue;
+
+			META_SCENE_PBRT_UN_RESOLVE_TOKEN;
+		}
+
+		material = instance;
+	}
 	
 	void import_material_from_property_group(scene_context& context, const property_group& properties, std::shared_ptr<material>& material)
 	{
 		const auto type = properties.find(type_and_name(PBRT_STRING_TOKEN, "type"))->second;
 
 		std::shared_ptr<materials::material> instance = nullptr;
-		
+
+		if (type == "substrate") import_substrate_material(context, properties, instance);
 		if (type == "plastic") import_plastic_material(context, properties, instance);
 		if (type == "mirror") import_mirror_material(context, properties, instance);
 		if (type == "glass") import_glass_material(context, properties, instance);
