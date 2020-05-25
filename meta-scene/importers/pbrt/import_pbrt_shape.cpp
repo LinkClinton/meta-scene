@@ -3,6 +3,7 @@
 #include "../../shapes/triangles.hpp"
 #include "../../shapes/sphere.hpp"
 #include "../../shapes/mesh.hpp"
+#include "../../shapes/disk.hpp"
 
 #include "import_pbrt_attribute.hpp"
 
@@ -94,6 +95,30 @@ namespace metascene::importers::pbrt {
 		shape = instance;
 	}
 
+	void import_disk(scene_context& context, std::shared_ptr<shape>& shape)
+	{
+		auto instance = std::make_shared<disk>();
+
+		instance->radius = 1;
+		instance->height = 0;
+
+		context.loop_important_token([&]()
+			{
+				auto [type, name] = context.peek_type_and_name();
+
+				if (type == PBRT_FLOAT_TOKEN) {
+					const auto value = context.peek_real();
+
+					if (name == "radius") META_SCENE_FINISHED_AND_RETURN(instance->radius = value);
+					if (name == "height") META_SCENE_FINISHED_AND_RETURN(instance->height = value);
+				}
+
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
+			});
+
+		shape = instance;
+	}
+
 	void import_shape(scene_context& context, std::shared_ptr<entity>& entity)
 	{
 		const auto type = remove_special_character(context.peek_one_token());
@@ -104,9 +129,10 @@ namespace metascene::importers::pbrt {
 		if (type == "trianglemesh") import_triangle_mesh(context, entity->shape);
 		if (type == "plymesh") import_ply_mesh(context, entity->shape);
 		if (type == "sphere") import_sphere(context, entity->shape);
-
+		if (type == "disk") import_disk(context, entity->shape);
+		
 		// build the shape we current state of context
-		entity->shape->reverse_orientation = context.state.reverse_orientation;
+		entity->shape->reverse_orientation = context.current().reverse_orientation;
 		entity->transform = context.current().transform;
 		entity->material = context.current().material;
 		entity->emitter = context.current().emitter;

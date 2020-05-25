@@ -3,6 +3,7 @@
 #include "import_pbrt_light_source.hpp"
 #include "import_pbrt_transform.hpp"
 #include "import_pbrt_material.hpp"
+#include "import_pbrt_texture.hpp"
 #include "import_pbrt_shape.hpp"
 
 #ifdef __PBRT_IMPORTER__
@@ -58,6 +59,9 @@ namespace metascene::importers::pbrt {
 
 				if (important_token == PBRT_OBJECT_INSTANCE_TOKEN)
 					META_SCENE_FINISHED_AND_RETURN(import_objects_to(context));
+
+				if (important_token == PBRT_MAKE_TEXTURE_TOKEN)
+					META_SCENE_FINISHED_AND_RETURN(import_texture(context));
 			
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});

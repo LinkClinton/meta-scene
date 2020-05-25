@@ -202,6 +202,7 @@
     <ClInclude Include="samplers\random_sampler.hpp" />
     <ClInclude Include="samplers\sampler.hpp" />
     <ClInclude Include="scene.hpp" />
+    <ClInclude Include="shapes\disk.hpp" />
     <ClInclude Include="shapes\mesh.hpp" />
     <ClInclude Include="shapes\shape.hpp" />
     <ClInclude Include="shapes\sphere.hpp" />
@@ -260,6 +261,7 @@
     <ClCompile Include="materials\uber_material.cpp" />
     <ClCompile Include="samplers\random_sampler.cpp" />
     <ClCompile Include="samplers\sampler.cpp" />
+    <ClCompile Include="shapes\disk.cpp" />
     <ClCompile Include="shapes\mesh.cpp" />
     <ClCompile Include="shapes\shape.cpp" />
     <ClCompile Include="shapes\sphere.cpp" />

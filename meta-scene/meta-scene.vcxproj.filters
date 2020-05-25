@@ -219,6 +219,9 @@
     <ClInclude Include="materials\substrate_material.hpp">
       <Filter>materials</Filter>
     </ClInclude>
+    <ClInclude Include="shapes\disk.hpp">
+      <Filter>shapes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">
@@ -381,6 +384,9 @@
     </ClCompile>
     <ClCompile Include="materials\substrate_material.cpp">
       <Filter>materials</Filter>
+    </ClCompile>
+    <ClCompile Include="shapes\disk.cpp">
+      <Filter>shapes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

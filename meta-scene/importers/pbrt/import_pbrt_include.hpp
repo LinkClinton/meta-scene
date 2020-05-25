@@ -76,6 +76,8 @@ namespace metascene::importers::pbrt {
 		std::shared_ptr<objects> objects = nullptr;
 		
 		matrix4x4 transform = matrix4x4(1);
+
+		bool reverse_orientation = false;
 		
 		render_config();
 	};
@@ -86,8 +88,6 @@ namespace metascene::importers::pbrt {
 		std::unordered_map<std::string, std::shared_ptr<objects>> objects;
 
 		std::stack<render_config> render_config_stack;
-
-		bool reverse_orientation = false;
 
 		std::shared_ptr<material> find_material(const std::string& name);
 

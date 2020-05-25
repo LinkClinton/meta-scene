@@ -252,7 +252,7 @@ namespace metascene::importers::pbrt {
 
 	void import_reverse_orientation(scene_context& context)
 	{
-		context.state.reverse_orientation ^= true;
+		context.current().reverse_orientation ^= true;
 	}
 
 }

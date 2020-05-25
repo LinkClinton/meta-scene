@@ -161,7 +161,7 @@ namespace metascene::importers::pbrt {
 		for (const auto& property : properties) {
 			auto [type, name] = property.first;
 
-			if (type == PBRT_RGB_TOKEN) {
+			if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
 				const auto value = property.second;
 
 				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(import_color_spectrum_texture(value, instance->reflectance));

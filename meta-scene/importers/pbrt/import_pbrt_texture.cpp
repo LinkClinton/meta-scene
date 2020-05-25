@@ -86,7 +86,7 @@ namespace metascene::importers::pbrt {
 					if (name == "tex2") META_SCENE_FINISHED_AND_RETURN(instance->scale = context.state.textures[value]);
 				}
 
-				if (type == PBRT_RGB_TOKEN) {
+				if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
 					const auto value = context.peek_one_token();
 
 					if (name == "tex1") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum_texture(value, instance->base));

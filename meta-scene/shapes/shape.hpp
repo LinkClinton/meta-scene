@@ -8,7 +8,7 @@ namespace metascene {
 	namespace shapes {
 
 		enum class type : uint32 {
-			unknown = 0, mesh = 1, sphere = 2, triangles = 3
+			unknown = 0, mesh = 1, sphere = 2, triangles = 3, disk = 4
 		};
 
 		struct shape : interfaces::string_property {
