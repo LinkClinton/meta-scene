@@ -40,8 +40,10 @@ namespace metascene::importers::pbrt {
 				if (name == "Ks") META_SCENE_FINISHED_AND_CONTINUE(instance->specular = context.state.find_texture(value));
 				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(instance->diffuse = context.state.find_texture(value));
 
+				if (name == "roughness") META_SCENE_FINISHED_AND_CONTINUE(instance->roughness = context.state.find_texture(value));
+				
 				// now we do not support it.
-				if (name == "bumpmap") continue;;
+				if (name == "bumpmap") continue;
 			}
 			
 			if (type == PBRT_FLOAT_TOKEN) {
@@ -87,8 +89,9 @@ namespace metascene::importers::pbrt {
 
 				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->roughness_u));
 				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->roughness_v));
+				if (name == "index") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->eta));
 			}
-
+			
 			// material name
 			if (type == PBRT_STRING_TOKEN) continue;
 

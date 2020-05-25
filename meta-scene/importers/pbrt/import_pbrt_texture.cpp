@@ -122,6 +122,14 @@ namespace metascene::importers::pbrt {
 					if (name == "value") META_SCENE_FINISHED_AND_RETURN({ instance->value_type = value_type::real; instance->real = value; });
 				}
 
+				if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
+					const auto value = context.peek_one_token();
+
+					if (name == "value") META_SCENE_FINISHED_AND_RETURN({
+						instance->value_type = value_type::spectrum; import_color_spectrum(value, instance->spectrum);
+						});
+				}
+			
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 
