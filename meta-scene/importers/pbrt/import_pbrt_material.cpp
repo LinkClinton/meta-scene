@@ -358,6 +358,10 @@ namespace metascene::importers::pbrt {
 
 		material = instance;
 	}
+
+	void import_fourier_material(scene_context& context, const property_group& properties, std::shared_ptr<material>& material)
+	{
+	}
 	
 	void import_material_from_property_group(scene_context& context, const property_group& properties, std::shared_ptr<material>& material)
 	{
@@ -367,17 +371,18 @@ namespace metascene::importers::pbrt {
 
 		if (type == "substrate") import_substrate_material(context, properties, instance);
 		if (type == "plastic") import_plastic_material(context, properties, instance);
+		if (type == "fourier") import_fourier_material(context, properties, instance);
 		if (type == "mirror") import_mirror_material(context, properties, instance);
 		if (type == "glass") import_glass_material(context, properties, instance);
 		if (type == "metal") import_metal_material(context, properties, instance);
 		if (type == "matte") import_matte_material(context, properties, instance);
 		if (type == "uber") import_uber_material(context, properties, instance);
-
+		
 		META_SCENE_IMPORT_SUCCESS_CHECK(instance);
 
 		material = instance;
 	}
-
+	
 	void import_material(scene_context& context, std::shared_ptr<material>& material)
 	{
 		const auto type = remove_special_character(context.peek_one_token());

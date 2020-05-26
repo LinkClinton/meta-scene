@@ -16,6 +16,7 @@ namespace metascene {
 			
 			size_t height = 720;
 			size_t width = 1280;
+			real scale = 1;
 			
 			film() = default;
 		};

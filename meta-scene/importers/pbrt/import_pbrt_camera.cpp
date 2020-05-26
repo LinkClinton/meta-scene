@@ -15,6 +15,9 @@ namespace metascene::importers::pbrt {
 		// so we just peek it without processing
 		context.peek_one_token();
 
+		film->filter = std::make_shared<box_filter>();
+		film->scale = static_cast<real>(1);
+		
 		context.loop_important_token([&]
 			{
 				auto [type, name] = context.peek_type_and_name();
@@ -30,8 +33,12 @@ namespace metascene::importers::pbrt {
 				if (type == PBRT_STRING_TOKEN) META_SCENE_FINISHED_AND_RETURN(context.peek_one_token());
 
 				// scale property 
-				if (type == PBRT_FLOAT_TOKEN) META_SCENE_FINISHED_AND_RETURN(context.peek_real());
+				if (type == PBRT_FLOAT_TOKEN) {
+					const auto value = context.peek_real();
 
+					if (name == "scale") META_SCENE_FINISHED_AND_RETURN(film->scale = value);
+				}
+				
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 	}
