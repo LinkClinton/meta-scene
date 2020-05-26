@@ -94,8 +94,8 @@ namespace metascene::importers::pbrt {
 					const auto value = context.peek_real();
 					
 					if (name == "fov") META_SCENE_FINISHED_AND_RETURN(instance->fov = value);
-					if (name == "focaldistance") return;
-					if (name == "lensradius") return;
+					if (name == "focaldistance") META_SCENE_FINISHED_AND_RETURN(instance->focus = value);
+					if (name == "lensradius") META_SCENE_FINISHED_AND_RETURN(instance->lens = value);
 				}
 
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
