@@ -50,6 +50,12 @@ namespace metascene::importers::pbrt {
 					if (name == "L") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum(value, instance->radiance));
 				}
 
+				if (type == PBRT_BLACK_BODY_TOKEN) {
+					const auto value = context.peek_one_token();
+					
+					if (name == "L") META_SCENE_FINISHED_AND_RETURN(import_black_body_spectrum(value, instance->radiance));
+				}
+			
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 

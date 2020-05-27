@@ -18,5 +18,11 @@ namespace metascene {
 		};
 
 		std::shared_ptr<sampled_spectrum> read_sampled_spectrum_from_spd(const std::string& filename);
+
+		std::shared_ptr<sampled_spectrum> create_sampled_spectrum_from_black_body(const std::vector<real>& lambda, real temperature, real scale);
+
+		std::shared_ptr<sampled_spectrum> create_sampled_spectrum_from_black_body(real temperature, real scale);
+
+		std::shared_ptr<sampled_spectrum> black_body(const std::vector<real>& lambda, real temperature);
 	}
 }

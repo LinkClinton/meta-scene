@@ -24,6 +24,17 @@ namespace metascene::importers::pbrt {
 	{
 		spectrum = read_sampled_spectrum_from_spd(filename);
 	}
+
+	void import_black_body_spectrum(const std::string& token, std::shared_ptr<spectrums::spectrum>& spectrum)
+	{
+		auto stream = std::stringstream(remove_special_character(token));
+
+		real temperature, scale;
+
+		stream >> temperature >> scale;
+
+		spectrum = create_sampled_spectrum_from_black_body(temperature, scale);
+	}
 }
 
 #endif

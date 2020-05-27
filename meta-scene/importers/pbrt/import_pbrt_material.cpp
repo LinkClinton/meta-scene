@@ -10,6 +10,8 @@
 #include "../../materials/metal_material.hpp"
 #include "../../materials/uber_material.hpp"
 
+#include "../../logs.hpp"
+
 #ifdef __PBRT_IMPORTER__
 
 namespace metascene::importers::pbrt {
@@ -361,6 +363,14 @@ namespace metascene::importers::pbrt {
 
 	void import_fourier_material(scene_context& context, const property_group& properties, std::shared_ptr<material>& material)
 	{
+		logs::warn("pbrt importer : fourier material is not supported. we will create default matte material.");
+
+		auto instance = std::make_shared<diffuse_material>();
+
+		instance->reflectance = std::make_shared<constant_texture>(std::make_shared<color_spectrum>(static_cast<real>(0.5)));
+		instance->sigma = std::make_shared<constant_texture>(static_cast<real>(0));
+
+		material = instance;
 	}
 	
 	void import_material_from_property_group(scene_context& context, const property_group& properties, std::shared_ptr<material>& material)

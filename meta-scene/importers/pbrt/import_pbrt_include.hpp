@@ -22,6 +22,7 @@
 
 namespace metascene::importers::pbrt {
 
+	const std::string PBRT_BLACK_BODY_TOKEN = "blackbody";
 	const std::string PBRT_SPECTRUM_TOKEN = "spectrum";
 	const std::string PBRT_TEXTURE_TOKEN = "texture";
 	const std::string PBRT_INTEGER_TOKEN = "integer";

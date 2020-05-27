@@ -222,6 +222,10 @@
     <ClInclude Include="shapes\disk.hpp">
       <Filter>shapes</Filter>
     </ClInclude>
+    <ClInclude Include="logs.hpp" />
+    <ClInclude Include="spectrums\cie_samples.hpp">
+      <Filter>spectrums</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">

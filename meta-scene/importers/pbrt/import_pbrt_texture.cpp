@@ -7,6 +7,8 @@
 #include "../../textures/scale_texture.hpp"
 #include "../../textures/texture.hpp"
 
+#include "../../logs.hpp"
+
 #include <filesystem>
 
 #ifdef __PBRT_IMPORTER__
@@ -135,6 +137,26 @@ namespace metascene::importers::pbrt {
 
 		texture = instance;
 	}
+
+	void import_marble_texture(scene_context& context, std::shared_ptr<texture>& texture)
+	{
+		context.loop_important_token([&]()
+			{
+				auto [type, name] = context.peek_type_and_name();
+
+				if (type == PBRT_FLOAT_TOKEN) {
+					const auto value = context.peek_real();
+
+					if (name == "scale") return;
+				}
+
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
+			});
+		
+		logs::warn("pbrt importer : marble texture is not supported. we will create default constant texture.");
+
+		texture = std::make_shared<constant_texture>(static_cast<real>(1));
+	}
 	
 	void import_texture(scene_context& context)
 	{
@@ -146,6 +168,7 @@ namespace metascene::importers::pbrt {
 		
 		if (type == "constant") import_constant_texture(context, instance);
 		if (type == "imagemap") import_image_map_texture(context, instance);
+		if (type == "marble") import_marble_texture(context, instance);
 		if (type == "scale") import_scale_texture(context, instance);
 
 		META_SCENE_IMPORT_SUCCESS_CHECK(instance);

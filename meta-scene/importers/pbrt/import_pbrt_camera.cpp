@@ -37,6 +37,7 @@ namespace metascene::importers::pbrt {
 					const auto value = context.peek_real();
 
 					if (name == "scale") META_SCENE_FINISHED_AND_RETURN(film->scale = value);
+					if (name == "maxsampleluminance") return;
 				}
 				
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
