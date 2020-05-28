@@ -226,6 +226,9 @@
     <ClInclude Include="spectrums\cie_samples.hpp">
       <Filter>spectrums</Filter>
     </ClInclude>
+    <ClInclude Include="materials\translucent_material.hpp">
+      <Filter>materials</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">
@@ -391,6 +394,9 @@
     </ClCompile>
     <ClCompile Include="shapes\disk.cpp">
       <Filter>shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="materials\translucent_material.cpp">
+      <Filter>materials</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

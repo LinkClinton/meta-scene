@@ -2,6 +2,7 @@
 
 #include "import_pbrt_texture.hpp"
 
+#include "../../materials/translucent_material.hpp"
 #include "../../materials/substrate_material.hpp"
 #include "../../materials/diffuse_material.hpp"
 #include "../../materials/plastic_material.hpp"
@@ -377,6 +378,66 @@ namespace metascene::importers::pbrt {
 
 		material = instance;
 	}
+
+	void import_translucent_material(scene_context& context, const property_group& properties, std::shared_ptr<material>& material)
+	{
+		auto instance = std::make_shared<translucent_material>();
+
+		instance->transmission = std::make_shared<constant_texture>(static_cast<real>(0.5));
+		instance->reflectance = std::make_shared<constant_texture>(static_cast<real>(0.5));
+		instance->specular = std::make_shared<constant_texture>(static_cast<real>(0.25));
+		instance->diffuse = std::make_shared<constant_texture>(static_cast<real>(0.25));
+		instance->roughness = std::make_shared<constant_texture>(static_cast<real>(0.1));
+
+		instance->remapped_roughness_to_alpha = true;
+
+		for (const auto& property : properties) {
+			auto [type, name] = property.first;
+
+			if (type == PBRT_TEXTURE_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+
+				if (name == "transmit") META_SCENE_FINISHED_AND_CONTINUE(instance->transmission = context.state.find_texture(value));
+				if (name == "reflect") META_SCENE_FINISHED_AND_CONTINUE(instance->reflectance = context.state.find_texture(value));
+				
+				if (name == "Ks") META_SCENE_FINISHED_AND_CONTINUE(instance->specular = context.state.find_texture(value));
+				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(instance->diffuse = context.state.find_texture(value));
+
+				if (name == "roughness") META_SCENE_FINISHED_AND_CONTINUE(instance->roughness = context.state.find_texture(value));
+				
+				if (name == "bumpmap") META_SCENE_FINISHED_AND_CONTINUE(logs::warn(META_SCENE_PBRT_BUMP_MAP_IS_NOT_SUPPORT));
+			}
+
+			if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
+				const auto value = property.second;
+
+				if (name == "transmit") META_SCENE_FINISHED_AND_CONTINUE(import_color_spectrum_texture(value, instance->transmission));
+				if (name == "reflect") META_SCENE_FINISHED_AND_CONTINUE(import_color_spectrum_texture(value, instance->reflectance));
+				
+				if (name == "Ks") META_SCENE_FINISHED_AND_CONTINUE(import_color_spectrum_texture(value, instance->specular));
+				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(import_color_spectrum_texture(value, instance->diffuse));
+			}
+
+			if (type == PBRT_FLOAT_TOKEN) {
+				const auto value = remove_special_character(property.second);
+
+				if (name == "roughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->roughness));
+			}
+
+			if (type == PBRT_BOOL_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+
+				if (name == "remaproughness") META_SCENE_FINISHED_AND_CONTINUE(instance->remapped_roughness_to_alpha = string_to_bool(value));
+			}
+
+			// material name
+			if (type == PBRT_STRING_TOKEN) continue;
+
+			META_SCENE_PBRT_UN_RESOLVE_TOKEN;
+		}
+
+		material = instance;
+	}
 	
 	void import_material_from_property_group(scene_context& context, const property_group& properties, std::shared_ptr<material>& material)
 	{
@@ -384,6 +445,7 @@ namespace metascene::importers::pbrt {
 
 		std::shared_ptr<materials::material> instance = nullptr;
 
+		if (type == "translucent") import_translucent_material(context, properties, instance);
 		if (type == "substrate") import_substrate_material(context, properties, instance);
 		if (type == "plastic") import_plastic_material(context, properties, instance);
 		if (type == "fourier") import_fourier_material(context, properties, instance);
