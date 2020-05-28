@@ -23,11 +23,15 @@ namespace metascene::importers::pbrt {
 	{
 		std::string ret = "";
 
+		auto in_special = false;
+		
 		// if we get the '#' we will ignore the rest of line
 		// because the rest of line is comment
+		// if '#' in string, we ignore it
 		for (const auto& character : line) {
-			if (character == '#') return ret;
-
+			if (character == '#' && in_special == false) return ret;
+			if (character == '"') in_special ^= true;
+			
 			ret.push_back(character);
 		}
 
@@ -157,6 +161,9 @@ namespace metascene::importers::pbrt {
 				if (token == PBRT_MATERIAL_TOKEN) 
 					META_SCENE_FINISHED_AND_RETURN(import_material(context, context.current().material));
 
+				if (token == PBRT_SCALE_TOKEN)
+					META_SCENE_FINISHED_AND_RETURN(import_scale(context, context.current().transform));
+			
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 

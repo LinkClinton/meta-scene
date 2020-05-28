@@ -16,6 +16,8 @@
 
 namespace metascene::importers::pbrt {
 
+	constexpr auto META_SCENE_PBRT_BUMP_MAP_IS_NOT_SUPPORT = "pbrt importer : bump map is not supported.";
+	
 	void import_plastic_material(scene_context& context, const property_group& properties, std::shared_ptr<material>& material)
 	{
 		auto instance = std::make_shared<plastic_material>();
@@ -45,7 +47,7 @@ namespace metascene::importers::pbrt {
 				if (name == "roughness") META_SCENE_FINISHED_AND_CONTINUE(instance->roughness = context.state.find_texture(value));
 				
 				// now we do not support it.
-				if (name == "bumpmap") continue;
+				if (name == "bumpmap") META_SCENE_FINISHED_AND_CONTINUE(logs::warn(META_SCENE_PBRT_BUMP_MAP_IS_NOT_SUPPORT));
 			}
 			
 			if (type == PBRT_FLOAT_TOKEN) {
@@ -183,6 +185,7 @@ namespace metascene::importers::pbrt {
 
 				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(instance->reflectance = context.state.find_texture(value));
 				if (name == "sigma") META_SCENE_FINISHED_AND_CONTINUE(instance->sigma = context.state.find_texture(value));
+				if (name == "bumpmap") META_SCENE_FINISHED_AND_CONTINUE(logs::warn(META_SCENE_PBRT_BUMP_MAP_IS_NOT_SUPPORT));
 			}
 
 			// material name
@@ -323,6 +326,8 @@ namespace metascene::importers::pbrt {
 
 				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(instance->roughness_u = context.state.find_texture(value));
 				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(instance->roughness_v = context.state.find_texture(value));
+
+				if (name == "bumpmap") META_SCENE_FINISHED_AND_CONTINUE(logs::warn(META_SCENE_PBRT_BUMP_MAP_IS_NOT_SUPPORT));
 			}
 
 			if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
@@ -367,7 +372,7 @@ namespace metascene::importers::pbrt {
 
 		auto instance = std::make_shared<diffuse_material>();
 
-		instance->reflectance = std::make_shared<constant_texture>(std::make_shared<color_spectrum>(static_cast<real>(0.5)));
+		instance->reflectance = std::make_shared<constant_texture>(std::make_shared<color_spectrum>(static_cast<real>(0.)));
 		instance->sigma = std::make_shared<constant_texture>(static_cast<real>(0));
 
 		material = instance;

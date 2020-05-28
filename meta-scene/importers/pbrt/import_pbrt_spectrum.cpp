@@ -2,6 +2,7 @@
 
 #include "../../spectrums/sampled_spectrum.hpp"
 #include "../../spectrums/color_spectrum.hpp"
+#include "../../logs.hpp"
 
 #ifdef __PBRT_IMPORTER__
 
@@ -34,6 +35,37 @@ namespace metascene::importers::pbrt {
 		stream >> temperature >> scale;
 
 		spectrum = create_sampled_spectrum_from_black_body(temperature, scale);
+	}
+
+	std::shared_ptr<spectrums::spectrum> multiply_spectrum(
+		const std::shared_ptr<spectrums::spectrum>& lhs,
+		const std::shared_ptr<spectrums::spectrum>& rhs)
+	{
+		if (lhs->type == spectrums::type::color &&
+			rhs->type == spectrums::type::color)
+			return multiply_color_spectrum(lhs, rhs);
+
+		if (lhs->type == spectrums::type::sampled ||
+			rhs->type == spectrums::type::sampled) {
+			logs::warn("pbrt importer : sampled spectrum can not multiply any spectrum.");
+			
+			return lhs->type == spectrums::type::sampled ? lhs : rhs;
+		}
+
+		return nullptr;
+	}
+
+	std::shared_ptr<spectrums::spectrum> multiply_color_spectrum(
+		const std::shared_ptr<spectrums::spectrum>& lhs,
+		const std::shared_ptr<spectrums::spectrum>& rhs)
+	{
+		const auto lhs_color = std::static_pointer_cast<color_spectrum>(lhs);
+		const auto rhs_color = std::static_pointer_cast<color_spectrum>(rhs);
+		
+		return std::make_shared<color_spectrum>(
+			lhs_color->red * rhs_color->red, 
+			lhs_color->green * rhs_color->green,
+			lhs_color->blue * rhs_color->blue);
 	}
 }
 

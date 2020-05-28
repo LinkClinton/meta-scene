@@ -54,15 +54,29 @@ namespace metascene::importers::pbrt {
 					const auto value = read_string_from_token(context.peek_one_token());
 
 					if (name == "filename") META_SCENE_FINISHED_AND_RETURN(instance->filename = context.directory_path + value);
+					if (name == "mapping") META_SCENE_FINISHED_AND_RETURN(logs::warn("pbrt importer : mapping is not support."));
+					if (name == "wrap") META_SCENE_FINISHED_AND_RETURN(logs::warn("pbrt importer : wrap is not support."));
+
 				}
 
 				if (type == PBRT_FLOAT_TOKEN) {
 					const auto value = context.peek_real();
 
-					if (name == "uscale") return;
-					if (name == "vscale") return;
+					if (name == "uscale") META_SCENE_FINISHED_AND_RETURN(logs::warn("pbrt importer : uscale is not support."));
+					if (name == "vscale") META_SCENE_FINISHED_AND_RETURN(logs::warn("pbrt importer : uscale is not support."));
+
+					if (name == "udelta") META_SCENE_FINISHED_AND_RETURN(logs::warn("pbrt importer : udelta is not support."));
+					if (name == "vdelta") META_SCENE_FINISHED_AND_RETURN(logs::warn("pbrt importer : udelta is not support."));
+
+					if (name == "maxanisotropy") META_SCENE_FINISHED_AND_RETURN(logs::warn("pbrt importer : maxanisotropy is not support"));
 				}
 
+				if (type == PBRT_BOOL_TOKEN) {
+					const auto value = read_string_from_token(context.peek_one_token());
+
+					if (name == "gamma") META_SCENE_FINISHED_AND_RETURN(instance->gamma = string_to_bool(value));
+				}
+			
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 
@@ -84,8 +98,8 @@ namespace metascene::importers::pbrt {
 				if (type == PBRT_TEXTURE_TOKEN) {
 					const auto value = read_string_from_token(context.peek_one_token());
 
-					if (name == "tex1") META_SCENE_FINISHED_AND_RETURN(instance->base = context.state.textures[value]);
-					if (name == "tex2") META_SCENE_FINISHED_AND_RETURN(instance->scale = context.state.textures[value]);
+					if (name == "tex1") META_SCENE_FINISHED_AND_RETURN(instance->base = context.state.find_texture(value));
+					if (name == "tex2") META_SCENE_FINISHED_AND_RETURN(instance->scale = context.state.find_texture(value));
 				}
 
 				if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
@@ -157,6 +171,18 @@ namespace metascene::importers::pbrt {
 
 		texture = std::make_shared<constant_texture>(static_cast<real>(1));
 	}
+
+	void import_fbm_texture(scene_context& context, std::shared_ptr<texture>& texture)
+	{
+		context.loop_important_token([&]()
+			{
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
+			});
+
+		logs::warn("pbrt importer : fbm texture is not supported. we will create default constant texture.");
+
+		texture = std::make_shared<constant_texture>(static_cast<real>(1));
+	}
 	
 	void import_texture(scene_context& context)
 	{
@@ -170,6 +196,7 @@ namespace metascene::importers::pbrt {
 		if (type == "imagemap") import_image_map_texture(context, instance);
 		if (type == "marble") import_marble_texture(context, instance);
 		if (type == "scale") import_scale_texture(context, instance);
+		if (type == "fbm") import_fbm_texture(context, instance);
 
 		META_SCENE_IMPORT_SUCCESS_CHECK(instance);
 

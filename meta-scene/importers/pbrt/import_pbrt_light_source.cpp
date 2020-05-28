@@ -3,6 +3,7 @@
 
 #include "../../emitters/environment_emitter.hpp"
 #include "../../emitters/surface_emitter.hpp"
+#include "../../logs.hpp"
 
 #ifdef __PBRT_IMPORTER__
 
@@ -11,6 +12,9 @@ namespace metascene::importers::pbrt {
 	void import_infinite_light(scene_context& context, std::shared_ptr<emitter>& emitter)
 	{
 		auto instance = std::make_shared<environment_emitter>();
+
+		std::shared_ptr<spectrum> intensity = std::make_shared<color_spectrum>(static_cast<real>(1));
+		std::shared_ptr<spectrum> scale = std::make_shared<color_spectrum>(static_cast<real>(1));
 		
 		context.loop_important_token([&]()
 			{
@@ -22,15 +26,23 @@ namespace metascene::importers::pbrt {
 					if (name == "mapname") META_SCENE_FINISHED_AND_RETURN(instance->environment_map = context.directory_path + value);
 				}
 
+				if (type == PBRT_INTEGER_TOKEN) {
+					const auto value = context.peek_integer<size_t>();
+
+					if (name == "nsamples") META_SCENE_FINISHED_AND_RETURN(logs::warn("pbrt importer : samples is not support in infinte light."));
+				}
+			
 				if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
 					const auto value = context.peek_one_token();
 					
-					if (name == "scale") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum(value, instance->intensity));
-					if (name == "L") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum(value, instance->intensity));
+					if (name == "scale") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum(value, scale));
+					if (name == "L") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum(value, intensity));
 				}
 
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
+
+		instance->intensity = multiply_spectrum(intensity, scale);
 
 		emitter = instance;
 	}
@@ -39,6 +51,9 @@ namespace metascene::importers::pbrt {
 	{
 		auto instance = std::make_shared<surface_emitter>();
 
+		std::shared_ptr<spectrum> intensity = std::make_shared<color_spectrum>(static_cast<real>(1));
+		std::shared_ptr<spectrum> scale = std::make_shared<color_spectrum>(static_cast<real>(1));
+		
 		context.loop_important_token([&]()
 			{
 				auto [type, name] = context.peek_type_and_name();
@@ -46,19 +61,27 @@ namespace metascene::importers::pbrt {
 				if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
 					const auto value = context.peek_one_token();
 
-					if (name == "scale") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum(value, instance->radiance));
-					if (name == "L") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum(value, instance->radiance));
+					if (name == "scale") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum(value, scale));
+					if (name == "L") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum(value, intensity));
 				}
 
 				if (type == PBRT_BLACK_BODY_TOKEN) {
 					const auto value = context.peek_one_token();
 					
-					if (name == "L") META_SCENE_FINISHED_AND_RETURN(import_black_body_spectrum(value, instance->radiance));
+					if (name == "L") META_SCENE_FINISHED_AND_RETURN(import_black_body_spectrum(value, intensity));
+				}
+
+				if (type == PBRT_INTEGER_TOKEN) {
+					const auto value = context.peek_integer<size_t>();
+
+					if (name == "nsamples") META_SCENE_FINISHED_AND_RETURN(logs::warn("pbrt importer : samples is not support in area light."));
 				}
 			
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 
+		instance->radiance = multiply_spectrum(intensity, scale);
+		
 		emitter = instance;
 	}
 

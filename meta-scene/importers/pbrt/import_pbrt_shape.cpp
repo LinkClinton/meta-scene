@@ -4,6 +4,7 @@
 #include "../../shapes/sphere.hpp"
 #include "../../shapes/mesh.hpp"
 #include "../../shapes/disk.hpp"
+#include "../../logs.hpp"
 
 #include "import_pbrt_attribute.hpp"
 
@@ -11,6 +12,10 @@
 
 namespace metascene::importers::pbrt {
 
+	constexpr auto META_SCENE_PBRT_ALPHA_IS_NOT_SUPPORT = "pbrt importer : alpha texture is not support.";
+	constexpr auto META_SCENE_PBRT_SHADOW_ALPHA_IS_NOT_SUPPORT = "pbrt importer : shadow alpha texture is not support.";
+
+	
 	void import_triangle_mesh(scene_context& context, std::shared_ptr<shape>& shape)
 	{
 		auto instance = std::make_shared<triangles>();
@@ -67,6 +72,20 @@ namespace metascene::importers::pbrt {
 					if (name == "filename") META_SCENE_FINISHED_AND_RETURN(instance->filename = context.directory_path + value);
 				}
 
+				if (type == PBRT_TEXTURE_TOKEN) {
+					const auto value = read_string_from_token(context.peek_one_token());
+
+					if (name == "alpha") META_SCENE_FINISHED_AND_RETURN(logs::warn(META_SCENE_PBRT_ALPHA_IS_NOT_SUPPORT));
+					if (name == "shadowalpha") META_SCENE_FINISHED_AND_RETURN(logs::warn(META_SCENE_PBRT_SHADOW_ALPHA_IS_NOT_SUPPORT));
+				}
+
+				if (type == PBRT_FLOAT_TOKEN) {
+					const auto value = context.peek_real();
+
+					if (name == "alpha") META_SCENE_FINISHED_AND_RETURN(logs::warn(META_SCENE_PBRT_ALPHA_IS_NOT_SUPPORT));
+					if (name == "shadowalpha") META_SCENE_FINISHED_AND_RETURN(logs::warn(META_SCENE_PBRT_SHADOW_ALPHA_IS_NOT_SUPPORT));
+				}
+			
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 

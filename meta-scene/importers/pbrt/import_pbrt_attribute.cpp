@@ -62,6 +62,9 @@ namespace metascene::importers::pbrt {
 
 				if (important_token == PBRT_MAKE_TEXTURE_TOKEN)
 					META_SCENE_FINISHED_AND_RETURN(import_texture(context));
+
+				if (important_token == PBRT_MAKE_NAMED_MATERIAL_TOKEN)
+					META_SCENE_FINISHED_AND_RETURN(import_named_material(context));
 			
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
