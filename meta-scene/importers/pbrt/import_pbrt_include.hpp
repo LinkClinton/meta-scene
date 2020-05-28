@@ -18,7 +18,7 @@
 #define META_SCENE_FINISHED_AND_CONTINUE(task) { task; continue; }
 #define META_SCENE_FINISHED_AND_RETURN(task) { task; return; }
 
-#define META_SCENE_IMPORT_SUCCESS_CHECK(value) assert(value != nullptr)
+#define META_SCENE_IMPORT_SUCCESS_CHECK(value) if (value == nullptr) throw "meta-scene pbrt error check failed."
 
 namespace metascene::importers::pbrt {
 

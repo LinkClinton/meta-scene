@@ -1,11 +1,14 @@
 #pragma once
 
+#include "../textures/texture.hpp"
 #include "shape.hpp"
 
 #include <string>
 
 namespace metascene {
 
+	using namespace textures;
+	
 	namespace shapes {
 
 		enum class mesh_type : uint32 {
@@ -15,6 +18,8 @@ namespace metascene {
 		struct mesh final : shape {
 			mesh_type mesh_type = mesh_type::unknown;
 
+			std::shared_ptr<texture> mask = nullptr;
+			
 			std::string filename = "unknown";
 			
 			mesh();

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../textures/texture.hpp"
 #include "../math/vector3.hpp"
 #include "shape.hpp"
 
@@ -7,11 +8,14 @@
 
 namespace metascene {
 
+	using namespace textures;
 	using namespace math;
 	
 	namespace shapes {
 
 		struct triangles final : shape {
+			std::shared_ptr<texture> mask;
+			
 			std::vector<unsigned> indices;
 
 			std::vector<vector3> positions;

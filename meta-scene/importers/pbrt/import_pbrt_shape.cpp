@@ -7,6 +7,7 @@
 #include "../../logs.hpp"
 
 #include "import_pbrt_attribute.hpp"
+#include "import_pbrt_texture.hpp"
 
 #ifdef __PBRT_IMPORTER__
 
@@ -61,6 +62,8 @@ namespace metascene::importers::pbrt {
 		auto instance = std::make_shared<mesh>();
 
 		instance->mesh_type = mesh_type::ply;
+		instance->filename = "";
+		instance->mask = nullptr;
 		
 		context.loop_important_token([&]()
 			{
@@ -75,15 +78,15 @@ namespace metascene::importers::pbrt {
 				if (type == PBRT_TEXTURE_TOKEN) {
 					const auto value = read_string_from_token(context.peek_one_token());
 
-					if (name == "alpha") META_SCENE_FINISHED_AND_RETURN(logs::warn(META_SCENE_PBRT_ALPHA_IS_NOT_SUPPORT));
-					if (name == "shadowalpha") META_SCENE_FINISHED_AND_RETURN(logs::warn(META_SCENE_PBRT_SHADOW_ALPHA_IS_NOT_SUPPORT));
+					if (name == "alpha") META_SCENE_FINISHED_AND_RETURN(instance->mask = context.state.find_texture(value));
+					if (name == "shadowalpha") META_SCENE_FINISHED_AND_RETURN(instance->mask = context.state.find_texture(value));
 				}
 
 				if (type == PBRT_FLOAT_TOKEN) {
-					const auto value = context.peek_real();
+					const auto value = context.peek_one_token();
 
-					if (name == "alpha") META_SCENE_FINISHED_AND_RETURN(logs::warn(META_SCENE_PBRT_ALPHA_IS_NOT_SUPPORT));
-					if (name == "shadowalpha") META_SCENE_FINISHED_AND_RETURN(logs::warn(META_SCENE_PBRT_SHADOW_ALPHA_IS_NOT_SUPPORT));
+					if (name == "alpha") META_SCENE_FINISHED_AND_RETURN(import_real_texture(value, instance->mask));
+					if (name == "shadowalpha") META_SCENE_FINISHED_AND_RETURN(import_real_texture(value, instance->mask));
 				}
 			
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
