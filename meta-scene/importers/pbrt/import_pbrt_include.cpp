@@ -209,7 +209,22 @@ namespace metascene::importers::pbrt {
 
 		return ret;
 	}
-	
+
+	void import_token_vector3(const std::string& token, vector3& data)
+	{
+		auto stream = std::stringstream(remove_special_character(token));
+
+		std::string x, y, z;
+
+		stream >> x >> y >> z;
+
+		data = vector3(
+			string_to_real(x),
+			string_to_real(y),
+			string_to_real(z)
+		);
+	}
+
 	void import_token_vector3(const std::string& token, std::vector<vector3>& data)
 	{
 		auto stream = std::stringstream(remove_special_character(token));

@@ -1,5 +1,6 @@
 #include "import_pbrt_integrator.hpp"
 
+#include "../../integrators/direct_integrator.hpp"
 #include "../../integrators/path_integrator.hpp"
 
 #ifdef __PBRT_IMPORTER__
@@ -34,13 +35,30 @@ namespace metascene::importers::pbrt {
 
 		integrator = instance;
 	}
+
+	void import_direct_integrator(scene_context& context, std::shared_ptr<integrator>& integrator)
+	{
+		auto instance = std::make_shared<direct_integrator>();
+
+		instance->emitter_samples = 4;
+		instance->bsdf_samples = 4;
+		instance->depth = 5;
+
+		context.loop_important_token([&]()
+			{
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
+			});
+
+		integrator = instance;
+	}
 	
 	void import_integrator(scene_context& context, std::shared_ptr<integrator>& integrator)
 	{
 		const auto integrator_type = remove_special_character(context.peek_one_token());
 
 		std::shared_ptr<integrators::integrator> instance = nullptr;
-		
+
+		if (integrator_type == "directlighting") import_direct_integrator(context, instance);
 		if (integrator_type == "path") import_path_integrator(context, instance);
 
 		META_SCENE_IMPORT_SUCCESS_CHECK(instance);

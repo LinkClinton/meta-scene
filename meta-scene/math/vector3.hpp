@@ -8,6 +8,8 @@
 
 #include "../utilities.hpp"
 
+#include <sstream>
+
 namespace metascene {
 
 	namespace math {
@@ -18,7 +20,15 @@ namespace metascene {
 		using vector3_t = glm::vec<3, T>;
 
 		using vector3 = vector3_t<real>;
-		
+
+		inline std::string to_string(const vector3& v)
+		{
+			std::stringstream stream;
+
+			stream << "[x = " << v.x << ", y = " << v.y << ", z = " << v.z << "]";
+
+			return stream.str();
+		}
 #endif
 		
 	}

@@ -15,6 +15,8 @@ namespace metascene {
 			
 			std::string environment_map = "";
 
+			bool gamma = false;
+
 			environment_emitter();
 
 			std::string to_string() const noexcept override;

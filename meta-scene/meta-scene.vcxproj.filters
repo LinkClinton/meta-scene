@@ -229,6 +229,9 @@
     <ClInclude Include="materials\translucent_material.hpp">
       <Filter>materials</Filter>
     </ClInclude>
+    <ClInclude Include="emitters\directional_emitter.hpp">
+      <Filter>emitters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">
@@ -397,6 +400,9 @@
     </ClCompile>
     <ClCompile Include="materials\translucent_material.cpp">
       <Filter>materials</Filter>
+    </ClCompile>
+    <ClCompile Include="emitters\directional_emitter.cpp">
+      <Filter>emitters</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

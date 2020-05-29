@@ -163,6 +163,8 @@ namespace metascene::importers::pbrt {
 	std::string remove_special_character(const std::string& value);
 
 	std::string read_string_from_token(const std::string& token);
+
+	void import_token_vector3(const std::string& token, vector3& data);
 	
 	void import_token_vector3(const std::string& token, std::vector<vector3>& data);
 

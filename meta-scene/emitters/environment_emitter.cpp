@@ -11,6 +11,7 @@ std::string metascene::emitters::environment_emitter::to_string() const noexcept
 	stream << "environment_emitter : " << std::endl;
 	stream << "intensity = " << intensity->to_string() << std::endl;
 	stream << "environment_map = " << environment_map << std::endl;
+	stream << "gamma = " << gamma << std::endl;
 
 	return stream.str();
 }
