@@ -196,6 +196,7 @@
     <ClInclude Include="materials\material.hpp" />
     <ClInclude Include="materials\metal_material.hpp" />
     <ClInclude Include="materials\mirror_material.hpp" />
+    <ClInclude Include="materials\mixture_material.hpp" />
     <ClInclude Include="materials\plastic_material.hpp" />
     <ClInclude Include="materials\substrate_material.hpp" />
     <ClInclude Include="materials\translucent_material.hpp" />
@@ -261,6 +262,7 @@
     <ClCompile Include="materials\material.cpp" />
     <ClCompile Include="materials\metal_material.cpp" />
     <ClCompile Include="materials\mirror_material.cpp" />
+    <ClCompile Include="materials\mixture_material.cpp" />
     <ClCompile Include="materials\plastic_material.cpp" />
     <ClCompile Include="materials\substrate_material.cpp" />
     <ClCompile Include="materials\translucent_material.cpp" />

@@ -6,6 +6,7 @@
 #include "../../materials/substrate_material.hpp"
 #include "../../materials/diffuse_material.hpp"
 #include "../../materials/plastic_material.hpp"
+#include "../../materials/mixture_material.hpp"
 #include "../../materials/mirror_material.hpp"
 #include "../../materials/glass_material.hpp"
 #include "../../materials/metal_material.hpp"
@@ -441,13 +442,33 @@ namespace metascene::importers::pbrt {
 
 	void import_mix_material(scene_context& context, const property_group& properties, std::shared_ptr<material>& material)
 	{
-		logs::warn("pbrt importer : mix material is not supported. we will create default matte material.");
+		auto instance = std::make_shared<mixture_material>();
 
-		auto instance = std::make_shared<diffuse_material>();
+		instance->alpha = std::make_shared<constant_texture>(static_cast<real>(0.5));
 
-		instance->reflectance = std::make_shared<constant_texture>(std::make_shared<color_spectrum>(static_cast<real>(0.5)));
-		instance->sigma = std::make_shared<constant_texture>(static_cast<real>(0));
+		for (const auto& property : properties) {
+			auto [type, name] = property.first;
 
+			if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
+				const auto value = property.second;
+
+				if (name == "amount") META_SCENE_FINISHED_AND_CONTINUE(import_color_spectrum_texture(value, instance->alpha));
+			}
+			
+			if (type == PBRT_STRING_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+
+				if (name == "namedmaterial1") META_SCENE_FINISHED_AND_CONTINUE(instance->materials[0] = context.state.find_material(value));
+				if (name == "namedmaterial2") META_SCENE_FINISHED_AND_CONTINUE(instance->materials[1] = context.state.find_material(value));
+				if (name == "type") continue;
+			}
+
+			META_SCENE_PBRT_UN_RESOLVE_TOKEN;
+		}
+
+		if (instance->materials[0] == nullptr || instance->materials[1] == nullptr)
+			logs::error("pbrt importer : the material in mixture material can not be nullptr.");
+		
 		material = instance;
 	}
 	

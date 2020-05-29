@@ -232,6 +232,9 @@
     <ClInclude Include="emitters\directional_emitter.hpp">
       <Filter>emitters</Filter>
     </ClInclude>
+    <ClInclude Include="materials\mixture_material.hpp">
+      <Filter>materials</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">
@@ -403,6 +406,9 @@
     </ClCompile>
     <ClCompile Include="emitters\directional_emitter.cpp">
       <Filter>emitters</Filter>
+    </ClCompile>
+    <ClCompile Include="materials\mixture_material.cpp">
+      <Filter>materials</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
