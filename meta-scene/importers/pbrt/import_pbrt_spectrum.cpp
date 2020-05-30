@@ -41,18 +41,10 @@ namespace metascene::importers::pbrt {
 		const std::shared_ptr<spectrums::spectrum>& lhs,
 		const std::shared_ptr<spectrums::spectrum>& rhs)
 	{
-		if (lhs->type == spectrums::type::color &&
-			rhs->type == spectrums::type::color)
-			return multiply_color_spectrum(lhs, rhs);
+		const auto right_hand = rhs->type == spectrums::type::color ? rhs : create_color_spectrum_from_sampled(rhs);
+		const auto left_hand = lhs->type == spectrums::type::color ? lhs : create_color_spectrum_from_sampled(lhs);
 
-		if (lhs->type == spectrums::type::sampled ||
-			rhs->type == spectrums::type::sampled) {
-			logs::warn("pbrt importer : sampled spectrum can not multiply any spectrum.");
-			
-			return lhs->type == spectrums::type::sampled ? lhs : rhs;
-		}
-
-		return nullptr;
+		return multiply_color_spectrum(left_hand, right_hand);
 	}
 
 	std::shared_ptr<spectrums::spectrum> multiply_color_spectrum(

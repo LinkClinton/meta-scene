@@ -17,6 +17,7 @@ namespace metascene {
 			
 			std::string to_string() const noexcept override;
 		};
-		
+
+		std::shared_ptr<spectrum> create_color_spectrum_from_sampled(const std::shared_ptr<spectrum>& spectrum);
 	}
 }
