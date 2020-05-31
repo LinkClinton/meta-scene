@@ -62,6 +62,8 @@ namespace metascene::importers::pbrt {
 				if (type == PBRT_FLOAT_TOKEN) {
 					const auto value = context.peek_real();
 
+					if (name == "scale") META_SCENE_FINISHED_AND_RETURN(logs::warn("pbrt importer : scale image map value is not support."))
+					
 					if (name == "uscale") META_SCENE_FINISHED_AND_RETURN(logs::warn("pbrt importer : uscale is not support."));
 					if (name == "vscale") META_SCENE_FINISHED_AND_RETURN(logs::warn("pbrt importer : uscale is not support."));
 
@@ -183,6 +185,18 @@ namespace metascene::importers::pbrt {
 
 		texture = std::make_shared<constant_texture>(static_cast<real>(1));
 	}
+
+	void import_wrinkled_texture(scene_context& context, std::shared_ptr<texture>& texture)
+	{
+		context.loop_important_token([&]()
+			{
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
+			});
+
+		logs::warn("pbrt importer : wrinkled texture is not supported. we will create default constant texture.");
+
+		texture = std::make_shared<constant_texture>(static_cast<real>(1));
+	}
 	
 	void import_texture(scene_context& context)
 	{
@@ -193,11 +207,12 @@ namespace metascene::importers::pbrt {
 		std::shared_ptr<texture> instance = nullptr;
 		
 		if (type == "constant") import_constant_texture(context, instance);
+		if (type == "wrinkled") import_wrinkled_texture(context, instance);
 		if (type == "imagemap") import_image_map_texture(context, instance);
 		if (type == "marble") import_marble_texture(context, instance);
 		if (type == "scale") import_scale_texture(context, instance);
 		if (type == "fbm") import_fbm_texture(context, instance);
-
+		
 		META_SCENE_IMPORT_SUCCESS_CHECK(instance);
 
 		context.state.textures[name] = instance;

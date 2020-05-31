@@ -201,6 +201,9 @@ namespace metascene::importers::pbrt {
 			if (token == PBRT_SCALE_TOKEN) 
 				META_SCENE_FINISHED_AND_CONTINUE(import_scale(context, invert_transform));
 
+			if (token == PBRT_ROTATE_TOKEN)
+				META_SCENE_FINISHED_AND_CONTINUE(import_rotate(context, invert_transform));
+			
 			if (token == PBRT_TRANSLATE_TOKEN) 
 				META_SCENE_FINISHED_AND_CONTINUE(import_translate(context, invert_transform));
 			
