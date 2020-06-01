@@ -3,6 +3,7 @@
 #include "import_pbrt_spectrum.hpp"
 
 #include "../../textures/constant_texture.hpp"
+#include "../../textures/mixture_texture.hpp"
 #include "../../textures/image_texture.hpp"
 #include "../../textures/scale_texture.hpp"
 #include "../../textures/texture.hpp"
@@ -197,7 +198,60 @@ namespace metascene::importers::pbrt {
 
 		texture = std::make_shared<constant_texture>(static_cast<real>(1));
 	}
-	
+
+	void import_mixture_texture(scene_context& context, std::shared_ptr<texture>& texture)
+	{
+		auto instance = std::make_shared<mixture_texture>();
+
+		instance->texture0 = std::make_shared<constant_texture>(static_cast<real>(0));
+		instance->texture1 = std::make_shared<constant_texture>(static_cast<real>(1));
+		instance->alpha = std::make_shared<constant_texture>(static_cast<real>(0.5));
+
+		context.loop_important_token([&]()
+			{
+				auto [type, name] = context.peek_type_and_name();
+			
+				if (type == PBRT_FLOAT_TOKEN) {
+					const auto value = context.peek_real();
+
+					if (name == "tex1") META_SCENE_FINISHED_AND_RETURN(instance->texture0 = std::make_shared<constant_texture>(static_cast<real>(value)));
+					if (name == "tex2") META_SCENE_FINISHED_AND_RETURN(instance->texture1 = std::make_shared<constant_texture>(static_cast<real>(value)));
+					if (name == "amount") META_SCENE_FINISHED_AND_RETURN(instance->alpha = std::make_shared<constant_texture>(static_cast<real>(value)));
+				}
+
+				if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
+					const auto value = context.peek_one_token();
+
+					if (name == "tex1") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum_texture(value, instance->texture0));
+					if (name == "tex2") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum_texture(value, instance->texture1));
+				}
+
+				if (type == PBRT_TEXTURE_TOKEN) {
+					const auto value = read_string_from_token(context.peek_one_token());
+
+					if (name == "tex1") META_SCENE_FINISHED_AND_RETURN(instance->texture0 = context.state.find_texture(value));
+					if (name == "tex2") META_SCENE_FINISHED_AND_RETURN(instance->texture1 = context.state.find_texture(value));
+					if (name == "amount") META_SCENE_FINISHED_AND_RETURN(instance->alpha = context.state.find_texture(value));
+				}
+
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
+			});
+
+		texture = instance;
+	}
+
+	void import_windy_texture(scene_context& context, std::shared_ptr<texture>& texture)
+	{
+		context.loop_important_token([&]()
+			{
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
+			});
+
+		logs::warn("pbrt importer : windy texture is not supported. we will create default constant texture.");
+
+		texture = std::make_shared<constant_texture>(static_cast<real>(1));
+	}
+
 	void import_texture(scene_context& context)
 	{
 		const auto name = remove_special_character(context.peek_one_token());
@@ -211,6 +265,8 @@ namespace metascene::importers::pbrt {
 		if (type == "imagemap") import_image_map_texture(context, instance);
 		if (type == "marble") import_marble_texture(context, instance);
 		if (type == "scale") import_scale_texture(context, instance);
+		if (type == "windy") import_windy_texture(context, instance);
+		if (type == "mix") import_mixture_texture(context, instance);
 		if (type == "fbm") import_fbm_texture(context, instance);
 		
 		META_SCENE_IMPORT_SUCCESS_CHECK(instance);

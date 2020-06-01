@@ -217,6 +217,7 @@
     <ClInclude Include="spectrums\spectrum.hpp" />
     <ClInclude Include="textures\constant_texture.hpp" />
     <ClInclude Include="textures\image_texture.hpp" />
+    <ClInclude Include="textures\mixture_texture.hpp" />
     <ClInclude Include="textures\scale_texture.hpp" />
     <ClInclude Include="textures\texture.hpp" />
     <ClInclude Include="utilities.hpp" />
@@ -279,6 +280,7 @@
     <ClCompile Include="spectrums\spectrum.cpp" />
     <ClCompile Include="textures\constant_texture.cpp" />
     <ClCompile Include="textures\image_texture.cpp" />
+    <ClCompile Include="textures\mixture_texture.cpp" />
     <ClCompile Include="textures\scale_texture.cpp" />
     <ClCompile Include="textures\texture.cpp" />
   </ItemGroup>

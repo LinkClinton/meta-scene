@@ -97,6 +97,13 @@ namespace metascene::importers::pbrt {
 				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->roughness_v));
 				if (name == "index") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->eta));
 			}
+
+			if (type == PBRT_TEXTURE_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+				
+				// now we do not support it.
+				if (name == "bumpmap") META_SCENE_FINISHED_AND_CONTINUE(logs::warn(META_SCENE_PBRT_BUMP_MAP_IS_NOT_SUPPORT));
+			}
 			
 			// material name
 			if (type == PBRT_STRING_TOKEN) continue;
@@ -148,6 +155,19 @@ namespace metascene::importers::pbrt {
 				
 				if (name == "eta") META_SCENE_FINISHED_AND_CONTINUE(import_sampled_spectrum_texture(context.directory_path + value, instance->eta));
 				if (name == "k") META_SCENE_FINISHED_AND_CONTINUE(import_sampled_spectrum_texture(context.directory_path + value, instance->k));
+			}
+
+			if (type == PBRT_TEXTURE_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+
+				if (name == "roughness") {
+					instance->roughness_u = context.state.find_texture(value);
+					instance->roughness_v = context.state.find_texture(value);
+
+					continue;
+				}
+
+				if (name == "bumpmap") META_SCENE_FINISHED_AND_CONTINUE(logs::warn(META_SCENE_PBRT_BUMP_MAP_IS_NOT_SUPPORT));
 			}
 
 			// material name
@@ -461,6 +481,12 @@ namespace metascene::importers::pbrt {
 				if (name == "namedmaterial1") META_SCENE_FINISHED_AND_CONTINUE(instance->materials[0] = context.state.find_material(value));
 				if (name == "namedmaterial2") META_SCENE_FINISHED_AND_CONTINUE(instance->materials[1] = context.state.find_material(value));
 				if (name == "type") continue;
+			}
+
+			if (type == PBRT_TEXTURE_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+
+				if (name == "amount") META_SCENE_FINISHED_AND_CONTINUE(instance->alpha = context.state.find_texture(value));
 			}
 
 			META_SCENE_PBRT_UN_RESOLVE_TOKEN;

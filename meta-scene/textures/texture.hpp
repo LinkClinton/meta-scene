@@ -8,7 +8,7 @@ namespace metascene {
 	namespace textures {
 
 		enum class type : uint32 {
-			unknown = 0, image = 1, scale = 2, constant = 3
+			unknown = 0, image = 1, scale = 2, constant = 3, mixture = 4
 		};
 
 		struct texture : interfaces::string_property {
