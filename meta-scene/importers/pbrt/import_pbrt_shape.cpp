@@ -7,6 +7,7 @@
 #include "../../logs.hpp"
 
 #include "import_pbrt_attribute.hpp"
+#include "import_pbrt_material.hpp"
 #include "import_pbrt_texture.hpp"
 
 #ifdef __PBRT_IMPORTER__
@@ -83,7 +84,7 @@ namespace metascene::importers::pbrt {
 				}
 
 				if (type == PBRT_FLOAT_TOKEN) {
-					const auto value = context.peek_one_token();
+					const auto value = remove_special_character(context.peek_one_token());
 
 					if (name == "alpha") META_SCENE_FINISHED_AND_RETURN(import_real_texture(value, instance->mask));
 					if (name == "shadowalpha") META_SCENE_FINISHED_AND_RETURN(import_real_texture(value, instance->mask));
@@ -213,6 +214,8 @@ namespace metascene::importers::pbrt {
 				if (important_token == PBRT_SHAPE_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_shape_to(context));
 
 				if (important_token == PBRT_ATTRIBUTE_BEGIN_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_attribute(context));
+
+				if (important_token == PBRT_MATERIAL_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_material(context, context.current().material));
 			
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});

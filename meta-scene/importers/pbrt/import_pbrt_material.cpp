@@ -277,7 +277,7 @@ namespace metascene::importers::pbrt {
 				}
 
 				// now we do not support bump map
-				if (name == "bumpmap") continue;
+				if (name == "bumpmap") META_SCENE_FINISHED_AND_CONTINUE(logs::warn(META_SCENE_PBRT_BUMP_MAP_IS_NOT_SUPPORT));
 			}
 
 			if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
@@ -316,6 +316,12 @@ namespace metascene::importers::pbrt {
 				if (name == "Kr") META_SCENE_FINISHED_AND_CONTINUE(import_color_spectrum_texture(value, instance->reflectance));
 			}
 
+			if (type == PBRT_TEXTURE_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+				
+				if (name == "bumpmap") META_SCENE_FINISHED_AND_CONTINUE(logs::warn(META_SCENE_PBRT_BUMP_MAP_IS_NOT_SUPPORT));
+			}
+			
 			// material name
 			if (type == PBRT_STRING_TOKEN) continue;
 			
