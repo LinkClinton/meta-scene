@@ -1,6 +1,6 @@
 # Meta-Scene
 
-Meta-scene is a library to load different scene format. Using meta-scene load scene file and create the scene to your renderer with `meta-scene` type.
+Meta-scene is a library to load different scene format. Using meta-scene to load scene file and create the scene to your renderer with `meta-scene` type.
 
 ## Build
 
@@ -11,7 +11,35 @@ Meta-scene is a library to load different scene format. Using meta-scene load sc
 ## Support Format
 
 - Part of mitsuba scene format. 
-- Part of PBRT scene format.
+- Most of PBRT scene format.
+
+## Test
+
+There are scenes passed the test. You can click [here](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes) to see the image of scene(render by rainbow-renderer).
+
+- [cbox/cbox.xml](https://github.com/LinkClinton/repository-data/blob/master/rainbow-renderer/scenes/cbox) : Cornell Box.
+- [veach_mi/mi.xml](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/veach_mi) : Veach's MIS test scene.
+- [dragon/f8-10.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/dragon) : Dragon with plastic/glass material.
+- [lte-orb/lte-orb-silver.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/lte-orb) : lte-orb with metal material.
+- [structuresynth/metal.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/structuresynth) : metal material scene.
+- [structuresynth/arcsphere.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/structuresynth) : glass material scene.
+- [structuresynth/microcity.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/structuresynth) : lens test scene.
+- [yeahright/yeahright.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/yeahright) : metal material scene.
+- [pbrt-book/book.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/pbrt-book) : pbrt-v2 book scene(not support bump mapping).
+- [ganesha/ganesha.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/ganesha) : substrate material scene.
+- [chopper-titan/chopper-titan.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/chopper-titan) : chopper scene.
+- [tt/tt.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/tt) : car scene(not support bump mapping).
+- [buddha-fractal/buddha-fractal.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/buddha-fractal) : instance of bvh scene.
+- [bathroom/bathroom.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/bathroom) : bathroom scene(replace fourier material to mixture material).
+- [landscape/view-0.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/landscape) : landscape scene.
+- [crown/crown.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/crown) : crown scene(not support bump mapping).
+- [ecosys/ecosys.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/ecosys) : ecosys scene(not support bump mapping and windy texture).
+- [bmw-m6/bmw-m6.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/bmw-m6) : bmw car scene(replace fourier material to matte material).
+- [vw-van/vw-van.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/vw-van) : car scene(replace fourier material to matte material).
+
+All scenes you can download from the web of mitsuba and pbrt. But some scenes(pbrt format) are changed for rendering(for example, replace "bdpt" to "path").
+
+You can click [here](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes) to get the changed scenes(only include the scene file, no textures/meshes/spds). Or you can click the name of scene.
 
 ## ThirdParties
 
