@@ -238,6 +238,9 @@
     <ClInclude Include="textures\mixture_texture.hpp">
       <Filter>textures</Filter>
     </ClInclude>
+    <ClInclude Include="materials\subsurface_material.hpp">
+      <Filter>materials</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">
@@ -415,6 +418,9 @@
     </ClCompile>
     <ClCompile Include="textures\mixture_texture.cpp">
       <Filter>textures</Filter>
+    </ClCompile>
+    <ClCompile Include="materials\subsurface_material.cpp">
+      <Filter>materials</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

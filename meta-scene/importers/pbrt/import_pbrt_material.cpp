@@ -3,6 +3,7 @@
 #include "import_pbrt_texture.hpp"
 
 #include "../../materials/translucent_material.hpp"
+#include "../../materials/subsurface_material.hpp"
 #include "../../materials/substrate_material.hpp"
 #include "../../materials/diffuse_material.hpp"
 #include "../../materials/plastic_material.hpp"
@@ -503,6 +504,51 @@ namespace metascene::importers::pbrt {
 		
 		material = instance;
 	}
+
+	void import_subsurface_material(scene_context& context, const property_group& properties, std::shared_ptr<material>& material)
+	{
+		auto instance = std::make_shared<subsurface_material>();
+
+		instance->transmission = std::make_shared<constant_texture>(static_cast<real>(1));
+		instance->reflectance = std::make_shared<constant_texture>(static_cast<real>(1));
+		instance->sigma_a = std::make_shared<constant_texture>(std::make_shared<color_spectrum>(real(.0011), real(.0024), real(.014)));
+		instance->sigma_s = std::make_shared<constant_texture>(std::make_shared<color_spectrum>(real(2.55), real(3.12), real(3.77)));
+		instance->roughness_u = std::make_shared<constant_texture>(static_cast<real>(0));
+		instance->roughness_v = std::make_shared<constant_texture>(static_cast<real>(0));
+		instance->eta = std::make_shared<constant_texture>(static_cast<real>(1.33));
+		instance->remapped_roughness_to_alpha = true;
+		instance->scale = 1;
+
+		for (const auto& property : properties) {
+			auto [type, name] = property.first;
+
+			if (type == PBRT_FLOAT_TOKEN) {
+				const auto value = remove_special_character(property.second);
+
+				if (name == "scale") META_SCENE_FINISHED_AND_CONTINUE(instance->scale = string_to_real(value));
+				if (name == "eta") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->eta));
+			}
+
+			if (type == PBRT_STRING_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+
+				if (name == "name") {
+					auto [sigma_s, sigma_a] = read_sigma_from_data(value);
+
+					instance->sigma_a = std::make_shared<constant_texture>(sigma_a);
+					instance->sigma_s = std::make_shared<constant_texture>(sigma_s);
+
+					continue;
+				}
+				
+				if (name == "type") continue;
+			}
+
+			META_SCENE_PBRT_UN_RESOLVE_TOKEN;
+		}
+
+		material = instance;
+	}
 	
 	void import_material_from_property_group(scene_context& context, const property_group& properties, std::shared_ptr<material>& material)
 	{
@@ -511,6 +557,7 @@ namespace metascene::importers::pbrt {
 		std::shared_ptr<materials::material> instance = nullptr;
 
 		if (type == "translucent") import_translucent_material(context, properties, instance);
+		if (type == "subsurface") import_subsurface_material(context, properties, instance);
 		if (type == "substrate") import_substrate_material(context, properties, instance);
 		if (type == "plastic") import_plastic_material(context, properties, instance);
 		if (type == "fourier") import_fourier_material(context, properties, instance);

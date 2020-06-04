@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../../spectrums/spectrum.hpp"
+
 #include "pbrt_importer.hpp"
 
 #ifdef __PBRT_IMPORTER__
@@ -151,6 +153,7 @@ namespace metascene::importers::pbrt {
 	using type_and_name = std::tuple<std::string, std::string>;
 	using property_value = std::string;
 	using property_group = std::map<type_and_name, property_value>;
+	using sigma_group = std::tuple<std::shared_ptr<spectrums::spectrum>, std::shared_ptr<spectrums::spectrum>>;
 
 	bool is_important_token(const std::string& token);
 
@@ -164,6 +167,8 @@ namespace metascene::importers::pbrt {
 
 	std::string read_string_from_token(const std::string& token);
 
+	sigma_group read_sigma_from_data(const std::string& name);
+	
 	void import_token_vector3(const std::string& token, vector3& data);
 	
 	void import_token_vector3(const std::string& token, std::vector<vector3>& data);

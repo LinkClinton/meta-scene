@@ -12,7 +12,8 @@ namespace metascene {
 			plastic = 2, glass = 3,
 			metal = 4, uber = 5,
 			mirror = 6, substrate = 7,
-			translucent = 8, mixture = 9
+			translucent = 8, mixture = 9,
+			subsurface = 10
 		};
 		
 		struct material : interfaces::string_property {
