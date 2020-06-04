@@ -540,8 +540,14 @@ namespace metascene::importers::pbrt {
 
 					continue;
 				}
-				
+
 				if (name == "type") continue;
+			}
+
+			if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
+				const auto value = property.second;
+
+				if (name == "Kr") META_SCENE_FINISHED_AND_CONTINUE(import_color_spectrum_texture(value, instance->reflectance));
 			}
 
 			META_SCENE_PBRT_UN_RESOLVE_TOKEN;
