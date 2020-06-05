@@ -210,21 +210,6 @@ namespace metascene::importers::pbrt {
 		return ret;
 	}
 
-	sigma_group read_sigma_from_data(const std::string& name)
-	{
-		static std::unordered_map<std::string, sigma_group> sigma_data = {
-			{
-				"Skin1",
-				{
-					std::make_shared<color_spectrum>(real(0.74), real(0.88), real(1.01)),
-					std::make_shared<color_spectrum>(real(0.032), real(0.17), real(0.48))
-				}
-			}
-		};
-
-		return sigma_data[name];
-	}
-
 	void import_token_vector3(const std::string& token, vector3& data)
 	{
 		auto stream = std::stringstream(remove_special_character(token));

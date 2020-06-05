@@ -87,6 +87,12 @@ namespace metascene::importers::pbrt {
 
 					if (name == "nsamples") META_SCENE_FINISHED_AND_RETURN(logs::warn("pbrt importer : samples is not support in area light."));
 				}
+
+				if (type == PBRT_SPECTRUM_TOKEN) {
+					const auto value = read_string_from_token(context.peek_one_token());
+
+					if (name == "L") META_SCENE_FINISHED_AND_RETURN(import_sampled_spectrum(context.directory_path + value, intensity));
+				}
 			
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});

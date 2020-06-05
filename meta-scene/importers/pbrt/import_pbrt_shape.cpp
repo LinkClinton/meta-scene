@@ -96,6 +96,44 @@ namespace metascene::importers::pbrt {
 		shape = instance;
 	}
 
+	void import_obj_mesh(scene_context& context, std::shared_ptr<shape>& shape)
+	{
+		auto instance = std::make_shared<mesh>();
+
+		instance->mesh_type = mesh_type::obj;
+		instance->filename = "";
+		instance->mask = nullptr;
+
+		context.loop_important_token([&]()
+			{
+				auto [type, name] = context.peek_type_and_name();
+
+				if (type == PBRT_STRING_TOKEN) {
+					const auto value = read_string_from_token(context.peek_one_token());
+
+					if (name == "filename") META_SCENE_FINISHED_AND_RETURN(instance->filename = context.directory_path + value);
+				}
+
+				if (type == PBRT_TEXTURE_TOKEN) {
+					const auto value = read_string_from_token(context.peek_one_token());
+
+					if (name == "alpha") META_SCENE_FINISHED_AND_RETURN(instance->mask = context.state.find_texture(value));
+					if (name == "shadowalpha") META_SCENE_FINISHED_AND_RETURN(instance->mask = context.state.find_texture(value));
+				}
+
+				if (type == PBRT_FLOAT_TOKEN) {
+					const auto value = remove_special_character(context.peek_one_token());
+
+					if (name == "alpha") META_SCENE_FINISHED_AND_RETURN(import_real_texture(value, instance->mask));
+					if (name == "shadowalpha") META_SCENE_FINISHED_AND_RETURN(import_real_texture(value, instance->mask));
+				}
+
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
+			});
+
+		shape = instance;
+	}
+
 	void import_sphere(scene_context& context, std::shared_ptr<shape>& shape)
 	{
 		auto instance = std::make_shared<sphere>();
@@ -151,6 +189,7 @@ namespace metascene::importers::pbrt {
 		if (type == "loopsubdiv") import_triangle_mesh(context, entity->shape);
 		if (type == "trianglemesh") import_triangle_mesh(context, entity->shape);
 		if (type == "plymesh") import_ply_mesh(context, entity->shape);
+		if (type == "objmesh") import_obj_mesh(context, entity->shape);
 		if (type == "sphere") import_sphere(context, entity->shape);
 		if (type == "disk") import_disk(context, entity->shape);
 		
