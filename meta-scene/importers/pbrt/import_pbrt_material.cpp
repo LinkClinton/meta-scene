@@ -518,7 +518,7 @@ namespace metascene::importers::pbrt {
 		instance->transmission = std::make_shared<constant_texture>(static_cast<real>(1));
 		instance->reflectance = std::make_shared<constant_texture>(static_cast<real>(1));
 		instance->diffuse = std::make_shared<constant_texture>(static_cast<real>(0.5));
-		instance->dmfp = std::make_shared<constant_texture>(static_cast<real>(1));
+		instance->mfp = std::make_shared<constant_texture>(static_cast<real>(1));
 		instance->roughness_u = std::make_shared<constant_texture>(static_cast<real>(0));
 		instance->roughness_v = std::make_shared<constant_texture>(static_cast<real>(0));
 		instance->eta = std::make_shared<constant_texture>(static_cast<real>(1.33));
@@ -531,7 +531,9 @@ namespace metascene::importers::pbrt {
 				const auto value = remove_special_character(property.second);
 
 				if (name == "eta") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->eta));
-				if (name == "mfp") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->dmfp));
+				if (name == "mfp") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->mfp));
+				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->roughness_u));
+				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, instance->roughness_v));
 			}
 
 			if (type == PBRT_STRING_TOKEN) {
@@ -545,8 +547,21 @@ namespace metascene::importers::pbrt {
 
 				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(import_color_spectrum_texture(value, instance->diffuse));
 				if (name == "Kr") META_SCENE_FINISHED_AND_CONTINUE(import_color_spectrum_texture(value, instance->reflectance));
+				if (name == "mfp") META_SCENE_FINISHED_AND_CONTINUE(import_color_spectrum_texture(value, instance->mfp));
 			}
 
+			if (type == PBRT_TEXTURE_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+
+				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(instance->diffuse = context.state.find_texture(value));
+			}
+
+			if (type == PBRT_BOOL_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+
+				if (name == "remaproughness") META_SCENE_FINISHED_AND_CONTINUE(instance->remapped_roughness_to_alpha = string_to_bool(value));
+			}
+			
 			META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 		}
 

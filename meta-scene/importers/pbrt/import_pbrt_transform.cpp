@@ -73,6 +73,8 @@ namespace metascene::importers::pbrt {
 				if (important_token == PBRT_TRANSFORM_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_matrix(context, context.current().transform));
 
 				if (important_token == PBRT_SCALE_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_scale(context, context.current().transform));
+
+				if (important_token == PBRT_TRANSLATE_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_translate(context, context.current().transform));
 			
 				if (important_token == PBRT_OBJECT_INSTANCE_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_objects_to(context));
 

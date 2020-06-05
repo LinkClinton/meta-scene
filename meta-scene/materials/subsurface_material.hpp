@@ -13,7 +13,7 @@ namespace metascene {
 			std::shared_ptr<texture> transmission = std::make_shared<constant_texture>(value_type::spectrum);
 			std::shared_ptr<texture> reflectance = std::make_shared<constant_texture>(value_type::spectrum);
 			std::shared_ptr<texture> diffuse = std::make_shared<constant_texture>(value_type::spectrum);
-			std::shared_ptr<texture> dmfp = std::make_shared<constant_texture>(value_type::spectrum);
+			std::shared_ptr<texture> mfp = std::make_shared<constant_texture>(value_type::spectrum);
 			
 			std::shared_ptr<texture> roughness_u = std::make_shared<constant_texture>(value_type::real);
 			std::shared_ptr<texture> roughness_v = std::make_shared<constant_texture>(value_type::real);

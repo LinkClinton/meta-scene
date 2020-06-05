@@ -12,7 +12,7 @@ std::string metascene::materials::subsurface_material::to_string() const noexcep
 	stream << "transmission = " << transmission->to_string() << std::endl;
 	stream << "reflectance  = " << reflectance->to_string() << std::endl;
 	stream << "diffuse      = " << diffuse->to_string() << std::endl;
-	stream << "dmfp         = " << dmfp->to_string() << std::endl;
+	stream << "mfp         = " << mfp->to_string() << std::endl;
 	stream << "roughness u  = " << roughness_u->to_string() << std::endl;
 	stream << "roughness v  = " << roughness_v->to_string() << std::endl;
 	stream << "eta          = " << eta->to_string() << std::endl;
