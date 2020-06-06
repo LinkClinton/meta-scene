@@ -17,13 +17,14 @@ Meta-scene is a library to load different scene format. Using meta-scene to load
 
 There are scenes passed the test. You can click [here](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes) to see the image of scene(render by rainbow-renderer).
 
-- [cbox/cbox.xml](https://github.com/LinkClinton/repository-data/blob/master/rainbow-renderer/scenes/cbox) : Cornell Box.
-- [veach_mi/mi.xml](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/veach_mi) : Veach's MIS test scene.
-- [dragon/f8-10.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/dragon) : Dragon with plastic/glass material.
+- [cbox/cbox.xml](https://github.com/LinkClinton/repository-data/blob/master/rainbow-renderer/scenes/cbox) : cornell box.
+- [veach_mi/mi.xml](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/veach_mi) : veach's MIS test scene.
+- [dragon/f8-10.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/dragon) : dragon with plastic/glass material.
 - [lte-orb/lte-orb-silver.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/lte-orb) : lte-orb with metal material.
 - [structuresynth/metal.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/structuresynth) : metal material scene.
 - [structuresynth/arcsphere.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/structuresynth) : glass material scene.
 - [structuresynth/microcity.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/structuresynth) : lens test scene.
+- [structuresynth/ballpile.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/structuresynth) : bssrdf test scene.
 - [yeahright/yeahright.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/yeahright) : metal material scene.
 - [pbrt-book/book.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/pbrt-book) : pbrt-v2 book scene(not support bump mapping).
 - [ganesha/ganesha.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/ganesha) : substrate material scene.
@@ -36,6 +37,9 @@ There are scenes passed the test. You can click [here](https://github.com/LinkCl
 - [ecosys/ecosys.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/ecosys) : ecosys scene(not support bump mapping and windy texture).
 - [bmw-m6/bmw-m6.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/bmw-m6) : bmw car scene(replace fourier material to matte material).
 - [vw-van/vw-van.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/vw-van) : car scene(replace fourier material to matte material).
+- [cbox-sss/cbox.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/cbox-sss) : cornell box with bssrdf.
+- [sssdragon/dragon_10.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/sssdragon) : dragon with bssrdf.
+- [head/head.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/head) : head with bssrdf.
 
 All scenes you can download from the web of mitsuba and pbrt. But some scenes(pbrt format) are changed for rendering(for example, replace "bdpt" to "path").
 
