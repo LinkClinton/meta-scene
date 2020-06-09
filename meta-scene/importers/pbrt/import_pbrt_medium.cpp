@@ -17,6 +17,8 @@ namespace metascene::importers::pbrt {
 		instance->sigma_s = std::make_shared<color_spectrum>(static_cast<real>(2.55), static_cast<real>(3.21), static_cast<real>(3.77));
 		instance->g = 0;
 
+		auto scale = std::make_shared<color_spectrum>(static_cast<real>(1));
+		
 		for (const auto& property : properties) {
 			auto [type, name] = property.first;
 
@@ -31,6 +33,7 @@ namespace metascene::importers::pbrt {
 				const auto value = string_to_real(remove_special_character(property.second));
 
 				if (name == "g") META_SCENE_FINISHED_AND_CONTINUE(instance->g = value);
+				if (name == "scale") META_SCENE_FINISHED_AND_CONTINUE(scale = std::make_shared<color_spectrum>(value));
 			}
 
 			if (type == PBRT_STRING_TOKEN) {
@@ -40,6 +43,9 @@ namespace metascene::importers::pbrt {
 			}
 		}
 
+		instance->sigma_s = multiply_spectrum(instance->sigma_s, scale);
+		instance->sigma_a = multiply_spectrum(instance->sigma_a, scale);
+		
 		medium = instance;
 	}
 
