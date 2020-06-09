@@ -4,6 +4,7 @@
 #include "import_pbrt_transform.hpp"
 #include "import_pbrt_material.hpp"
 #include "import_pbrt_texture.hpp"
+#include "import_pbrt_medium.hpp"
 #include "import_pbrt_shape.hpp"
 
 #ifdef __PBRT_IMPORTER__
@@ -51,6 +52,9 @@ namespace metascene::importers::pbrt {
 				if (important_token == PBRT_NAMED_MATERIAL_TOKEN) 
 					META_SCENE_FINISHED_AND_RETURN(import_named_material(context, context.current().material));
 
+				if (important_token == PBRT_MEDIUM_INTERFACE_TOKEN)
+					META_SCENE_FINISHED_AND_RETURN(import_medium_interface(context, context.current().media));
+			
 				if (important_token == PBRT_ATTRIBUTE_BEGIN_TOKEN) 
 					META_SCENE_FINISHED_AND_RETURN(import_attribute(context));
 			

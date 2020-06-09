@@ -43,7 +43,9 @@ namespace metascene::importers::pbrt {
 	}
 
 	std::shared_ptr<material> scene_state::find_material(const std::string& name)
-	{	
+	{
+		if (name == "") return nullptr;
+		
 		if (materials.find(name) != materials.end()) return materials.at(name);
 
 		META_SCENE_PBRT_NO_ELEMENT;
@@ -59,6 +61,15 @@ namespace metascene::importers::pbrt {
 	std::shared_ptr<objects> scene_state::find_object(const std::string& name)
 	{
 		if (objects.find(name) != objects.end()) return objects.at(name);
+
+		META_SCENE_PBRT_NO_ELEMENT;
+	}
+
+	std::shared_ptr<medium> scene_state::find_medium(const std::string& name)
+	{
+		if (name == "") return nullptr;
+		
+		if (media.find(name) != media.end()) return media.at(name);
 
 		META_SCENE_PBRT_NO_ELEMENT;
 	}
@@ -155,7 +166,9 @@ namespace metascene::importers::pbrt {
 		return
 			token == PBRT_REVERSE_ORIENTATION_TOKEN ||
 			token == PBRT_MAKE_NAMED_MATERIAL_TOKEN ||
+			token == PBRT_MAKE_NAMED_MEDIUM_TOKEN ||
 			token == PBRT_AREA_LIGHT_SOURCE_TOKEN ||
+			token == PBRT_MEDIUM_INTERFACE_TOKEN ||
 			token == PBRT_CONCAT_TRANSFORM_TOKEN ||
 			token == PBRT_OBJECT_INSTANCE_TOKEN ||
 			token == PBRT_ATTRIBUTE_BEGIN_TOKEN ||

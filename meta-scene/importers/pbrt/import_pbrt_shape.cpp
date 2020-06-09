@@ -198,6 +198,7 @@ namespace metascene::importers::pbrt {
 		entity->transform = context.current().transform;
 		entity->material = context.current().material;
 		entity->emitter = context.current().emitter;
+		entity->media = context.current().media;
 
 		META_SCENE_IMPORT_SUCCESS_CHECK(entity->shape);
 	}
@@ -228,6 +229,7 @@ namespace metascene::importers::pbrt {
 			entity->material = object->material;
 			entity->emitter = object->emitter;
 			entity->shape = object->shape;
+			entity->media = object->media;
 
 			entity->transform = context.current().transform * object->transform;
 

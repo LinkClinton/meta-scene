@@ -607,6 +607,8 @@ namespace metascene::importers::pbrt {
 				properties.insert({ type_and_name, value });
 			});
 
+		if (type == "") { material = nullptr; return; }
+
 		import_material_from_property_group(context, properties, material);
 	}
 

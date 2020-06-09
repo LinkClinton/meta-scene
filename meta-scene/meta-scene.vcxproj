@@ -181,6 +181,7 @@
     <ClInclude Include="importers\pbrt\import_pbrt_integrator.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_light_source.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_material.hpp" />
+    <ClInclude Include="importers\pbrt\import_pbrt_medium.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_shape.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_spectrum.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_texture.hpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="integrators\direct_integrator.hpp" />
     <ClInclude Include="integrators\integrator.hpp" />
     <ClInclude Include="integrators\path_integrator.hpp" />
+    <ClInclude Include="integrators\volume_path_integrator.hpp" />
     <ClInclude Include="interfaces\string_property.hpp" />
     <ClInclude Include="logs.hpp" />
     <ClInclude Include="materials\diffuse_material.hpp" />
@@ -204,6 +206,8 @@
     <ClInclude Include="materials\uber_material.hpp" />
     <ClInclude Include="math\matrix4x4.hpp" />
     <ClInclude Include="math\vector3.hpp" />
+    <ClInclude Include="media\homogeneous_medium.hpp" />
+    <ClInclude Include="media\medium.hpp" />
     <ClInclude Include="samplers\random_sampler.hpp" />
     <ClInclude Include="samplers\sampler.hpp" />
     <ClInclude Include="scene.hpp" />
@@ -250,6 +254,7 @@
     <ClCompile Include="importers\pbrt\import_pbrt_integrator.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_light_source.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_material.cpp" />
+    <ClCompile Include="importers\pbrt\import_pbrt_medium.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_shape.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_spectrum.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_texture.cpp" />
@@ -258,6 +263,7 @@
     <ClCompile Include="integrators\direct_integrator.cpp" />
     <ClCompile Include="integrators\integrator.cpp" />
     <ClCompile Include="integrators\path_integrator.cpp" />
+    <ClCompile Include="integrators\volume_path_integrator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="materials\diffuse_material.cpp" />
     <ClCompile Include="materials\glass_material.cpp" />
@@ -270,6 +276,8 @@
     <ClCompile Include="materials\subsurface_material.cpp" />
     <ClCompile Include="materials\translucent_material.cpp" />
     <ClCompile Include="materials\uber_material.cpp" />
+    <ClCompile Include="media\homogeneous_medium.cpp" />
+    <ClCompile Include="media\medium.cpp" />
     <ClCompile Include="samplers\random_sampler.cpp" />
     <ClCompile Include="samplers\sampler.cpp" />
     <ClCompile Include="shapes\disk.cpp" />

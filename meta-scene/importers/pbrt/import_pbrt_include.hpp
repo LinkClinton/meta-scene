@@ -38,7 +38,9 @@ namespace metascene::importers::pbrt {
 
 	const std::string PBRT_REVERSE_ORIENTATION_TOKEN = "ReverseOrientation";
 	const std::string PBRT_MAKE_NAMED_MATERIAL_TOKEN = "MakeNamedMaterial";
+	const std::string PBRT_MAKE_NAMED_MEDIUM_TOKEN = "MakeNamedMedium";
 	const std::string PBRT_AREA_LIGHT_SOURCE_TOKEN = "AreaLightSource";
+	const std::string PBRT_MEDIUM_INTERFACE_TOKEN = "MediumInterface";
 	const std::string PBRT_CONCAT_TRANSFORM_TOKEN = "ConcatTransform";
 	const std::string PBRT_OBJECT_INSTANCE_TOKEN = "ObjectInstance";
 	const std::string PBRT_ATTRIBUTE_BEGIN_TOKEN = "AttributeBegin";
@@ -73,11 +75,12 @@ namespace metascene::importers::pbrt {
 	};
 	
 	struct render_config {
+		std::shared_ptr<metascene::media::media> media = nullptr;
 		std::shared_ptr<material> material = nullptr;
 		std::shared_ptr<emitter> emitter = nullptr;
 
 		std::shared_ptr<objects> objects = nullptr;
-		
+
 		matrix4x4 transform = matrix4x4(1);
 
 		bool reverse_orientation = false;
@@ -89,6 +92,7 @@ namespace metascene::importers::pbrt {
 		std::unordered_map<std::string, std::shared_ptr<material>> materials;
 		std::unordered_map<std::string, std::shared_ptr<texture>> textures;
 		std::unordered_map<std::string, std::shared_ptr<objects>> objects;
+		std::unordered_map<std::string, std::shared_ptr<medium>> media;
 
 		std::stack<render_config> render_config_stack;
 
@@ -97,6 +101,8 @@ namespace metascene::importers::pbrt {
 		std::shared_ptr<texture> find_texture(const std::string& name);
 
 		std::shared_ptr<pbrt::objects> find_object(const std::string& name);
+
+		std::shared_ptr<medium> find_medium(const std::string& name);
 		
 		scene_state() = default;
 	};

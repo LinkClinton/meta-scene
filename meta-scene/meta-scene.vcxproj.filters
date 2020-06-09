@@ -43,6 +43,9 @@
     <Filter Include="filters">
       <UniqueIdentifier>{58774d09-6db7-403e-9382-e2df18fbdfb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="media">
+      <UniqueIdentifier>{76b9b7c6-68df-40a3-a72f-0f1b51917c12}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\vector3.hpp">
@@ -241,6 +244,18 @@
     <ClInclude Include="materials\subsurface_material.hpp">
       <Filter>materials</Filter>
     </ClInclude>
+    <ClInclude Include="integrators\volume_path_integrator.hpp">
+      <Filter>integrators</Filter>
+    </ClInclude>
+    <ClInclude Include="media\medium.hpp">
+      <Filter>media</Filter>
+    </ClInclude>
+    <ClInclude Include="media\homogeneous_medium.hpp">
+      <Filter>media</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\pbrt\import_pbrt_medium.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">
@@ -421,6 +436,18 @@
     </ClCompile>
     <ClCompile Include="materials\subsurface_material.cpp">
       <Filter>materials</Filter>
+    </ClCompile>
+    <ClCompile Include="integrators\volume_path_integrator.cpp">
+      <Filter>integrators</Filter>
+    </ClCompile>
+    <ClCompile Include="media\medium.cpp">
+      <Filter>media</Filter>
+    </ClCompile>
+    <ClCompile Include="media\homogeneous_medium.cpp">
+      <Filter>media</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\pbrt\import_pbrt_medium.cpp">
+      <Filter>importers\pbrt</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
