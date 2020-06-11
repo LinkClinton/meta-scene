@@ -18,6 +18,8 @@
 #include <filesystem>
 #include <fstream>
 
+#pragma optimize("", off)
+
 namespace metascene::importers::pbrt {
 
 	std::string read_line_without_comment(const std::string& line)
@@ -165,6 +167,9 @@ namespace metascene::importers::pbrt {
 				if (token == PBRT_MATERIAL_TOKEN) 
 					META_SCENE_FINISHED_AND_RETURN(import_material(context, context.current().material));
 
+				if (token == PBRT_TRANSLATE_TOKEN)
+					META_SCENE_FINISHED_AND_RETURN(import_translate(context, context.current().transform));
+			
 				if (token == PBRT_SCALE_TOKEN)
 					META_SCENE_FINISHED_AND_RETURN(import_scale(context, context.current().transform));
 			
