@@ -12,7 +12,7 @@ namespace metascene::importers::pbrt {
 
 	void import_filter(scene_context& context, std::shared_ptr<filter>& filter);
 	
-	void import_camera(scene_context& context, std::shared_ptr<camera>& camera);
+	void import_camera(scene_context& context, std::shared_ptr<camera>& camera, const matrix4x4& transform);
 }
 
 #endif

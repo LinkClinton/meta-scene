@@ -220,8 +220,8 @@ namespace metascene::importers::pbrt {
 			if (token == PBRT_TRANSFORM_TOKEN)
 				META_SCENE_FINISHED_AND_CONTINUE(import_matrix(context, invert_transform));
 			
-			if (token == PBRT_CAMERA_TOKEN) 
-				META_SCENE_FINISHED_AND_CONTINUE(import_camera(context, context.scene->camera));
+			if (token == PBRT_CAMERA_TOKEN)
+				META_SCENE_FINISHED_AND_CONTINUE(import_camera(context, context.scene->camera, inverse(invert_transform)));
 
 			if (token == PBRT_WORLD_BEGIN_TOKEN) 
 				META_SCENE_FINISHED_AND_CONTINUE(import_world(context));
@@ -229,7 +229,6 @@ namespace metascene::importers::pbrt {
 			META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 		}
 
-		context.scene->camera->transform = inverse(invert_transform);
 		context.scene->film->filter = filter;
 	}
 	

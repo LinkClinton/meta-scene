@@ -21,6 +21,9 @@ namespace metascene::importers::pbrt {
 
 				if (important_token == PBRT_REVERSE_ORIENTATION_TOKEN) 
 					META_SCENE_FINISHED_AND_RETURN(import_reverse_orientation(context));
+
+				if (important_token == PBRT_COORD_SYS_TRANSFORM_TOKEN)
+					META_SCENE_FINISHED_AND_RETURN(import_coord_sys_transform(context, context.current().transform));
 			
 				if (important_token == PBRT_TRANSLATE_TOKEN) 
 					META_SCENE_FINISHED_AND_RETURN(import_translate(context, context.current().transform));
@@ -69,6 +72,9 @@ namespace metascene::importers::pbrt {
 
 				if (important_token == PBRT_MAKE_NAMED_MATERIAL_TOKEN)
 					META_SCENE_FINISHED_AND_RETURN(import_named_material(context));
+
+				if (important_token == PBRT_MAKE_NAMED_MEDIUM_TOKEN)
+					META_SCENE_FINISHED_AND_RETURN(import_named_medium(context));
 			
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});

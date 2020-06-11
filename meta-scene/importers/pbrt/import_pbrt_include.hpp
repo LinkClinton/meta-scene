@@ -37,6 +37,7 @@ namespace metascene::importers::pbrt {
 	const std::string PBRT_RGB_TOKEN = "rgb";
 
 	const std::string PBRT_REVERSE_ORIENTATION_TOKEN = "ReverseOrientation";
+	const std::string PBRT_COORD_SYS_TRANSFORM_TOKEN = "CoordSysTransform";
 	const std::string PBRT_MAKE_NAMED_MATERIAL_TOKEN = "MakeNamedMaterial";
 	const std::string PBRT_MAKE_NAMED_MEDIUM_TOKEN = "MakeNamedMedium";
 	const std::string PBRT_AREA_LIGHT_SOURCE_TOKEN = "AreaLightSource";
@@ -93,7 +94,8 @@ namespace metascene::importers::pbrt {
 		std::unordered_map<std::string, std::shared_ptr<texture>> textures;
 		std::unordered_map<std::string, std::shared_ptr<objects>> objects;
 		std::unordered_map<std::string, std::shared_ptr<medium>> media;
-
+		std::unordered_map<std::string, matrix4x4> transforms;
+		
 		std::stack<render_config> render_config_stack;
 
 		std::shared_ptr<material> find_material(const std::string& name);
@@ -103,6 +105,8 @@ namespace metascene::importers::pbrt {
 		std::shared_ptr<pbrt::objects> find_object(const std::string& name);
 
 		std::shared_ptr<medium> find_medium(const std::string& name);
+
+		matrix4x4 find_transform(const std::string& name);
 		
 		scene_state() = default;
 	};
@@ -178,6 +182,8 @@ namespace metascene::importers::pbrt {
 
 	void import_token_vector2(const std::string& token, std::vector<vector3>& data);
 
+	void import_token_real(const std::string& token, std::vector<real>& data);
+	
 	void import_token_unsigned(const std::string& token, std::vector<unsigned>& data);
 
 	void import_reverse_orientation(scene_context& context);

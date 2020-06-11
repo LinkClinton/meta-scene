@@ -112,7 +112,7 @@ namespace metascene::importers::pbrt {
 		camera = instance;
 	}
 
-	void import_camera(scene_context& context, std::shared_ptr<camera>& camera)
+	void import_camera(scene_context& context, std::shared_ptr<camera>& camera, const matrix4x4& transform)
 	{
 		const auto type = remove_special_character(context.peek_one_token());
 
@@ -120,6 +120,10 @@ namespace metascene::importers::pbrt {
 		
 		if (type == "perspective") import_perspective_camera(context, instance);
 
+		instance->transform = transform;
+
+		context.state.transforms.insert({ "camera", transform });
+		
 		META_SCENE_IMPORT_SUCCESS_CHECK(instance);
 
 		camera = instance;

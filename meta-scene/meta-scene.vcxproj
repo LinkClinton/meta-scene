@@ -206,6 +206,7 @@
     <ClInclude Include="materials\uber_material.hpp" />
     <ClInclude Include="math\matrix4x4.hpp" />
     <ClInclude Include="math\vector3.hpp" />
+    <ClInclude Include="media\heterogeneous_medium.hpp" />
     <ClInclude Include="media\homogeneous_medium.hpp" />
     <ClInclude Include="media\medium.hpp" />
     <ClInclude Include="samplers\random_sampler.hpp" />
@@ -276,6 +277,7 @@
     <ClCompile Include="materials\subsurface_material.cpp" />
     <ClCompile Include="materials\translucent_material.cpp" />
     <ClCompile Include="materials\uber_material.cpp" />
+    <ClCompile Include="media\heterogeneous_medium.cpp" />
     <ClCompile Include="media\homogeneous_medium.cpp" />
     <ClCompile Include="media\medium.cpp" />
     <ClCompile Include="samplers\random_sampler.cpp" />

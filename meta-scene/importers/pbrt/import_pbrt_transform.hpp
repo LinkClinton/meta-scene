@@ -6,6 +6,8 @@
 
 namespace metascene::importers::pbrt {
 
+	void import_coord_sys_transform(scene_context& context, matrix4x4& transform);
+	
 	void import_look_at(scene_context& context, matrix4x4& transform);
 
 	void import_translate(scene_context& context, matrix4x4& transform);

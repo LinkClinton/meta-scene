@@ -256,6 +256,9 @@
     <ClInclude Include="importers\pbrt\import_pbrt_medium.hpp">
       <Filter>importers\pbrt</Filter>
     </ClInclude>
+    <ClInclude Include="media\heterogeneous_medium.hpp">
+      <Filter>media</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">
@@ -448,6 +451,9 @@
     </ClCompile>
     <ClCompile Include="importers\pbrt\import_pbrt_medium.cpp">
       <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="media\heterogeneous_medium.cpp">
+      <Filter>media</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

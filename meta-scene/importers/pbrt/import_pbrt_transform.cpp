@@ -1,11 +1,19 @@
 #include "import_pbrt_transform.hpp"
 
 #include "import_pbrt_texture.hpp"
+#include "import_pbrt_medium.hpp"
 #include "import_pbrt_shape.hpp"
 
 #ifdef __PBRT_IMPORTER__
 
 namespace metascene::importers::pbrt {
+
+	void import_coord_sys_transform(scene_context& context, matrix4x4& transform)
+	{
+		const auto name = read_string_from_token(context.peek_one_token());
+
+		transform = context.state.find_transform(name);
+	}
 
 	void import_look_at(scene_context& context, matrix4x4& transform)
 	{
@@ -74,11 +82,15 @@ namespace metascene::importers::pbrt {
 
 				if (important_token == PBRT_SCALE_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_scale(context, context.current().transform));
 
+				if (important_token == PBRT_ROTATE_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_rotate(context, context.current().transform));
+			
 				if (important_token == PBRT_TRANSLATE_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_translate(context, context.current().transform));
 			
 				if (important_token == PBRT_OBJECT_INSTANCE_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_objects_to(context));
 
 				if (important_token == PBRT_MAKE_TEXTURE_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_texture(context));
+
+				if (important_token == PBRT_MAKE_NAMED_MEDIUM_TOKEN) META_SCENE_FINISHED_AND_RETURN(import_named_medium(context));
 			
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});

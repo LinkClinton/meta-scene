@@ -74,6 +74,13 @@ namespace metascene::importers::pbrt {
 		META_SCENE_PBRT_NO_ELEMENT;
 	}
 
+	matrix4x4 scene_state::find_transform(const std::string& name)
+	{
+		if (transforms.find(name) != transforms.end()) return transforms.at(name);
+
+		META_SCENE_PBRT_NO_ELEMENT;
+	}
+
 	void scene_context::push_config()
 	{
 		if (state.render_config_stack.empty()) state.render_config_stack.push(render_config());
@@ -165,6 +172,7 @@ namespace metascene::importers::pbrt {
 	{
 		return
 			token == PBRT_REVERSE_ORIENTATION_TOKEN ||
+			token == PBRT_COORD_SYS_TRANSFORM_TOKEN ||
 			token == PBRT_MAKE_NAMED_MATERIAL_TOKEN ||
 			token == PBRT_MAKE_NAMED_MEDIUM_TOKEN ||
 			token == PBRT_AREA_LIGHT_SOURCE_TOKEN ||
@@ -266,6 +274,15 @@ namespace metascene::importers::pbrt {
 				0
 			));
 		}
+	}
+
+	void import_token_real(const std::string& token, std::vector<real>& data)
+	{
+		auto stream = std::stringstream(remove_special_character(token));
+
+		std::string value;
+
+		while (stream >> value) data.push_back(string_to_real(value));
 	}
 
 	void import_token_unsigned(const std::string& token, std::vector<unsigned>& data)

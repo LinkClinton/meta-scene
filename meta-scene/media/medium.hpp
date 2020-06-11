@@ -8,7 +8,7 @@ namespace metascene {
 	namespace media {
 
 		enum class type : uint32 {
-			unknown = 0, homogeneous = 1
+			unknown = 0, homogeneous = 1, heterogeneous = 2
 		};
 		
 		struct medium : interfaces::string_property {
