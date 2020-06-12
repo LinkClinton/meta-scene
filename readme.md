@@ -40,6 +40,11 @@ There are scenes passed the test. You can click [here](https://github.com/LinkCl
 - [cbox-sss/cbox.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/cbox-sss) : cornell box with bssrdf.
 - [sssdragon/dragon_10.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/sssdragon) : dragon with bssrdf.
 - [head/head.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/head) : head with bssrdf.
+- [cloud/cloud.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/cloud) : cloud.
+- [coffee-splash/splash.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/coffee-splash) : coffee((replace fourier material to mixture material).
+- [dambreak/dambreak0.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/dambreak): water.
+- [dragon/f11-14.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/dragon) : dragon with glass material and medium.
+- [smoke-plume/plume-084.pbrt](https://github.com/LinkClinton/repository-data/tree/master/rainbow-renderer/scenes/smoke-plume) : smoke with mirror sphere. 
 
 All scenes you can download from the web of mitsuba and pbrt. But some scenes(pbrt format) are changed for rendering(for example, replace "bdpt" to "path").
 
