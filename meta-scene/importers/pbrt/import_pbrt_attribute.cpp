@@ -75,6 +75,9 @@ namespace metascene::importers::pbrt {
 
 				if (important_token == PBRT_MAKE_NAMED_MEDIUM_TOKEN)
 					META_SCENE_FINISHED_AND_RETURN(import_named_medium(context));
+
+				if (important_token == PBRT_TRANSFORM_BEGIN_TOKEN)
+					META_SCENE_FINISHED_AND_RETURN(import_transform(context));
 			
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});

@@ -172,6 +172,9 @@ namespace metascene::importers::pbrt {
 			
 				if (token == PBRT_SCALE_TOKEN)
 					META_SCENE_FINISHED_AND_RETURN(import_scale(context, context.current().transform));
+
+				if (token == PBRT_NAMED_MATERIAL_TOKEN)
+					META_SCENE_FINISHED_AND_RETURN(import_named_material(context, context.current().material));
 			
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});

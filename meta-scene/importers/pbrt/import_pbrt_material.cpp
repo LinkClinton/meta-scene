@@ -105,7 +105,13 @@ namespace metascene::importers::pbrt {
 				// now we do not support it.
 				if (name == "bumpmap") META_SCENE_FINISHED_AND_CONTINUE(logs::warn(META_SCENE_PBRT_BUMP_MAP_IS_NOT_SUPPORT));
 			}
-			
+
+			if (type == PBRT_BOOL_TOKEN) {
+				const auto value = string_to_bool(read_string_from_token(property.second));
+
+				if (name == "remaproughness") META_SCENE_FINISHED_AND_CONTINUE(instance->remapped_roughness_to_alpha = value);
+			}
+
 			// material name
 			if (type == PBRT_STRING_TOKEN) continue;
 
@@ -171,6 +177,12 @@ namespace metascene::importers::pbrt {
 				if (name == "bumpmap") META_SCENE_FINISHED_AND_CONTINUE(logs::warn(META_SCENE_PBRT_BUMP_MAP_IS_NOT_SUPPORT));
 			}
 
+			if (type == PBRT_BOOL_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+
+				if (name == "remaproughness") META_SCENE_FINISHED_AND_CONTINUE(instance->remapped_roughness_to_alpha = string_to_bool(value));
+			}
+			
 			// material name
 			if (type == PBRT_STRING_TOKEN) continue;
 
@@ -585,6 +597,7 @@ namespace metascene::importers::pbrt {
 		if (type == "matte") import_matte_material(context, properties, instance);
 		if (type == "uber") import_uber_material(context, properties, instance);
 		if (type == "mix") import_mix_material(context, properties, instance);
+		if (type == "none") { material = nullptr; return; }
 		
 		META_SCENE_IMPORT_SUCCESS_CHECK(instance);
 
