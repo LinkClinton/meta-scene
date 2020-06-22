@@ -2,6 +2,7 @@
 
 #include "../../shapes/triangles.hpp"
 #include "../../shapes/sphere.hpp"
+#include "../../shapes/curve.hpp"
 #include "../../shapes/mesh.hpp"
 #include "../../shapes/disk.hpp"
 #include "../../logs.hpp"
@@ -180,6 +181,48 @@ namespace metascene::importers::pbrt {
 		shape = instance;
 	}
 
+	void import_curve(scene_context& context, std::shared_ptr<shape>& shape)
+	{
+		auto instance = std::make_shared<curve>();
+
+		instance->control_points = {};
+		instance->width = { 1, 1 };
+		instance->u_min = 0;
+		instance->u_max = 1;
+
+		std::vector<vector3> control_points;
+		
+		context.loop_important_token([&]()
+			{
+				auto [type, name] = context.peek_type_and_name();
+
+				if (type == PBRT_STRING_TOKEN) {
+					const auto value = read_string_from_token(context.peek_one_token());
+
+					if (name == "type" && value == "cylinder") return;
+				}
+
+				if (type == PBRT_POINT_TOKEN) {
+					const auto value = context.peek_one_token();
+
+					if (name == "P") META_SCENE_FINISHED_AND_RETURN(import_token_vector3(value, control_points));
+				}
+
+				if (type == PBRT_FLOAT_TOKEN) {
+					const auto value = context.peek_real();
+
+					if (name == "width0") META_SCENE_FINISHED_AND_RETURN(instance->width[0] = value);
+					if (name == "width1") META_SCENE_FINISHED_AND_RETURN(instance->width[1] = value);
+				}
+
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
+			});
+
+		instance->control_points = { control_points[0], control_points[1], control_points[2], control_points[3] };
+		
+		shape = instance;
+	}
+
 	void import_shape(scene_context& context, std::shared_ptr<entity>& entity)
 	{
 		const auto type = remove_special_character(context.peek_one_token());
@@ -191,6 +234,7 @@ namespace metascene::importers::pbrt {
 		if (type == "plymesh") import_ply_mesh(context, entity->shape);
 		if (type == "objmesh") import_obj_mesh(context, entity->shape);
 		if (type == "sphere") import_sphere(context, entity->shape);
+		if (type == "curve") import_curve(context, entity->shape);
 		if (type == "disk") import_disk(context, entity->shape);
 		
 		// build the shape we current state of context

@@ -259,6 +259,9 @@
     <ClInclude Include="media\heterogeneous_medium.hpp">
       <Filter>media</Filter>
     </ClInclude>
+    <ClInclude Include="shapes\curve.hpp">
+      <Filter>shapes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">
@@ -454,6 +457,9 @@
     </ClCompile>
     <ClCompile Include="media\heterogeneous_medium.cpp">
       <Filter>media</Filter>
+    </ClCompile>
+    <ClCompile Include="shapes\curve.cpp">
+      <Filter>shapes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
