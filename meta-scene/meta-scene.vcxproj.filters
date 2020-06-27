@@ -262,6 +262,9 @@
     <ClInclude Include="shapes\curve.hpp">
       <Filter>shapes</Filter>
     </ClInclude>
+    <ClInclude Include="integrators\photon_mapping_integrator.hpp">
+      <Filter>integrators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">
@@ -460,6 +463,9 @@
     </ClCompile>
     <ClCompile Include="shapes\curve.cpp">
       <Filter>shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="integrators\photon_mapping_integrator.cpp">
+      <Filter>integrators</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

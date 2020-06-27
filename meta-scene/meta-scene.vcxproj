@@ -190,6 +190,7 @@
     <ClInclude Include="integrators\direct_integrator.hpp" />
     <ClInclude Include="integrators\integrator.hpp" />
     <ClInclude Include="integrators\path_integrator.hpp" />
+    <ClInclude Include="integrators\photon_mapping_integrator.hpp" />
     <ClInclude Include="integrators\volume_path_integrator.hpp" />
     <ClInclude Include="interfaces\string_property.hpp" />
     <ClInclude Include="logs.hpp" />
@@ -265,6 +266,7 @@
     <ClCompile Include="integrators\direct_integrator.cpp" />
     <ClCompile Include="integrators\integrator.cpp" />
     <ClCompile Include="integrators\path_integrator.cpp" />
+    <ClCompile Include="integrators\photon_mapping_integrator.cpp" />
     <ClCompile Include="integrators\volume_path_integrator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="materials\diffuse_material.cpp" />
