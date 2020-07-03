@@ -187,6 +187,7 @@
     <ClInclude Include="importers\pbrt\import_pbrt_texture.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_transform.hpp" />
     <ClInclude Include="importers\pbrt\pbrt_importer.hpp" />
+    <ClInclude Include="integrators\bidirectional_path_integrator.hpp" />
     <ClInclude Include="integrators\direct_integrator.hpp" />
     <ClInclude Include="integrators\integrator.hpp" />
     <ClInclude Include="integrators\path_integrator.hpp" />
@@ -263,6 +264,7 @@
     <ClCompile Include="importers\pbrt\import_pbrt_texture.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_transform.cpp" />
     <ClCompile Include="importers\pbrt\pbrt_importer.cpp" />
+    <ClCompile Include="integrators\bidirectional_path_integrator.cpp" />
     <ClCompile Include="integrators\direct_integrator.cpp" />
     <ClCompile Include="integrators\integrator.cpp" />
     <ClCompile Include="integrators\path_integrator.cpp" />

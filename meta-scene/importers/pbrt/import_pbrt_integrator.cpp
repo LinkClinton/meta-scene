@@ -1,5 +1,6 @@
 #include "import_pbrt_integrator.hpp"
 
+#include "../../integrators/bidirectional_path_integrator.hpp"
 #include "../../integrators/photon_mapping_integrator.hpp"
 #include "../../integrators/volume_path_integrator.hpp"
 #include "../../integrators/direct_integrator.hpp"
@@ -99,6 +100,28 @@ namespace metascene::importers::pbrt {
 
 		integrator = instance;
 	}
+
+	void import_bidirectional_path_integrator(scene_context& context, std::shared_ptr<integrator>& integrator)
+	{
+		auto instance = std::make_shared<bidirectional_path_integrator>();
+
+		instance->depth = 5;
+		
+		context.loop_important_token([&]()
+			{
+				auto [type, name] = context.peek_type_and_name();
+
+				if (type == PBRT_INTEGER_TOKEN) {
+					const auto value = context.peek_integer<int>();
+
+					if (name == "maxdepth") META_SCENE_FINISHED_AND_RETURN(instance->depth = value);
+				}
+			
+				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
+			});
+
+		integrator = instance;
+	}
 	
 	void import_direct_integrator(scene_context& context, std::shared_ptr<integrator>& integrator)
 	{
@@ -122,6 +145,7 @@ namespace metascene::importers::pbrt {
 
 		std::shared_ptr<integrators::integrator> instance = nullptr;
 
+		if (integrator_type == "bdpt") import_bidirectional_path_integrator(context, instance);
 		if (integrator_type == "sppm") import_photon_mapping_integrator(context, instance);
 		if (integrator_type == "directlighting") import_direct_integrator(context, instance);
 		if (integrator_type == "volpath") import_vol_path_integrator(context, instance);

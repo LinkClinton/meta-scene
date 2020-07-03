@@ -9,7 +9,7 @@ namespace metascene {
 	namespace integrators {
 
 		enum class type : unsigned {
-			unknown = 0, path = 1, direct = 2, volume_path = 3, photon_mapping = 4
+			unknown = 0, path = 1, direct = 2, volume_path = 3, photon_mapping = 4, bidirectional_path = 5
 		};
 		
 		struct integrator {

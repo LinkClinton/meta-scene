@@ -1,6 +1,7 @@
 #include "import_pbrt_include.hpp"
 
 #include "../../materials/diffuse_material.hpp"
+#include "../../logs.hpp"
 
 #ifdef __PBRT_IMPORTER__
 
@@ -48,6 +49,10 @@ namespace metascene::importers::pbrt {
 		
 		if (materials.find(name) != materials.end()) return materials.at(name);
 
+		logs::warn("the material (name = {0}) is not found. we will return nullptr.", name);
+		
+		return nullptr;
+		
 		META_SCENE_PBRT_NO_ELEMENT;
 	}
 
@@ -55,6 +60,10 @@ namespace metascene::importers::pbrt {
 	{
 		if (textures.find(name) != textures.end()) return textures.at(name);
 
+		logs::warn("the texture (name = {0}) is not found. we will return constant texture.", name);
+		
+		return std::make_shared<constant_texture>(static_cast<real>(0));
+		
 		META_SCENE_PBRT_NO_ELEMENT;
 	}
 
