@@ -46,6 +46,12 @@
     <Filter Include="media">
       <UniqueIdentifier>{76b9b7c6-68df-40a3-a72f-0f1b51917c12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="exporters">
+      <UniqueIdentifier>{eaf62b87-5e7b-4cb7-9f54-4292cc150499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="exporters\json">
+      <UniqueIdentifier>{1fa7cbe4-5acf-43e3-bf09-d928d3962dec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\vector3.hpp">
@@ -268,6 +274,27 @@
     <ClInclude Include="integrators\bidirectional_path_integrator.hpp">
       <Filter>integrators</Filter>
     </ClInclude>
+    <ClInclude Include="exporters\json\json_exporter.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
+    <ClInclude Include="exporters\json\export_json_camera.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
+    <ClInclude Include="exporters\json\export_json_include.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
+    <ClInclude Include="exporters\json\export_json_transform.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
+    <ClInclude Include="exporters\json\export_json_entity.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
+    <ClInclude Include="exporters\json\export_json_shape.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
+    <ClInclude Include="exporters\json\export_json_emitter.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">
@@ -472,6 +499,24 @@
     </ClCompile>
     <ClCompile Include="integrators\bidirectional_path_integrator.cpp">
       <Filter>integrators</Filter>
+    </ClCompile>
+    <ClCompile Include="exporters\json\json_exporter.cpp">
+      <Filter>exporters\json</Filter>
+    </ClCompile>
+    <ClCompile Include="exporters\json\export_json_camera.cpp">
+      <Filter>exporters\json</Filter>
+    </ClCompile>
+    <ClCompile Include="exporters\json\export_json_transform.cpp">
+      <Filter>exporters\json</Filter>
+    </ClCompile>
+    <ClCompile Include="exporters\json\export_json_entity.cpp">
+      <Filter>exporters\json</Filter>
+    </ClCompile>
+    <ClCompile Include="exporters\json\export_json_shape.cpp">
+      <Filter>exporters\json</Filter>
+    </ClCompile>
+    <ClCompile Include="exporters\json\export_json_emitter.cpp">
+      <Filter>exporters\json</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
