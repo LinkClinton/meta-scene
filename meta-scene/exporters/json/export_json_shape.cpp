@@ -5,6 +5,31 @@
 
 #ifdef __JSON_EXPORTER__
 
+namespace nlohmann {
+
+	template <>
+	struct adl_serializer<std::vector<metascene::vector3>> {
+		static void to_json(json& j, const std::vector<metascene::vector3>& value)
+		{
+			for (size_t index = 0; index < value.size(); index++) {
+				j.push_back(value[index].x);
+				j.push_back(value[index].y);
+				j.push_back(value[index].z);
+			}
+		}
+
+		static void from_json(const json& j, std::vector<metascene::vector3>& value)
+		{
+			for (size_t index = 0; index < j.size(); index += 3) {
+				value.push_back({
+					j[index + 0], j[index + 1], j[index + 2]
+				});
+			}
+		}
+	};
+	
+}
+
 namespace metascene::exporters::json {
 
 	std::vector<float> copy_vector3_array_to_float_array(const std::vector<vector3>& values)
@@ -22,10 +47,10 @@ namespace metascene::exporters::json {
 
 		triangles["type"] = "triangles";
 
-		if (!shape->positions.empty()) triangles["data"]["positions"] = copy_vector3_array_to_float_array(shape->positions);
-		if (!shape->normals.empty()) triangles["data"]["normals"] = copy_vector3_array_to_float_array(shape->normals);
+		if (!shape->positions.empty()) triangles["data"]["positions"] = shape->positions;
+		if (!shape->normals.empty()) triangles["data"]["normals"] = shape->normals;
 		if (!shape->indices.empty()) triangles["data"]["indices"] = shape->indices;
-		if (!shape->uvs.empty()) triangles["data"]["uvs"] = copy_vector3_array_to_float_array(shape->uvs);
+		if (!shape->uvs.empty()) triangles["data"]["uvs"] = shape->uvs;
 
 		return triangles;
 	}
