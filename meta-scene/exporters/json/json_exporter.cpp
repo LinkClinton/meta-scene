@@ -1,6 +1,7 @@
 #include "json_exporter.hpp"
 
 #include "export_json_camera.hpp"
+#include "export_json_config.hpp"
 #include "export_json_entity.hpp"
 
 #include <fstream>
@@ -15,6 +16,7 @@ namespace metascene::exporters::json {
 	{
 		nlohmann::json scene_json;
 
+		scene_json["config"] = export_config_to_json(scene);
 		scene_json["camera"] = export_camera_and_film_to_json(scene->camera, scene->film);
 
 		for (size_t index = 0; index < scene->entities.size(); index++) 

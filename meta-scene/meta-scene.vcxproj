@@ -163,9 +163,11 @@
     <ClInclude Include="emitters\surface_emitter.hpp" />
     <ClInclude Include="entity.hpp" />
     <ClInclude Include="exporters\json\export_json_camera.hpp" />
+    <ClInclude Include="exporters\json\export_json_config.hpp" />
     <ClInclude Include="exporters\json\export_json_emitter.hpp" />
     <ClInclude Include="exporters\json\export_json_entity.hpp" />
     <ClInclude Include="exporters\json\export_json_include.hpp" />
+    <ClInclude Include="exporters\json\export_json_material.hpp" />
     <ClInclude Include="exporters\json\export_json_shape.hpp" />
     <ClInclude Include="exporters\json\export_json_transform.hpp" />
     <ClInclude Include="exporters\json\json_exporter.hpp" />
@@ -247,8 +249,10 @@
     <ClCompile Include="emitters\surface_emitter.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="exporters\json\export_json_camera.cpp" />
+    <ClCompile Include="exporters\json\export_json_config.cpp" />
     <ClCompile Include="exporters\json\export_json_emitter.cpp" />
     <ClCompile Include="exporters\json\export_json_entity.cpp" />
+    <ClCompile Include="exporters\json\export_json_material.cpp" />
     <ClCompile Include="exporters\json\export_json_shape.cpp" />
     <ClCompile Include="exporters\json\export_json_transform.cpp" />
     <ClCompile Include="exporters\json\json_exporter.cpp" />

@@ -295,6 +295,12 @@
     <ClInclude Include="exporters\json\export_json_emitter.hpp">
       <Filter>exporters\json</Filter>
     </ClInclude>
+    <ClInclude Include="exporters\json\export_json_config.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
+    <ClInclude Include="exporters\json\export_json_material.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="integrators\integrator.cpp">
@@ -516,6 +522,12 @@
       <Filter>exporters\json</Filter>
     </ClCompile>
     <ClCompile Include="exporters\json\export_json_emitter.cpp">
+      <Filter>exporters\json</Filter>
+    </ClCompile>
+    <ClCompile Include="exporters\json\export_json_config.cpp">
+      <Filter>exporters\json</Filter>
+    </ClCompile>
+    <ClCompile Include="exporters\json\export_json_material.cpp">
       <Filter>exporters\json</Filter>
     </ClCompile>
   </ItemGroup>
