@@ -18,78 +18,35 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="importers\pbrt\import_pbrt_attribute.hpp" />
-    <ClInclude Include="importers\pbrt\import_pbrt_camera.hpp" />
-    <ClInclude Include="importers\pbrt\import_pbrt_include.hpp" />
-    <ClInclude Include="importers\pbrt\import_pbrt_integrator.hpp" />
-    <ClInclude Include="importers\pbrt\import_pbrt_light_source.hpp" />
-    <ClInclude Include="importers\pbrt\import_pbrt_material.hpp" />
-    <ClInclude Include="importers\pbrt\import_pbrt_medium.hpp" />
-    <ClInclude Include="importers\pbrt\import_pbrt_shape.hpp" />
-    <ClInclude Include="importers\pbrt\import_pbrt_spectrum.hpp" />
-    <ClInclude Include="importers\pbrt\import_pbrt_texture.hpp" />
-    <ClInclude Include="importers\pbrt\import_pbrt_transform.hpp" />
-    <ClInclude Include="importers\pbrt\pbrt_importer.hpp" />
-    <ClInclude Include="objects\camera.hpp" />
-    <ClInclude Include="objects\entity.hpp" />
-    <ClInclude Include="objects\film.hpp" />
-    <ClInclude Include="objects\filter.hpp" />
-    <ClInclude Include="objects\integrator.hpp" />
-    <ClInclude Include="objects\light.hpp" />
-    <ClInclude Include="objects\material.hpp" />
-    <ClInclude Include="objects\medium.hpp" />
-    <ClInclude Include="objects\sampler.hpp" />
-    <ClInclude Include="objects\shape.hpp" />
-    <ClInclude Include="objects\texture.hpp" />
-    <ClInclude Include="scene.hpp" />
-    <ClInclude Include="shared\cie_samples.hpp" />
-    <ClInclude Include="shared\spectrum.hpp" />
-    <ClInclude Include="types.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="importers\pbrt\import_pbrt_attribute.cpp" />
-    <ClCompile Include="importers\pbrt\import_pbrt_camera.cpp" />
-    <ClCompile Include="importers\pbrt\import_pbrt_include.cpp" />
-    <ClCompile Include="importers\pbrt\import_pbrt_integrator.cpp" />
-    <ClCompile Include="importers\pbrt\import_pbrt_light_source.cpp" />
-    <ClCompile Include="importers\pbrt\import_pbrt_material.cpp" />
-    <ClCompile Include="importers\pbrt\import_pbrt_medium.cpp" />
-    <ClCompile Include="importers\pbrt\import_pbrt_shape.cpp" />
-    <ClCompile Include="importers\pbrt\import_pbrt_spectrum.cpp" />
-    <ClCompile Include="importers\pbrt\import_pbrt_texture.cpp" />
-    <ClCompile Include="importers\pbrt\import_pbrt_transform.cpp" />
-    <ClCompile Include="importers\pbrt\pbrt_importer.cpp" />
-    <ClCompile Include="shared\spectrum.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{00DFDEC4-336E-4501-8980-C5D6354796BE}</ProjectGuid>
-    <RootNamespace>metascene</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{47caf97e-53e2-40ef-8ec7-37bfd61ce233}</ProjectGuid>
+    <RootNamespace>meta2json</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -118,13 +75,13 @@
     <OutDir>$(ProjectDir)bin\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)bin\$(PlatformTarget)\$(Configuration)\</IntDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)bin\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)bin\$(PlatformTarget)\$(Configuration)\</IntDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)bin\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)bin\$(PlatformTarget)\$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -137,24 +94,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -167,15 +109,27 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -188,7 +142,6 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -197,6 +150,14 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\meta-scene\meta-scene.vcxproj">
+      <Project>{00dfdec4-336e-4501-8980-c5d6354796be}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

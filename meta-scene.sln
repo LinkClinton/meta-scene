@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "meta-scene", "meta-scene\meta-scene.vcxproj", "{00DFDEC4-336E-4501-8980-C5D6354796BE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{E69D9E3D-D497-4261-8C0B-D44992A0651E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "meta2json", "tools\meta2json\meta2json.vcxproj", "{47CAF97E-53E2-40EF-8EC7-37BFD61CE233}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,9 +25,20 @@ Global
 		{00DFDEC4-336E-4501-8980-C5D6354796BE}.Release|x64.Build.0 = Release|x64
 		{00DFDEC4-336E-4501-8980-C5D6354796BE}.Release|x86.ActiveCfg = Release|Win32
 		{00DFDEC4-336E-4501-8980-C5D6354796BE}.Release|x86.Build.0 = Release|Win32
+		{47CAF97E-53E2-40EF-8EC7-37BFD61CE233}.Debug|x64.ActiveCfg = Debug|x64
+		{47CAF97E-53E2-40EF-8EC7-37BFD61CE233}.Debug|x64.Build.0 = Debug|x64
+		{47CAF97E-53E2-40EF-8EC7-37BFD61CE233}.Debug|x86.ActiveCfg = Debug|Win32
+		{47CAF97E-53E2-40EF-8EC7-37BFD61CE233}.Debug|x86.Build.0 = Debug|Win32
+		{47CAF97E-53E2-40EF-8EC7-37BFD61CE233}.Release|x64.ActiveCfg = Release|x64
+		{47CAF97E-53E2-40EF-8EC7-37BFD61CE233}.Release|x64.Build.0 = Release|x64
+		{47CAF97E-53E2-40EF-8EC7-37BFD61CE233}.Release|x86.ActiveCfg = Release|Win32
+		{47CAF97E-53E2-40EF-8EC7-37BFD61CE233}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{47CAF97E-53E2-40EF-8EC7-37BFD61CE233} = {E69D9E3D-D497-4261-8C0B-D44992A0651E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B9B98157-430E-4994-88A5-CB225F4E081E}

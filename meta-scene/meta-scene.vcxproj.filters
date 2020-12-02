@@ -1,2 +1,140 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="objects">
+      <UniqueIdentifier>{bc239000-c82b-43a2-8aff-cd36eb137320}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="importers">
+      <UniqueIdentifier>{ae2caf4b-7f79-497b-9564-eae811dd57f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="exporters">
+      <UniqueIdentifier>{4dcb3d1f-fb62-4495-9433-de45140c446a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="importers\pbrt">
+      <UniqueIdentifier>{bfb5d9b1-03e4-4d71-becc-937954c8ae60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shared">
+      <UniqueIdentifier>{841d70d1-f59c-4dba-b495-89a2afcf846d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="types.hpp" />
+    <ClInclude Include="objects\camera.hpp">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\filter.hpp">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\film.hpp">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\light.hpp">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\integrator.hpp">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\material.hpp">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\medium.hpp">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\sampler.hpp">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\shape.hpp">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\texture.hpp">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\entity.hpp">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.hpp" />
+    <ClInclude Include="importers\pbrt\import_pbrt_attribute.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\pbrt\import_pbrt_camera.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\pbrt\import_pbrt_include.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\pbrt\import_pbrt_integrator.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\pbrt\import_pbrt_light_source.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\pbrt\import_pbrt_material.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\pbrt\import_pbrt_medium.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\pbrt\import_pbrt_shape.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\pbrt\import_pbrt_spectrum.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\pbrt\import_pbrt_texture.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\pbrt\import_pbrt_transform.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
+    <ClInclude Include="importers\pbrt\pbrt_importer.hpp">
+      <Filter>importers\pbrt</Filter>
+    </ClInclude>
+    <ClInclude Include="shared\cie_samples.hpp">
+      <Filter>shared</Filter>
+    </ClInclude>
+    <ClInclude Include="shared\spectrum.hpp">
+      <Filter>shared</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="importers\pbrt\import_pbrt_attribute.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\pbrt\import_pbrt_camera.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\pbrt\import_pbrt_include.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\pbrt\import_pbrt_integrator.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\pbrt\import_pbrt_light_source.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\pbrt\import_pbrt_material.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\pbrt\import_pbrt_medium.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\pbrt\import_pbrt_shape.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\pbrt\import_pbrt_spectrum.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\pbrt\import_pbrt_texture.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\pbrt\import_pbrt_transform.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="importers\pbrt\pbrt_importer.cpp">
+      <Filter>importers\pbrt</Filter>
+    </ClCompile>
+    <ClCompile Include="shared\spectrum.cpp">
+      <Filter>shared</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
