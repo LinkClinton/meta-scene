@@ -80,7 +80,7 @@ namespace meta_scene::importers::pbrt {
 		std::optional<meta_scene::objects::media> media;
 		std::optional<meta_scene::objects::light> light;
 
-		std::optional<objects> objects;
+		std::shared_ptr<objects> objects;
 		
 		matrix4x4 transform = matrix4x4(1);
 

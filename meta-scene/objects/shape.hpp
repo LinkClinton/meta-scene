@@ -2,6 +2,7 @@
 
 #include "texture.hpp"
 
+#include <optional>
 #include <array>
 
 namespace meta_scene::objects::internal {

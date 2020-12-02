@@ -40,6 +40,7 @@ namespace meta_scene::importers::pbrt {
 		material->diffuse.reflectance.constant.value = spectrum(0.5);
 		material->diffuse.sigma.type = "constant";
 		material->diffuse.sigma.constant.value = spectrum(0);
+		material->type = "diffuse";
 	}
 
 	std::optional<meta_scene::objects::material> scene_state::find_material(const std::string& name)

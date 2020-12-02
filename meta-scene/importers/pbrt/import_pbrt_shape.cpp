@@ -229,7 +229,7 @@ namespace meta_scene::importers::pbrt {
 
 		import_shape(context, entity);
 
-		if (context.current().objects != std::nullopt)
+		if (context.current().objects != nullptr)
 			context.current().objects->entities.push_back(entity);
 		else
 			context.scene.entities.push_back(entity);
@@ -253,7 +253,7 @@ namespace meta_scene::importers::pbrt {
 
 			entity.transform = context.current().transform * object.transform;
 
-			if (context.current().objects != std::nullopt)
+			if (context.current().objects != nullptr)
 				context.current().objects->entities.push_back(entity);
 			else
 				context.scene.entities.push_back(entity);
@@ -265,7 +265,7 @@ namespace meta_scene::importers::pbrt {
 		const auto name = remove_special_character(context.peek_one_token());
 
 		context.push_config();		
-		context.current().objects = objects();
+		context.current().objects = std::make_shared<objects>();
 		
 		context.loop_objects_token([&]()
 			{
@@ -280,7 +280,7 @@ namespace meta_scene::importers::pbrt {
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 
-		context.state.objects.insert({ name, context.current().objects.value() });
+		context.state.objects.insert({ name, *context.current().objects });
 		
 		context.peek_one_token();
 		context.pop_config();

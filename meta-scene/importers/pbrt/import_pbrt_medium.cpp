@@ -87,7 +87,7 @@ namespace meta_scene::importers::pbrt {
 			}
 
 			if (type == PBRT_INTEGER_TOKEN) {
-				const auto value = string_to_integer<size_t>(remove_special_character(property.second));
+				const auto value = string_to_integer<uint32>(remove_special_character(property.second));
 
 				if (name == "nx") META_SCENE_FINISHED_AND_CONTINUE(medium.heterogeneous.size_x = value);
 				if (name == "ny") META_SCENE_FINISHED_AND_CONTINUE(medium.heterogeneous.size_y = value);

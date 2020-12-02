@@ -52,7 +52,7 @@ namespace meta_scene::importers::pbrt {
 				auto [type, name] = context.peek_type_and_name();
 
 				if (type == PBRT_INTEGER_TOKEN) {
-					const auto value = context.peek_integer<size_t>();
+					const auto value = context.peek_integer<uint32>();
 					
 					if (name == "pixelsamples") META_SCENE_FINISHED_AND_RETURN(sampler.sample_per_pixel = value);
 				}

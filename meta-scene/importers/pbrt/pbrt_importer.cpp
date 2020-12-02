@@ -186,6 +186,8 @@ namespace meta_scene::importers::pbrt {
 		context.scene.integrator.depth = 5;
 
 		meta_scene::objects::filter filter;
+
+		filter.type = "box";
 		
 		auto invert_transform = matrix4x4(1);
 		
