@@ -36,10 +36,10 @@ namespace meta_scene::importers::pbrt {
 	{
 		material = meta_scene::objects::material();
 		
-		material->diffuse.reflectance.type = "constant";
-		material->diffuse.reflectance.constant.value = spectrum(0.5);
-		material->diffuse.sigma.type = "constant";
-		material->diffuse.sigma.constant.value = spectrum(0);
+		material->properties["reflectance"].type = "constant";
+		material->properties["reflectance"].constant.value = spectrum(0.5);
+		material->properties["sigma"].type = "constant";
+		material->properties["sigma"].constant.value = spectrum(0);
 		material->type = "diffuse";
 	}
 
