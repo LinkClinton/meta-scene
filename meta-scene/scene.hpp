@@ -16,6 +16,8 @@ namespace meta_scene {
 		objects::camera camera;
 		objects::film film;
 
+		std::string directory_path = "";
+		
 		scene() = default;
 	};
 	

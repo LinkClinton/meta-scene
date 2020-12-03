@@ -24,7 +24,7 @@ namespace meta_scene::importers::pbrt {
 				if (type == PBRT_STRING_TOKEN) {
 					const auto value = read_string_from_token(context.peek_one_token());
 
-					if (name == "mapname") META_SCENE_FINISHED_AND_RETURN(light.environment.image = context.directory_path + value);
+					if (name == "mapname") META_SCENE_FINISHED_AND_RETURN(light.environment.image = value);
 				}
 
 				if (type == PBRT_INTEGER_TOKEN) {

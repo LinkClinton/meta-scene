@@ -184,7 +184,8 @@ namespace meta_scene::importers::pbrt {
 		// initialize pbrt default value
 		context.scene.integrator.type = "path";
 		context.scene.integrator.depth = 5;
-
+		context.scene.directory_path = context.directory_path;
+		
 		meta_scene::objects::filter filter;
 
 		filter.type = "box";

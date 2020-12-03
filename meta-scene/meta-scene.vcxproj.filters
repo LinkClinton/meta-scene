@@ -16,6 +16,9 @@
     <Filter Include="shared">
       <UniqueIdentifier>{841d70d1-f59c-4dba-b495-89a2afcf846d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="exporters\json">
+      <UniqueIdentifier>{9f865349-3839-4172-99ec-16f5448847a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="types.hpp" />
@@ -95,6 +98,36 @@
     <ClInclude Include="shared\spectrum.hpp">
       <Filter>shared</Filter>
     </ClInclude>
+    <ClInclude Include="exporters\json\json_exporter.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
+    <ClInclude Include="exporters\json\export_json_include.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
+    <ClInclude Include="exporters\json\export_json_transform.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
+    <ClInclude Include="exporters\json\export_json_camera.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
+    <ClInclude Include="exporters\json\export_json_config.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
+    <ClInclude Include="exporters\json\export_json_light.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
+    <ClInclude Include="exporters\json\export_json_shape.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
+    <ClInclude Include="exporters\json\export_json_texture.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
+    <ClInclude Include="exporters\json\export_json_material.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
+    <ClInclude Include="exporters\json\export_json_entity.hpp">
+      <Filter>exporters\json</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="importers\pbrt\import_pbrt_attribute.cpp">
@@ -135,6 +168,33 @@
     </ClCompile>
     <ClCompile Include="shared\spectrum.cpp">
       <Filter>shared</Filter>
+    </ClCompile>
+    <ClCompile Include="exporters\json\export_json_transform.cpp">
+      <Filter>exporters\json</Filter>
+    </ClCompile>
+    <ClCompile Include="exporters\json\export_json_camera.cpp">
+      <Filter>exporters\json</Filter>
+    </ClCompile>
+    <ClCompile Include="exporters\json\export_json_config.cpp">
+      <Filter>exporters\json</Filter>
+    </ClCompile>
+    <ClCompile Include="exporters\json\export_json_light.cpp">
+      <Filter>exporters\json</Filter>
+    </ClCompile>
+    <ClCompile Include="exporters\json\export_json_shape.cpp">
+      <Filter>exporters\json</Filter>
+    </ClCompile>
+    <ClCompile Include="exporters\json\export_json_texture.cpp">
+      <Filter>exporters\json</Filter>
+    </ClCompile>
+    <ClCompile Include="exporters\json\export_json_material.cpp">
+      <Filter>exporters\json</Filter>
+    </ClCompile>
+    <ClCompile Include="exporters\json\export_json_entity.cpp">
+      <Filter>exporters\json</Filter>
+    </ClCompile>
+    <ClCompile Include="exporters\json\json_exporter.cpp">
+      <Filter>exporters\json</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

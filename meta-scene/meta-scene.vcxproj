@@ -19,6 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="exporters\json\export_json_camera.hpp" />
+    <ClInclude Include="exporters\json\export_json_config.hpp" />
+    <ClInclude Include="exporters\json\export_json_entity.hpp" />
+    <ClInclude Include="exporters\json\export_json_include.hpp" />
+    <ClInclude Include="exporters\json\export_json_light.hpp" />
+    <ClInclude Include="exporters\json\export_json_material.hpp" />
+    <ClInclude Include="exporters\json\export_json_shape.hpp" />
+    <ClInclude Include="exporters\json\export_json_texture.hpp" />
+    <ClInclude Include="exporters\json\export_json_transform.hpp" />
+    <ClInclude Include="exporters\json\json_exporter.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_attribute.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_camera.hpp" />
     <ClInclude Include="importers\pbrt\import_pbrt_include.hpp" />
@@ -48,6 +58,15 @@
     <ClInclude Include="types.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="exporters\json\export_json_camera.cpp" />
+    <ClCompile Include="exporters\json\export_json_config.cpp" />
+    <ClCompile Include="exporters\json\export_json_entity.cpp" />
+    <ClCompile Include="exporters\json\export_json_light.cpp" />
+    <ClCompile Include="exporters\json\export_json_material.cpp" />
+    <ClCompile Include="exporters\json\export_json_shape.cpp" />
+    <ClCompile Include="exporters\json\export_json_texture.cpp" />
+    <ClCompile Include="exporters\json\export_json_transform.cpp" />
+    <ClCompile Include="exporters\json\json_exporter.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_attribute.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_camera.cpp" />
     <ClCompile Include="importers\pbrt\import_pbrt_include.cpp" />

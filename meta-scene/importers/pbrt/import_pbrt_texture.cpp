@@ -39,7 +39,7 @@ namespace meta_scene::importers::pbrt {
 				if (type == PBRT_STRING_TOKEN) {
 					const auto value = read_string_from_token(context.peek_one_token());
 
-					if (name == "filename") META_SCENE_FINISHED_AND_RETURN(texture.image.filename = context.directory_path + value);
+					if (name == "filename") META_SCENE_FINISHED_AND_RETURN(texture.image.filename = value);
 					if (name == "mapping") META_SCENE_FINISHED_AND_RETURN(warn("pbrt importer : mapping is not support."));
 					if (name == "wrap") META_SCENE_FINISHED_AND_RETURN(warn("pbrt importer : wrap is not support."));
 
