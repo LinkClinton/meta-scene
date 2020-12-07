@@ -94,11 +94,12 @@ namespace meta_scene::importers::pbrt {
 
 	void import_distant_light(scene_context& context, meta_scene::objects::light& light)
 	{
-		light.directional.from = vector3(0, 0, 0);
-		light.directional.to = vector3(0, 0, 1);
 		light.intensity = vector3(1);
 		light.type = "directional";
 
+		vector3 from = vector3(0, 0, 0);
+		vector3 to = vector3(0, 0, 1);
+		
 		spectrum intensity = spectrum(1);
 		spectrum scale = spectrum(1);
 		
@@ -116,14 +117,15 @@ namespace meta_scene::importers::pbrt {
 				if (type == PBRT_POINT_TOKEN) {
 					const auto value = context.peek_one_token();
 
-					if (name == "from") META_SCENE_FINISHED_AND_RETURN(import_token_vector3(value, light.directional.from));
-					if (name == "to") META_SCENE_FINISHED_AND_RETURN(import_token_vector3(value, light.directional.to));
+					if (name == "from") META_SCENE_FINISHED_AND_RETURN(import_token_vector3(value, from));
+					if (name == "to") META_SCENE_FINISHED_AND_RETURN(import_token_vector3(value, to));
 				}
 
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 
 		light.intensity = intensity * scale;
+		light.directional.direction = from - to;
 	}
 
 	void import_light_source(scene_context& context)

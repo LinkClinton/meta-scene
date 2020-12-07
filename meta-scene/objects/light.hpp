@@ -5,8 +5,7 @@
 namespace meta_scene::objects::internal {
 
 	struct directional_light final {
-		vector3 from = vector3(0);
-		vector3 to = vector3(0);
+		vector3 direction = vector3(0);
 	};
 
 	struct environment_light final {

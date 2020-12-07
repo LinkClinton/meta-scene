@@ -10,9 +10,8 @@ namespace meta_scene::exporters::json {
 
 		export_json["type"] = light.type;
 		export_json["intensity"] = light.intensity;
-		export_json["directional"]["from"] = light.directional.from;
-		export_json["directional"]["to"] = light.directional.to;
-
+		export_json["directional"]["direction"] = light.directional.direction;
+		
 		return export_json;
 	}
 

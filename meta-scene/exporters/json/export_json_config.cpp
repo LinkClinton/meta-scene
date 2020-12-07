@@ -11,7 +11,7 @@ namespace meta_scene::exporters::json {
 		export_json["coordinate_system"]["camera"] = "left_hand";
 		export_json["coordinate_system"]["texture"] = "right_hand";
 
-		export_json["output_window"]["enable"] = false;
+		export_json["output_window"]["enable"] = true;
 		export_json["output_window"]["name"] = "view_window";
 		export_json["output_window"]["font"] = 20;
 		export_json["output_window"]["size"] = { scene.film.size_x, scene.film.size_y };
