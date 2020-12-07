@@ -63,10 +63,8 @@ namespace meta_scene::importers::pbrt {
 		material.properties["transmission"].type = "constant";
 		material.properties["reflectance"].constant.value = spectrum(1);
 		material.properties["reflectance"].type = "constant";
-		material.properties["roughness_u"].constant.value = spectrum(0);
-		material.properties["roughness_u"].type = "constant";
-		material.properties["roughness_v"].constant.value = spectrum(0);
-		material.properties["roughness_v"].type = "constant";
+		material.properties["roughness"].constant.value = spectrum(0);
+		material.properties["roughness"].type = "constant";
 		material.properties["eta"].constant.value = spectrum(1.5f);
 		material.properties["eta"].type = "constant";
 		material.remapping = true;
@@ -85,8 +83,8 @@ namespace meta_scene::importers::pbrt {
 			if (type == PBRT_FLOAT_TOKEN) {
 				const auto value = remove_special_character(property.second);
 
-				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness_u"]));
-				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness_v"]));
+				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness"], 0));
+				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness"], 1));
 				if (name == "index") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["eta"]));
 			}
 
@@ -117,10 +115,8 @@ namespace meta_scene::importers::pbrt {
 		material.properties["eta"].type = "constant";
 		material.properties["k"].constant.value = spectrum(0);
 		material.properties["k"].type = "constant";
-		material.properties["roughness_u"].constant.value = spectrum(0.01f);
-		material.properties["roughness_u"].type = "constant";
-		material.properties["roughness_v"].constant.value = spectrum(0.01f);
-		material.properties["roughness_v"].type = "constant";
+		material.properties["roughness"].constant.value = spectrum(0.01f);
+		material.properties["roughness"].type = "constant";
 		material.remapping = true;
 		
 		for (const auto& property : properties)
@@ -130,15 +126,10 @@ namespace meta_scene::importers::pbrt {
 			if (type == PBRT_FLOAT_TOKEN) {
 				const auto value = remove_special_character(property.second);
 
-				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness_u"]));
-				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness_v"]));
-
-				if (name == "roughness") {
-					import_real_texture(value, material.properties["roughness_u"]);
-					import_real_texture(value, material.properties["roughness_v"]);
-
-					continue;
-				}
+				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness"], 0));
+				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness"], 1));
+				
+				if (name == "roughness")  META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness"]));
 			}
 
 			if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
@@ -158,12 +149,7 @@ namespace meta_scene::importers::pbrt {
 			if (type == PBRT_TEXTURE_TOKEN) {
 				const auto value = read_string_from_token(property.second);
 
-				if (name == "roughness") {
-					material.properties["roughness_u"] = context.state.find_texture(value);
-					material.properties["roughness_v"] = context.state.find_texture(value);
-
-					continue;
-				}
+				if (name == "roughness") META_SCENE_FINISHED_AND_CONTINUE(material.properties["roughness"] = context.state.find_texture(value));
 
 				if (name == "bumpmap") META_SCENE_FINISHED_AND_CONTINUE(warn(META_SCENE_PBRT_BUMP_MAP_IS_NOT_SUPPORT));
 			}
@@ -239,10 +225,8 @@ namespace meta_scene::importers::pbrt {
 		material.properties["diffuse"].type = "constant";
 		material.properties["opacity"].constant.value = spectrum(1);
 		material.properties["opacity"].type = "constant";
-		material.properties["roughness_u"].constant.value = spectrum(0.1f);
-		material.properties["roughness_u"].type = "constant";
-		material.properties["roughness_v"].constant.value = spectrum(0.1f);
-		material.properties["roughness_v"].type = "constant";
+		material.properties["roughness"].constant.value = spectrum(0.1f);
+		material.properties["roughness"].type = "constant";
 		material.properties["eta"].constant.value = spectrum(1.5f);
 		material.properties["eta"].type = "constant";
 		material.remapping = true;
@@ -253,17 +237,12 @@ namespace meta_scene::importers::pbrt {
 			if (type == PBRT_FLOAT_TOKEN) {
 				const auto value = remove_special_character(property.second);
 
-				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness_u"]));
-				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness_v"]));
+				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness"], 0));
+				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness"], 1));
 				
 				if (name == "index") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["eta"]));
 
-				if (name == "roughness") {
-					import_real_texture(value, material.properties["roughness_u"]);
-					import_real_texture(value, material.properties["roughness_v"]);
-
-					continue;
-				}
+				if (name == "roughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness"]));
 			}
 
 			if (type == PBRT_TEXTURE_TOKEN) {
@@ -277,13 +256,8 @@ namespace meta_scene::importers::pbrt {
 
 				if (name == "opacity") META_SCENE_FINISHED_AND_CONTINUE(material.properties["opacity"] = context.state.find_texture(value));
 
-				if (name == "roughness") {
+				if (name == "roughness") META_SCENE_FINISHED_AND_CONTINUE(material.properties["roughness"] = context.state.find_texture(value));
 
-					material.properties["roughness_u"] = context.state.find_texture(value);
-					material.properties["roughness_v"] = context.state.find_texture(value);
-					
-					continue;
-				}
 
 				// now we do not support bump map
 				if (name == "bumpmap") META_SCENE_FINISHED_AND_CONTINUE(warn(META_SCENE_PBRT_BUMP_MAP_IS_NOT_SUPPORT));
@@ -343,10 +317,8 @@ namespace meta_scene::importers::pbrt {
 		material.properties["specular"].type = "constant";
 		material.properties["diffuse"].constant.value = spectrum(0.5f);
 		material.properties["diffuse"].type = "constant";
-		material.properties["roughness_u"].constant.value = spectrum(0.1f);
-		material.properties["roughness_u"].type = "constant";
-		material.properties["roughness_v"].constant.value = spectrum(0.1f);
-		material.properties["roughness_v"].type = "constant";
+		material.properties["roughness"].constant.value = spectrum(0.1f);
+		material.properties["roughness"].type = "constant";
 		material.remapping = true;
 		
 		for (const auto& property : properties) {
@@ -358,8 +330,8 @@ namespace meta_scene::importers::pbrt {
 				if (name == "Ks") META_SCENE_FINISHED_AND_CONTINUE(material.properties["specular"] = context.state.find_texture(value));
 				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(material.properties["diffuse"] = context.state.find_texture(value));
 
-				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(material.properties["roughness_u"] = context.state.find_texture(value));
-				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(material.properties["roughness_v"] = context.state.find_texture(value));
+				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(material.properties["roughness"] = context.state.find_texture(value));
+				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(material.properties["roughness"] = context.state.find_texture(value));
 
 				if (name == "bumpmap") META_SCENE_FINISHED_AND_CONTINUE(warn(META_SCENE_PBRT_BUMP_MAP_IS_NOT_SUPPORT));
 			}
@@ -374,15 +346,10 @@ namespace meta_scene::importers::pbrt {
 			if (type == PBRT_FLOAT_TOKEN) {
 				const auto value = remove_special_character(property.second);
 
-				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness_u"]));
-				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness_v"]));
+				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness"], 0));
+				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness"], 1));
 
-				if (name == "roughness") {
-					import_real_texture(value, material.properties["roughness_u"]);
-					import_real_texture(value, material.properties["roughness_v"]);
-
-					continue;
-				}
+				if (name == "roughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness"]));
 			}
 
 			if (type == PBRT_BOOL_TOKEN) {
@@ -527,10 +494,8 @@ namespace meta_scene::importers::pbrt {
 		material.properties["diffuse"].type = "constant";
 		material.properties["mfp"].constant.value = spectrum(1);
 		material.properties["mfp"].type = "constant";
-		material.properties["roughness_u"].constant.value = spectrum(0);
-		material.properties["roughness_u"].type = "constant";
-		material.properties["roughness_v"].constant.value = spectrum(0);
-		material.properties["roughness_v"].type = "constant";
+		material.properties["roughness"].constant.value = spectrum(0);
+		material.properties["roughness"].type = "constant";
 		material.properties["eta"].constant.value = spectrum(1.33f);
 		material.properties["eta"].type = "constant";
 		material.remapping = true;
@@ -543,8 +508,8 @@ namespace meta_scene::importers::pbrt {
 
 				if (name == "eta") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["eta"]));
 				if (name == "mfp") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["mfp"]));
-				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness_u"]));
-				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness_v"]));
+				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness"], 0));
+				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness"], 1));
 			}
 
 			if (type == PBRT_STRING_TOKEN) {

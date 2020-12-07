@@ -28,6 +28,12 @@ namespace meta_scene::importers::pbrt {
 		texture.type = "constant";
 	}
 
+	void import_real_texture(const std::string& token, meta_scene::objects::texture& texture, uint32 channel)
+	{
+		texture.constant.value[channel] = string_to_real(token);
+		texture.type = "constant";
+	}
+
 	void import_image_map_texture(scene_context& context, meta_scene::objects::texture& texture)
 	{
 		texture.type = "image";

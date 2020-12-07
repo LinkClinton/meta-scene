@@ -12,6 +12,8 @@ namespace meta_scene::importers::pbrt {
 	
 	void import_real_texture(const std::string& token, meta_scene::objects::texture& texture);
 
+	void import_real_texture(const std::string& token, meta_scene::objects::texture& texture, uint32 channel);
+	
 	void import_texture(scene_context& context);
 }
 
