@@ -169,6 +169,9 @@ namespace meta_scene::importers::pbrt {
 				if (token == PBRT_SCALE_TOKEN)
 					META_SCENE_FINISHED_AND_RETURN(import_scale(context, context.current().transform));
 
+				if (token == PBRT_ROTATE_TOKEN)
+					META_SCENE_FINISHED_AND_RETURN(import_rotate(context, context.current().transform));
+			
 				if (token == PBRT_NAMED_MATERIAL_TOKEN)
 					META_SCENE_FINISHED_AND_RETURN(import_named_material(context, context.current().material));
 			
