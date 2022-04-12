@@ -171,8 +171,8 @@ namespace meta_scene::importers::pbrt {
 	{
 		material.type = "diffuse";
 
-		material.properties["reflectance"].constant.value = spectrum(0.5f);
-		material.properties["reflectance"].type = "constant";
+		material.properties["diffuse"].constant.value = spectrum(0.5f);
+		material.properties["diffuse"].type = "constant";
 		material.properties["sigma"].constant.value = spectrum(0);
 		material.properties["sigma"].type = "constant";
 		
@@ -182,7 +182,7 @@ namespace meta_scene::importers::pbrt {
 			if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
 				const auto value = property.second;
 
-				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(import_color_spectrum_texture(value, material.properties["reflectance"]));
+				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(import_color_spectrum_texture(value, material.properties["diffuse"]));
 			}
 
 			if (type == PBRT_FLOAT_TOKEN) {
@@ -194,7 +194,7 @@ namespace meta_scene::importers::pbrt {
 			if (type == PBRT_TEXTURE_TOKEN) {
 				const auto value = read_string_from_token(property.second);
 
-				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(material.properties["reflectance"] = context.state.find_texture(value));
+				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(material.properties["diffuse"] = context.state.find_texture(value));
 				if (name == "sigma") META_SCENE_FINISHED_AND_CONTINUE(material.properties["sigma"] = context.state.find_texture(value));
 				if (name == "bumpmap") META_SCENE_FINISHED_AND_CONTINUE(warn(META_SCENE_PBRT_BUMP_MAP_IS_NOT_SUPPORT));
 			}
@@ -202,7 +202,7 @@ namespace meta_scene::importers::pbrt {
 			if (type == PBRT_SPECTRUM_TOKEN) {
 				const auto value = read_string_from_token(property.second);
 
-				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(import_sampled_spectrum_texture(context.directory_path + value, material.properties["reflectance"]));
+				if (name == "Kd") META_SCENE_FINISHED_AND_CONTINUE(import_sampled_spectrum_texture(context.directory_path + value, material.properties["diffuse"]));
 			}
 			
 			// material name

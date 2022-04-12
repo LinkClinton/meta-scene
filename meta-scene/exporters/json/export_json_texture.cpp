@@ -8,32 +8,28 @@ namespace meta_scene::exporters::json {
 	{
 		nlohmann::json export_json;
 
-		export_json["type"] = texture.type;
-		export_json["constant"]["value"] = texture.constant.value;
-
+		export_json["value"] = texture.constant.value;
+		export_json["image"] = "";
+		export_json["gamma"] = false;
+		
 		return export_json;
 	}
 
 	nlohmann::json export_mixture_texture(const objects::texture& texture)
 	{
-		nlohmann::json export_json;
+		error("json format does not support mixture texture.");
 
-		export_json["type"] = texture.type;
-		export_json["mixture"]["texture0"] = export_texture(*texture.mixture.texture0);
-		export_json["mixture"]["texture1"] = export_texture(*texture.mixture.texture1);
-		export_json["mixture"]["alpha"] = export_texture(*texture.mixture.alpha);
-
-		return export_json;
+		return {};
 	}
 	
 	nlohmann::json export_image_texture(const objects::texture& texture)
 	{
 		nlohmann::json export_json;
 
-		export_json["type"] = texture.type;
-		export_json["image"]["filename"] = texture.image.filename;
-		export_json["image"]["gamma"] = texture.image.gamma;
-
+		export_json["value"] = vector3(1, 1, 1);
+		export_json["image"] = texture.image.filename;
+		export_json["gamma"] = texture.image.gamma;
+		
 		return export_json;
 	}
 
@@ -41,10 +37,14 @@ namespace meta_scene::exporters::json {
 	{
 		nlohmann::json export_json;
 
-		export_json["type"] = texture.type;
-		export_json["scale"]["scale"] = export_texture(*texture.scale.scale);
-		export_json["scale"]["base"] = export_texture(*texture.scale.base);
+		// only support export image with scale value 
+		assert(texture.scale.scale->type == "constant");
+		assert(texture.scale.base->type == "image");
 
+		export_json["value"] = texture.scale.scale->constant.value;
+		export_json["image"] = texture.scale.base->image.filename;
+		export_json["gamma"] = texture.scale.base->image.gamma;
+		
 		return export_json;
 	}
 	
