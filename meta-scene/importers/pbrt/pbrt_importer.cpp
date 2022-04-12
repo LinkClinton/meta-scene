@@ -178,7 +178,7 @@ namespace meta_scene::importers::pbrt {
 				META_SCENE_PBRT_UN_RESOLVE_TOKEN;
 			});
 
-		context.peek_one_token();
+		if (!context.token_stack.empty()) context.peek_one_token();
 		context.pop_config();
 	}
 

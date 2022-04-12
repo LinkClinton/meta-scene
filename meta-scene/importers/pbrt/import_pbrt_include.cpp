@@ -178,7 +178,7 @@ namespace meta_scene::importers::pbrt {
 
 	void scene_context::loop_world_token(const std::function<void()>& function) const
 	{
-		while (token_stack.top() != PBRT_WORLD_END_TOKEN) 
+		while (!token_stack.empty() && token_stack.top() != PBRT_WORLD_END_TOKEN) 
 			function();
 	}
 
