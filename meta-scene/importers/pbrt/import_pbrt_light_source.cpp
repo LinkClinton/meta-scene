@@ -114,7 +114,7 @@ namespace meta_scene::importers::pbrt {
 					if (name == "L") META_SCENE_FINISHED_AND_RETURN(import_color_spectrum(value, intensity));
 				}
 
-				if (type == PBRT_POINT_TOKEN) {
+				if (type == PBRT_POINT_TOKEN || type == PBRT_POINT3_TOKEN) {
 					const auto value = context.peek_one_token();
 
 					if (name == "from") META_SCENE_FINISHED_AND_RETURN(import_token_vector3(value, from));

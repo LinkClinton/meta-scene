@@ -24,6 +24,7 @@ namespace meta_scene::exporters::json {
 		if (material.type == "translucent") return export_common_material(material);
 		if (material.type == "subsurface") return export_common_material(material);
 		if (material.type == "substrate") return export_common_material(material);
+		if (material.type == "conductor") return export_common_material(material);
 		if (material.type == "plastic") return export_common_material(material);
 		if (material.type == "diffuse") return export_common_material(material);
 		if (material.type == "mirror") return export_common_material(material);

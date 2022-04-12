@@ -7,7 +7,17 @@
 namespace meta_scene::importers::pbrt {
 
 	constexpr auto META_SCENE_PBRT_BUMP_MAP_IS_NOT_SUPPORT = "pbrt importer : bump map is not supported.";
-	
+
+	bool is_material_null(const meta_scene::objects::material& material)
+	{
+		if (material.type == "diffuse" &&
+			material.properties.at("diffuse").type == "constant" &&
+			material.properties.at("diffuse").constant.value == spectrum(0, 0, 0))
+			return true;
+
+		return false;
+	}
+
 	void import_plastic_material(scene_context& context, const property_group& properties, meta_scene::objects::material& material)
 	{
 		material.type = "plastic";
@@ -668,7 +678,9 @@ namespace meta_scene::importers::pbrt {
 		if (type == "uber") import_uber_material(context, properties, material.value());
 		if (type == "mix") import_mix_material(context, properties, material.value());
 		if (type == "none") { material = std::nullopt; return; }
-		
+
+		if (is_material_null(material.value())) { material = std::nullopt; return; }
+
 		META_SCENE_IMPORT_SUCCESS_CHECK_TYPE(material.value());
 	}
 	
