@@ -36,6 +36,10 @@ namespace meta_scene::importers::pbrt {
 	const std::string PBRT_BOOL_TOKEN = "bool";
 	const std::string PBRT_RGB_TOKEN = "rgb";
 
+	// PBRT-V4 NEW TOKEN
+	const std::string PBRT_POINT2_TOKEN = "point2";
+	const std::string PBRT_POINT3_TOKEN = "point3";
+
 	const std::string PBRT_REVERSE_ORIENTATION_TOKEN = "ReverseOrientation";
 	const std::string PBRT_COORD_SYS_TRANSFORM_TOKEN = "CoordSysTransform";
 	const std::string PBRT_MAKE_NAMED_MATERIAL_TOKEN = "MakeNamedMaterial";

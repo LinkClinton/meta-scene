@@ -108,6 +108,65 @@ namespace meta_scene::importers::pbrt {
 		}
 	}
 
+	void import_conductor_material(scene_context& context, const property_group& properties, meta_scene::objects::material& material)
+	{
+		material.type = "conductor";
+		material.properties["eta"].constant.value = spectrum(0);
+		material.properties["eta"].type = "constant";
+		material.properties["k"].constant.value = spectrum(0);
+		material.properties["k"].type = "constant";
+		material.properties["roughness"].constant.value = spectrum(0.01f);
+		material.properties["roughness"].type = "constant";
+		material.remapping = true;
+
+		for (const auto& property : properties)
+		{
+			auto [type, name] = property.first;
+
+			if (type == PBRT_FLOAT_TOKEN) {
+				const auto value = remove_special_character(property.second);
+
+				if (name == "uroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness"], 0));
+				if (name == "vroughness") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness"], 1));
+
+				if (name == "roughness")  META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["roughness"]));
+			}
+
+			if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
+				const auto value = property.second;
+
+				if (name == "eta") META_SCENE_FINISHED_AND_CONTINUE(import_color_spectrum_texture(value, material.properties["eta"]));
+				if (name == "k") META_SCENE_FINISHED_AND_CONTINUE(import_color_spectrum_texture(value, material.properties["k"]));
+			}
+
+			if (type == PBRT_SPECTRUM_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+
+				if (name == "eta") META_SCENE_FINISHED_AND_CONTINUE(import_sampled_spectrum_texture(context.directory_path + value, material.properties["eta"]));
+				if (name == "k") META_SCENE_FINISHED_AND_CONTINUE(import_sampled_spectrum_texture(context.directory_path + value, material.properties["k"]));
+			}
+
+			if (type == PBRT_TEXTURE_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+
+				if (name == "roughness") META_SCENE_FINISHED_AND_CONTINUE(material.properties["roughness"] = context.state.find_texture(value));
+
+				if (name == "bumpmap") META_SCENE_FINISHED_AND_CONTINUE(warn(META_SCENE_PBRT_BUMP_MAP_IS_NOT_SUPPORT));
+			}
+
+			if (type == PBRT_BOOL_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+
+				if (name == "remaproughness") META_SCENE_FINISHED_AND_CONTINUE(material.remapping = string_to_bool(value));
+			}
+
+			// material name
+			if (type == PBRT_STRING_TOKEN) continue;
+
+			META_SCENE_PBRT_UN_RESOLVE_TOKEN;
+		}
+	}
+
 	void import_metal_material(scene_context& context, const property_group& properties, meta_scene::objects::material& material)
 	{
 		material.type = "metal";
@@ -160,6 +219,52 @@ namespace meta_scene::importers::pbrt {
 				if (name == "remaproughness") META_SCENE_FINISHED_AND_CONTINUE(material.remapping = string_to_bool(value));
 			}
 			
+			// material name
+			if (type == PBRT_STRING_TOKEN) continue;
+
+			META_SCENE_PBRT_UN_RESOLVE_TOKEN;
+		}
+	}
+
+	void import_diffuse_material(scene_context& context, const property_group& properties, meta_scene::objects::material& material)
+	{
+		// pbrt-v4 diffuse material
+		material.type = "diffuse";
+
+		material.properties["diffuse"].constant.value = spectrum(0.5f);
+		material.properties["diffuse"].type = "constant";
+		material.properties["sigma"].constant.value = spectrum(0);
+		material.properties["sigma"].type = "constant";
+
+		for (const auto& property : properties) {
+			auto [type, name] = property.first;
+
+			if (type == PBRT_COLOR_TOKEN || type == PBRT_RGB_TOKEN) {
+				const auto value = property.second;
+
+				if (name == "Kd" || name == "reflectance") META_SCENE_FINISHED_AND_CONTINUE(import_color_spectrum_texture(value, material.properties["diffuse"]));
+			}
+
+			if (type == PBRT_FLOAT_TOKEN) {
+				const auto value = remove_special_character(property.second);
+
+				if (name == "sigma") META_SCENE_FINISHED_AND_CONTINUE(import_real_texture(value, material.properties["sigma"]));
+			}
+
+			if (type == PBRT_TEXTURE_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+
+				if (name == "Kd" || name == "reflectance") META_SCENE_FINISHED_AND_CONTINUE(material.properties["diffuse"] = context.state.find_texture(value));
+				if (name == "sigma") META_SCENE_FINISHED_AND_CONTINUE(material.properties["sigma"] = context.state.find_texture(value));
+				if (name == "bumpmap") META_SCENE_FINISHED_AND_CONTINUE(warn(META_SCENE_PBRT_BUMP_MAP_IS_NOT_SUPPORT));
+			}
+
+			if (type == PBRT_SPECTRUM_TOKEN) {
+				const auto value = read_string_from_token(property.second);
+
+				if (name == "Kd" || name == "reflectance") META_SCENE_FINISHED_AND_CONTINUE(import_sampled_spectrum_texture(context.directory_path + value, material.properties["diffuse"]));
+			}
+
 			// material name
 			if (type == PBRT_STRING_TOKEN) continue;
 
@@ -551,7 +656,9 @@ namespace meta_scene::importers::pbrt {
 		
 		if (type == "translucent") import_translucent_material(context, properties, material.value());
 		if (type == "kdsubsurface") import_kd_subsurface_material(context, properties, material.value());
+		if (type == "conductor") import_conductor_material(context, properties, material.value());
 		if (type == "substrate") import_substrate_material(context, properties, material.value());
+		if (type == "diffuse") import_diffuse_material(context, properties, material.value());
 		if (type == "plastic") import_plastic_material(context, properties, material.value());
 		if (type == "fourier") import_fourier_material(context, properties, material.value());
 		if (type == "mirror") import_mirror_material(context, properties, material.value());

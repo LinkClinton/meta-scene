@@ -20,13 +20,13 @@ namespace meta_scene::importers::pbrt {
 			{
 				auto [type, name] = context.peek_type_and_name();
 
-				if (type == PBRT_POINT_TOKEN) {
+				if (type == PBRT_POINT_TOKEN || type == PBRT_POINT3_TOKEN) {
 					const auto token = context.peek_one_token();
 
 					if (name == "P") META_SCENE_FINISHED_AND_RETURN(import_token_vector3(token, shape.triangles.positions));
 				}
 
-				if (type == PBRT_FLOAT_TOKEN) {
+				if (type == PBRT_FLOAT_TOKEN || type == PBRT_POINT2_TOKEN) {
 					const auto token = context.peek_one_token();
 
 					if (name == "uv") META_SCENE_FINISHED_AND_RETURN(import_token_vector2(token, shape.triangles.uvs));
