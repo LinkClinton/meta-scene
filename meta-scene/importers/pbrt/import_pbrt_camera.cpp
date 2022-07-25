@@ -61,6 +61,17 @@ namespace meta_scene::importers::pbrt {
 			});
 	}
 
+	void import_box_filter(scene_context& context, meta_scene::objects::filter& filter)
+	{
+		filter.type = "box";
+		filter.radius_x = 0.5;
+		filter.radius_y = 0.5;
+
+		context.loop_important_token([&]()
+			{
+			});
+	}
+
 	void import_gaussian_filter(scene_context& context, meta_scene::objects::filter& filter)
 	{
 		filter.type = "gaussian";
@@ -78,6 +89,7 @@ namespace meta_scene::importers::pbrt {
 		const auto name = remove_special_character(context.peek_one_token());
 
 		if (name == "gaussian") import_gaussian_filter(context, filter);
+		if (name == "box") import_box_filter(context, filter);
 
 		META_SCENE_IMPORT_SUCCESS_CHECK_TYPE(filter);
 	}
