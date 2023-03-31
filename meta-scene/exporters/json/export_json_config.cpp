@@ -7,10 +7,7 @@ namespace meta_scene::exporters::json {
 	nlohmann::json export_config(const scene& scene)
 	{
 		nlohmann::json export_json;
-
-		export_json["coordinate_system"]["camera"] = "left_hand";
-		export_json["coordinate_system"]["texture"] = "right_hand";
-
+		
 		export_json["output_window"]["enable"] = true;
 		export_json["output_window"]["name"] = "view_window";
 		export_json["output_window"]["font"] = 20;
