@@ -8,7 +8,8 @@ namespace meta_scene::exporters::json {
 	{
 		nlohmann::json export_json;
 
-		export_json["reverse_orientation"] = shape.reverse_orientation;
+		// todo : orientation may be not necessary
+		//export_json["reverse_orientation"] = shape.reverse_orientation;
 		export_json["type"] = shape.type;
 
 		if (!shape.triangles.positions.empty()) export_json["triangles"]["positions"] = shape.triangles.positions;
@@ -23,7 +24,7 @@ namespace meta_scene::exporters::json {
 	{
 		nlohmann::json export_json;
 
-		export_json["reverse_orientation"] = shape.reverse_orientation;
+		//export_json["reverse_orientation"] = shape.reverse_orientation;
 		export_json["type"] = shape.type;
 		export_json["sphere"]["radius"] = shape.sphere.radius;
 
@@ -34,7 +35,7 @@ namespace meta_scene::exporters::json {
 	{
 		nlohmann::json export_json;
 
-		export_json["reverse_orientation"] = shape.reverse_orientation;
+		//export_json["reverse_orientation"] = shape.reverse_orientation;
 		export_json["type"] = shape.type;
 		export_json["mesh"]["filename"] = shape.mesh.filename;
 		export_json["mesh"]["type"] = shape.mesh.type;

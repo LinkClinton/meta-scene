@@ -11,10 +11,10 @@ namespace meta_scene::exporters::json {
 		nlohmann::json export_json;
 
 		export_json["type"] = material.type;
-		export_json["remapping"] = material.remapping;
+		//export_json["remapping"] = material.remapping;
 
 		for (const auto& property : material.properties)
-			export_json["properties"][property.first] = export_texture(property.second);
+			export_json[property.first] = export_texture(property.second);
 
 		return export_json;
 	}
