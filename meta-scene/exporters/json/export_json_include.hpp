@@ -23,21 +23,17 @@ namespace nlohmann {
 
 	template <>
 	struct adl_serializer<std::vector<vector3>> {
-		static void to_json(json& j, const std::vector<vector3>& value)
+		static void to_json(json& json, const std::vector<vector3>& value)
 		{
 			for (size_t index = 0; index < value.size(); index++) {
-				j.push_back(value[index].x);
-				j.push_back(value[index].y);
-				j.push_back(value[index].z);
+				json[index] = value[index];
 			}
 		}
 
-		static void from_json(const json& j, std::vector<vector3>& value)
+		static void from_json(const json& json, std::vector<vector3>& value)
 		{
-			for (size_t index = 0; index < j.size(); index += 3) {
-				value.push_back({
-					j[index + 0], j[index + 1], j[index + 2]
-					});
+			for (size_t index = 0; index < json.size(); index++) {
+				value.push_back(json[index]);
 			}
 		}
 	};

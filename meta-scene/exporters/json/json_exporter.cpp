@@ -5,7 +5,6 @@
 #include "export_json_entity.hpp"
 
 #include <fstream>
-#include <iomanip>
 
 #ifdef __JSON_EXPORTER__
 
@@ -25,15 +24,39 @@ namespace meta_scene::exporters::json {
 		return export_json;
 	}
 
+	void print_json(print_context& context, const nlohmann::json& json)
+	{
+		if (json.is_object())
+		{
+			context.stream << "{" << std::endl;
+
+			for (const auto& child : json.items())
+			{
+				context.indent += 4;
+
+				context.stream << std::setw(context.indent) << "\"" << child.key() << "\": ";
+
+				print_json(context, child.value());
+
+				context.indent -= 4;
+			}
+
+			context.stream << "}" << std::endl;
+		}
+	}
+	
 	void export_scene_to_file(const scene& scene, const std::string& filename)
 	{
 		const auto json = export_scene(scene);
 
-		std::ofstream stream(filename);
+		print_context context;
 
-		stream << std::setw(4) << json << std::endl;
+		context.stream = std::ofstream(filename);
+		context.indent = 0;
 
-		stream.close();
+		print_json(context, json);
+
+		context.stream.close();
 	}
 
 }

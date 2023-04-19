@@ -7,10 +7,20 @@
 #define __JSON_EXPORTER__
 
 #include <nlohmann/json.hpp>
+#include <fstream>
 
 namespace meta_scene::exporters::json {
 
+	struct print_context
+	{
+		std::ofstream stream;
+
+		uint32 indent;
+	};
+
 	nlohmann::json export_scene(const scene& scene);
+
+	void print_scene(print_context& context, const nlohmann::json& scene);
 
 	void export_scene_to_file(const scene& scene, const std::string& filename);
 	

@@ -21,7 +21,11 @@ namespace meta_scene::exporters::json {
 
 		return export_json;
 	}
-	
+
+	void print_config(print_context& context, const nlohmann::json& config)
+	{
+		
+	}
 }
 
 #endif

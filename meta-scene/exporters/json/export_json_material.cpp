@@ -13,14 +13,11 @@ namespace meta_scene::exporters::json {
 		export_json["type"] = material.type;
 		//export_json["remapping"] = material.remapping;
 
-		uint32 property_index = 0;
-
 		for (const auto& property : material.properties)
 		{
-			export_json["properties"][property_index] = export_texture(property.second);
-			export_json["properties"][property_index]["name"] = property.first;
+			export_json[property.first] = export_texture(property.second);
+			
 
-			property_index++;
 		}
 			
 		return export_json;
