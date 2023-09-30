@@ -20,8 +20,6 @@ namespace meta_scene::exporters::json {
 
 	nlohmann::json export_scene(const scene& scene);
 
-	void print_scene(print_context& context, const nlohmann::json& scene);
-
 	void export_scene_to_file(const scene& scene, const std::string& filename);
 	
 }

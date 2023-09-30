@@ -21,5 +21,5 @@ int main()
 	//meta_scene::exporters::json::export_scene_to_file(scene, "./../../resources/dragon/scene.json");
 	//meta_scene::exporters::json::export_scene_to_file(scene, "./../../resources/coffee/scene.json");
 
-	system("pause");
+	//system("pause");
 }
