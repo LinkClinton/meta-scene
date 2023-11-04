@@ -10,7 +10,7 @@ namespace meta_scene::exporters::json {
 
 		export_json["type"] = light.type;
 		export_json["intensity"] = light.intensity;
-		export_json["directional"]["direction"] = light.directional.direction;
+		export_json["direction"] = light.directional.direction;
 		
 		return export_json;
 	}
@@ -21,9 +21,8 @@ namespace meta_scene::exporters::json {
 
 		export_json["type"] = light.type;
 		export_json["intensity"] = light.intensity;
-		export_json["environment"]["image"] = light.environment.image;
-		export_json["environment"]["gamma"] = light.environment.gamma;
-
+		export_json["environment"] = light.environment.image;
+		
 		return export_json;
 	}
 

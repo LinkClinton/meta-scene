@@ -37,9 +37,8 @@ namespace meta_scene::exporters::json {
 
 		//export_json["reverse_orientation"] = shape.reverse_orientation;
 		export_json["type"] = shape.type;
-		export_json["mesh"]["filename"] = shape.mesh.filename;
-		export_json["mesh"]["type"] = shape.mesh.type;
-
+		export_json["mesh"] = shape.mesh.filename;
+		
 		return export_json;
 	}
 	
