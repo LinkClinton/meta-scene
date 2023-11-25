@@ -9,9 +9,11 @@ namespace meta_scene::exporters::json {
 		nlohmann::json export_json;
 
 		export_json["type"] = light.type;
-		export_json["intensity"] = light.intensity;
-		export_json["direction"] = light.directional.direction;
-		
+		export_json["intensity"]["value"] = light.intensity;
+		export_json["intensity"]["image"] = "";
+		export_json["direction"]["value"] = light.directional.direction;
+		export_json["direction"]["image"] = "";
+
 		return export_json;
 	}
 
@@ -20,8 +22,8 @@ namespace meta_scene::exporters::json {
 		nlohmann::json export_json;
 
 		export_json["type"] = light.type;
-		export_json["intensity"] = light.intensity;
-		export_json["environment"] = light.environment.image;
+		export_json["intensity"]["value"] = light.intensity;
+		export_json["intensity"]["image"] = light.environment.image;
 		
 		return export_json;
 	}
@@ -31,7 +33,8 @@ namespace meta_scene::exporters::json {
 		nlohmann::json export_json;
 
 		export_json["type"] = light.type;
-		export_json["intensity"] = light.intensity;
+		export_json["intensity"]["value"] = light.intensity;
+		export_json["intensity"]["image"] = "";
 
 		return export_json;
 	}
